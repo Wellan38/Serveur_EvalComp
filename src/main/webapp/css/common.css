@@ -147,3 +147,7 @@ body {
 .row {
     margin:0px;
 }
+
+.form-horizontal .control-label{
+    text-align:left;
+}
