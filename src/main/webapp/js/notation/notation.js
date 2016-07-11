@@ -141,10 +141,7 @@ function afficherScores(competence)
         
         for (var i = 0; i < scores.length; i++)
         {
-            if (document.getElementById("score_" + scores[i].competence_specifique + "_" + scores[i].note) != null)
-            {
-                document.getElementById("score_" + scores[i].competence_specifique + "_" + scores[i].note).setAttribute("checked", "checked");
-            }
+            $('#note_' + scores[i].competence_specifique + '_' + scores[i].note).addClass('active').siblings().removeClass('active');
         }
     })
     .fail(function() {
@@ -215,11 +212,12 @@ function detailsCompS(code)
         
         var r = regle.texte;
         
-        var contenu_regle = '<ul class="list-group">';
+        var contenu_regle = '<ul class="list-group" id="score_' + code + '">';
         
         for (var i = 0; i < r.length; i++)
         {
             var tab_regle = r[i].split(" ");
+            var note = tab_regle[tab_regle.length - 1];
             tab_regle[0] = '<b>' + tab_regle[0] + '</b>';
             
             for (var j = tab_regle.length - 5; j < tab_regle.length; j++)
@@ -229,24 +227,12 @@ function detailsCompS(code)
             
             var texte = tab_regle.join(" ");
             
-            contenu_regle += '<li class="clickable list-group-item" onclick="$(this).addClass(\'active\').siblings().removeClass(\'active\')">' + texte + '</li>';
+            contenu_regle += '<li class="clickable list-group-item" id="note_' + code + '_' + note + '" onclick="$(this).addClass(\'active\').siblings().removeClass(\'active\')">' + texte + '</li>';
         }
         
         contenu_regle += '</ul>';
         
         document.getElementById("regle_" + code + "_").innerHTML = contenu_regle;
-        
-//        document.getElementById("infos_compS").innerHTML = contenuHtml;
-//        
-//        
-//        document.getElementById("mise_en_situation").value = texte_mes;
-//        $('#form_mes').show();
-//        
-//        infosRegle(code_regle);
-//        var texte_regle = '- ' + regle.texte.replace(/\\n/g, newline + '- ');
-//        
-//        document.getElementById("regle").value = texte_regle;
-//        $('#form_regle').show();
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -287,27 +273,21 @@ function annulerModifs()
 
 function validerModifs()
 {
+    $('#icone_retour').attr("class", "glyphicon glyphicon-refresh gly-spin");
+    
     var scores = [];
     
-    for (var i = 0; i < liste_competences.length; i++)
-    {
-        var cg = liste_competences[i];
-        
-        for (var j = 0; j < cg.compSpec.length; j++)
-        {
-            var cs = cg.compSpec[j];
-            var note = $('input[type="radio"][name="score_' + cs.code + '_"]:checked').val();
-            
-            if (note != null)
-            {
-                var s = {competence: cs.code,note: note};
-                scores.push(s);
-                console.log(note);
-            }
-        }
-    }
+    var actifs = document.getElementsByClassName("list-group-item active");
     
-    console.log(apprenant);
+    for (var i = 0; i < actifs.length; i++)
+    {
+        var id = actifs[i].id.split("_");
+        
+        var code = id[1];
+        var note = id[2];
+        
+        scores.push({competence: code,note: note});
+    }
     
     $.ajax({
         url: './ActionServlet',
@@ -321,7 +301,18 @@ function validerModifs()
         dataType: 'json'
     })
     .done(function(data) {
-        regle = data.obj;
+        if (data.retour.valide)
+        {
+            $('#icone_retour').attr("class", "glyphicon glyphicon-ok");
+        }
+        else
+        {
+            $('#icone_retour').attr("class", "glyphicon glyphicon-remove");
+        }
+        
+        setTimeout(function() {
+            $('#icone_retour').attr("class", "glyphicon");
+        }, 2000);
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
