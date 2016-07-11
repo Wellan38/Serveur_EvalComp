@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>EvalComp - Notation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/notation.css" rel="stylesheet">
+        <style type="text/css">
+          [class*="col"] { margin-bottom: 20px; }
+          img { width: 100%; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <fieldset>
+                <legend>Donner une note à un apprenant</legend>
+                <div class="row">
+                            <label class="control-label">Compétences générales</label>
+                </div>
+                <div class="col-md-9" style="padding: 0px;">
+                    <div class="panel-group" id="competences"></div>
+                    <div class="row" id="infos_compS"></div>
+                    <div class="row" id="boutons_modifs" hidden>
+                        <div class="text-center">
+                            <div class="btn-toolbar">
+                                <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                                <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="js/notation/notation.js"></script>
+    </body>
+</html>

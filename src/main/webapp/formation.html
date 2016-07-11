@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>EvalComp - Formation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/formation.css" rel="stylesheet">
+        <style type="text/css">
+          [class*="col"] { margin-bottom: 20px; }
+          img { width: 100%; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class='container'>
+            <fieldset>
+                <legend id="legende">Formation :</legend>
+                <form class='form-horizontal'>
+                    <div class='form-group'>
+                        <label for='code_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Code* :</label>
+                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                            <input type='text' class='form-control' id='code_formation' onkeyup="checkCode()" required>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='libelle_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Libellé* :</label>
+                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                            <input type='text' class='form-control' id='libelle_formation' onkeyup="checkLibelle()" required>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='domaine_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Domaine* :</label>
+                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                            <input type='text' class='form-control' id='domaine_formation' onkeyup="checkDomaine()" required>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='url_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>URL :</label>
+                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                            <input type='url' class='form-control' id='url_formation'>
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for='duree_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Durée* :</label>
+                        <div class='col-xs-2'>
+                            <input type='text' class='form-control' id='duree_formation' onkeyup="checkDuree()" required>
+                        </div>
+                        <label class='control-label'>jours</label>
+                    </div>
+                    <div class="form-group">
+                        <label for='date_formation' class='col-xs-3 col-md-2 control-label'>Date de début* :</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="datepicker" id='date_formation' onkeyup="checkDate()" required>
+                        </div>
+                        <div class="col-xs-7 col-md-8" id="boutons_modif"></div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-danger" id="annuler" onclick="afficherInfos()"><span class="glyphicon glyphicon-remove"></span></button>
+                        <button type="button" class="btn btn-success" id="valider" onclick="validerModifs()" ng-click="submitted=true;"><span class="glyphicon glyphicon-check"></span></button>
+                        <h4><span class="glyphicon" id="icone_retour"></span></h4>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-datepicker.js"></script>
+        <script src="js/formation/formation.js"></script>
+    </body>
+</html>
+

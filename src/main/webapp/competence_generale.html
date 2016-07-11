@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>EvalComp - Compétence Générale</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/competence_generale.css" rel="stylesheet">
+        <style type="text/css">
+          [class*="col"] { margin-bottom: 20px; }
+          img { width: 100%; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class='container'>
+            <fieldset>
+                <legend id="legende">Compétence générale :</legend>
+                <div class="row">
+                    <div id="infos">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="code_competence" class="col-sm-4 col-md-3 control-label">Code :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="code_competence">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="categorie_competence" class="col-sm-4 col-md-3 control-label">Catégorie :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="categorie_competence">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="libelle_competence" class="col-sm-4 col-md-3 control-label">Libellé :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="libelle_competence">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="propriete_competence" class="col-sm-4 col-md-3 control-label">Propriété :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="propriete_competence">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="seuil_min_competence" class="col-sm-4 col-md-3 control-label">Seuil minimal :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="seuil_min_competence">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="seuil_max_competence" class="col-sm-4 col-md-3 control-label">Seuil maximal :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="seuil_max_competence">
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger" id="btn_annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
+                                <button type="button" class="btn btn-success" id="btn_valider" onclick="valider()"><span class="glyphicon glyphicon-check"></span></button>
+                                <h4><span class="glyphicon" id="icone_retour"></span></h4>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="comp_spec"></div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="js/competence/competence_generale.js"></script>
+    </body>
+</html>

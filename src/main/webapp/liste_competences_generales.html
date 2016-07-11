@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Compétences générales</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/liste_competences_generales.css" rel="stylesheet">
+        <style type="text/css">
+          [class*="col"] { margin-bottom: 20px; }
+          img { width: 100%; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <fieldset>
+                <legend id="legende">Formation :</legend>
+                
+                <div id="nb_comp"></div>
+                
+                <div class="col-xs-11">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Libellé</th>
+                                <th>Seuil min</th>
+                                <th>Seuil max</th>
+                                <th>nb compétences spécifiques</th>
+                                <th class="minimal_cell"></th>
+                                <th class="minimal_cell"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="liste_comp">
+                        </tbody>
+                    </table>
+                </div>
+                <h4 class="col-xs-1">
+                    <i class="glyphicon" id="icone_competences"></i>
+                </h4>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="js/competence/affichage_competences_specifiques.js"></script>
+        <script src="js/competence/liste_competences_generales.js"></script>
+    </body>
+</html>

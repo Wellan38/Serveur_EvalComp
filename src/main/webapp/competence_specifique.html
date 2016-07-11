@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>EvalComp - Compétence spécifique</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/jqcloud/jqcloud.css" rel="stylesheet">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/competence_specifique.css" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <fieldset>
+                <legend id="legende">Compétence spécifique :</legend>
+                <div class="form-horizontal">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="code_comp" class="col-sm-4 col-md-3 control-label">Code :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="code_comp" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="categorie_comp" class="col-sm-4 col-md-3 control-label">Catégorie :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <div class="col-xs-6" style="padding-left:0px">
+                                        <select class="form-control" id="categorie_comp" onchange="listerTags()">
+                                            <option>Connaissance</option>
+                                            <option>Compréhension</option>
+                                            <option>Application</option>
+                                            <option>Analyse</option>
+                                            <option>Synthèse</option>
+                                            <option>Évaluation</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div id="tags_cloud" style="height: 100px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="libelle_comp" class="col-sm-4 col-md-3 control-label">Libellé :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="libelle_comp">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="propriete_comp" class="col-sm-4 col-md-3 control-label">Propriété :</label>
+                                <div class="col-sm-8 col-md-9">
+                                    <input type="text" class="form-control" id="propriete_comp">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ponderation_comp" class="col-xs-4 col-md-3 control-label">Pondération :</label>
+                                <div class="col-xs-3 col-sm-2 col-md-3">
+                                    <input type="number" class="form-control" id="ponderation_comp" onchange="changerPonderation(this.value)" value="0.2" min="0.1" max="1" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="liste_regles">Règles :</label>
+                                <form id="liste_regles"></form>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <form role="form">
+                                            <div class="form-group has-feedback">
+                                                <input type="text" class="form-control" placeholder="nom de la règle" id="recherche_regle" onkeyup="rechercherRegle()">
+                                                <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <button type="button" class="col-sm-6 btn btn-primary center-block"><span class="glyphicon glyphicon-plus"></span> Créer une règle</button>
+                                </div>
+                                <div class="row">
+                                    <textarea class="form-control" rows="5" id="texte_regle" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="mise_en_situation">Mise en situation :</label>
+                            <textarea class="form-control" rows="5" id="mise_en_situation"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger" id="annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
+                                <button type="button" class="btn btn-success" id="valider" onclick="valider()"><span class="glyphicon glyphicon-check"></span></button>
+                                <h4><span class="glyphicon" id="icone_retour"></span></h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6" id="autres_comp"></div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="assets/jqcloud/jqcloud-1.0.4.js"></script>
+        <script src="js/competence/affichage_competences_specifiques.js"></script>
+        <script src="js/competence/competence_specifique.js"></script>
+    </body>
+</html>

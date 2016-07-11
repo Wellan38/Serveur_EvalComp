@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page d'accueil - EvalComp</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/index.css" rel="stylesheet">
+        <style type="text/css">
+          [class*="col"] { margin-bottom: 20px; }
+          img { width: 100%; }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                        <a class="navbar-brand" href="index.html">EvalComp</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav">
+                        <li class="clickable"><a onclick="deroulerFormations()">Formations</a></li>
+                        <li class="clickable"><a onclick="deroulerApprenants()">Apprenants</a></li>
+                        <li class="clickable"><a onclick="deroulerCompetences()">Compétences</a></li>
+                        <li class="clickable"><a href="notation.html">Notation</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                        <li class="clickable"><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class='container'>
+            <fieldset>
+                <legend>Page d'accueil</legend>
+                <div class="row" id="listes">
+                    <div class="panel-group">
+                        <div class="row" id="ligne_formations">
+                            <div class="col-sm-3 col-sm-push-9" style="padding:0px;">
+                                <form role="form">
+                                    <div class="col-xs-6" style="padding: 0px">
+                                        <div class="form-group has-feedback">
+                                            <input type="text" class="form-control" id="recherche_formation" placeholder="recherche" onkeyup="rechercherFormation()">
+                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" style="padding: 0px 0px 0px 15px;">
+                                        <select class="form-control" id="type_recherche_formation">
+                                            <option>Libellé</option>
+                                            <option>Domaine</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-9 col-sm-pull-3" style="padding-left:0px;">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clearfix">
+                                        <h4 class="panel-title pull-left">
+                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#formations">Liste des formations</a>
+                                        </h4>
+                                        <h4 class="pull-right" style="margin: 0px;">
+                                            <i class="glyphicon" id="icone_formations"></i>
+                                        </h4>
+                                    </div>
+                                    <div id="formations" class="clickable panel-collapse collapse">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:50%">Libellé</th>
+                                                    <th style="width:50%">Domaine</th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="formations_body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row" id="ligne_apprenants">
+                            <div class="col-sm-3 col-sm-push-9" style="padding:0px;">
+                                <form role="form">
+                                    <div class="col-xs-6" style="padding: 0px">
+                                        <div class="form-group has-feedback">
+                                            <input type="text" class="form-control" id="recherche_apprenant" placeholder="recherche" onkeyup="rechercherApprenant()">
+                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" style="padding: 0px 0px 0px 15px;">
+                                        <select class="form-control" id="type_recherche_apprenant">
+                                            <option>Nom</option>
+                                            <option>Fonction</option>
+                                            <option>Entreprise</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-9 col-sm-pull-3" style="padding-left:0px;">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clearfix">
+                                        <h4 class="panel-title pull-left">
+                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#apprenants">Liste des apprenants</a>
+                                        </h4>
+                                        <h4 class="pull-right" style="margin: 0px;">
+                                            <i class="glyphicon" id="icone_apprenants"></i>
+                                        </h4>
+                                    </div>
+                                    <div id="apprenants" class="clickable panel-collapse collapse">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:35%">Nom</th>
+                                                    <th style="width:35%">Fonction</th>
+                                                    <th style="width:30%">Entreprise</th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                            </thead>
+                                            <tbody id="apprenants_body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="ligne_competences">
+                            <div class="col-sm-3 col-sm-push-9" style="padding:0px;">
+                                <form role="form">
+                                    <div class="col-xs-6" style="padding: 0px">
+                                        <div class="form-group has-feedback">
+                                            <input type="text" class="form-control" id="recherche_competence" placeholder="recherche" onkeyup="rechercherCompetence()">
+                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6" style="padding: 0px 0px 0px 15px;">
+                                        <select class="form-control" id="type_recherche_competence">
+                                            <option>Libellé</option>
+                                            <option>Type</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-9 col-sm-pull-3" style="padding-left: 0px;">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading clearfix">
+                                        <h4 class="panel-title pull-left">
+                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#competences">Liste des compétences générales</a>
+                                        </h4>
+                                        <h4 class="pull-right" style="margin: 0px;">
+                                            <i class="glyphicon" id="icone_competences"></i>
+                                        </h4>
+                                    </div>
+                                    <div id="competences" class="clickable panel-collapse collapse">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:50%">Libellé</th>
+                                                    <th style="width:30%">Catégorie</th>
+                                                    <th style="width:20%">nb compétences spécifiques</th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="competences_body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        
+        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="js/index/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 20, 2016, 12:52:22 PM
+    Author     : Alex-Laptop
+*/
+
+[id^="apprenant"] {
+    cursor:auto;
+}
+
+[id^="competence"] {
+    cursor:auto;
+}
+
+
+
+#ligne_apprenants {
+    visibility: hidden;
+}
+
+#ligne_competences {
+    visibility: hidden;
+}
