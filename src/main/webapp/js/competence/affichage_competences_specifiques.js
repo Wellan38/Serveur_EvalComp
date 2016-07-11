@@ -101,7 +101,7 @@ function afficherCompS(code, compS, codeS)
                         document.getElementById("ponderation_comp").value = compS[i].ponderation;
                     }
                     
-                    contenuHtml += '<div id="cercle_' + compS[i].code + '_" class="clickable full-circle" style="background-color: #E1E6FA;height:' + d + 'px; width:' + d + 'px; top:' + (h_circle) + 'px; left:' + (w_circle) + 'px" data-toggle="tooltip" title="' + compS[i].libelle + '\nCatégorie : ' + compS[i].categorie + '\nPondération : ' + compS[i].ponderation + '" onclick="voirCompS(\'' + code + '\', \'' + compS[i].code + '\')">';
+                    contenuHtml += '<div id="cercle_' + compS[i].code + '_" class="clickable full-circle" style="background-color: #A2B5BF;height:' + d + 'px; width:' + d + 'px; top:' + (h_circle) + 'px; left:' + (w_circle) + 'px" data-toggle="tooltip" title="' + compS[i].libelle + '\nCatégorie : ' + compS[i].categorie + '\nPondération : ' + compS[i].ponderation + '" onclick="voirCompS(\'' + code + '\', \'' + compS[i].code + '\')">';
                 }
                 else
                 {

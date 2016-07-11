@@ -25,3 +25,7 @@ and open the template in the editor.
 #ligne_competences {
     visibility: hidden;
 }
+
+[id^="ligne"] {
+    margin-bottom: 15px;
+}

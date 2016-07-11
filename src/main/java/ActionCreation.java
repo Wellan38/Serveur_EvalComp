@@ -121,13 +121,12 @@ public class ActionCreation extends Action
         String code = request.getParameter("code");
         String libelle = request.getParameter("libelle");
         String categorie = request.getParameter("categorie");
-        String propriete = request.getParameter("propriete");
         Double ponderation = Double.valueOf(request.getParameter("ponderation"));
         Regle regle = servM.trouverRegleParId(request.getParameter("regle"));
         
         if (regle != null)
         {
-            CompetenceS cs = servM.creerCompetenceS(code, libelle, categorie, propriete, ponderation, regle);
+            CompetenceS cs = servM.creerCompetenceS(code, libelle, categorie, ponderation, regle);
             
             if (cs != null)
             {
@@ -155,7 +154,7 @@ public class ActionCreation extends Action
                                 if (c.getId().equals(o.get("code").toString().replace("\"", "")))
                                 {
                                     c.setPonderation(o.get("ponderation").getAsDouble());
-                                    servM.majObjet(o);
+                                    servM.majObjet(c);
                                     break;
                                 }
                             }
@@ -245,11 +244,10 @@ public class ActionCreation extends Action
         String code = request.getParameter("code");
         String libelle = request.getParameter("libelle");
         String categorie = request.getParameter("categorie");
-        String propriete = request.getParameter("propriete");
         Double seuil_min = Double.valueOf(request.getParameter("seuil_min"));
         Double seuil_max = Double.valueOf(request.getParameter("seuil_max"));
         
-        CompetenceG c = servM.creerCompetenceG(code, libelle, categorie, propriete, seuil_min, seuil_max, new ArrayList());
+        CompetenceG c = servM.creerCompetenceG(code, libelle, categorie, seuil_min, seuil_max, new ArrayList());
         
         if (!request.getParameter("formation").equals(""))
         {

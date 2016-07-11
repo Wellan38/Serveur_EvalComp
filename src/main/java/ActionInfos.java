@@ -170,7 +170,6 @@ public class ActionInfos extends Action {
             competence.addProperty("code", c.getId());
             competence.addProperty("libelle", c.getLibelle());
             competence.addProperty("categorie", c.getType());
-            competence.addProperty("propriete", c.getPropriete());
             competence.addProperty("seuil_min", c.getSeuilMin());
             competence.addProperty("seuil_max", c.getSeuilMax());
             
@@ -208,7 +207,6 @@ public class ActionInfos extends Action {
             competence.addProperty("code", c.getId());
             competence.addProperty("libelle", c.getLibelle());
             competence.addProperty("categorie", c.getType());
-            competence.addProperty("propriete", c.getPropriete());
             competence.addProperty("ponderation", c.getPonderation());
             competence.addProperty("regle", c.getRegle().getId());
             

@@ -57,7 +57,6 @@ function detailsCompetence()
         document.getElementById("code_competence").value = c.code;
         document.getElementById("categorie_competence").value = c.categorie;
         document.getElementById("libelle_competence").value = c.libelle;
-        document.getElementById("propriete_competence").value = c.propriete;
         document.getElementById("seuil_min_competence").value = c.seuil_min;
         document.getElementById("seuil_max_competence").value = c.seuil_max;
         
@@ -83,8 +82,6 @@ function valider()
                 type: 'competence_generale',
                 code: document.getElementById("code_competence").value,
                 categorie: document.getElementById("categorie_competence").value,
-                libelle: document.getElementById("libelle_competence").value,
-                propriete: document.getElementById("propriete_competence").value,
                 seuil_min: document.getElementById("seuil_min_competence").value,
                 seuil_max: document.getElementById("seuil_max_competence").value,
                 formation: formation
@@ -129,7 +126,6 @@ function valider()
                 code: document.getElementById("code_competence").value,
                 libelle: document.getElementById("libelle_competence").value,
                 categorie: document.getElementById("categorie_competence").value,
-                propriete: document.getElementById("propriete_competence").value,
                 seuil_min: document.getElementById("seuil_min_competence").value,
                 seuil_max: document.getElementById("seuil_max_competence").value,
                 compSpec: JSON.stringify(compS)
@@ -274,7 +270,7 @@ function afficherCompS()
         var h_ajout = h/2 + 15;
     }
     
-    contenuHtml += '<button class="btn btn-md btn-primary" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"><i class="fa fa-plus"></i></button>';
+    contenuHtml += '<h2 class="clickable glyphicon glyphicon-plus-sign" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></h2>';
     
     contenuHtml += '</div>';
     

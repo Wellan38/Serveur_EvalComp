@@ -43,3 +43,7 @@ and open the template in the editor.
     text-align:center;
     border-radius: 50%;
 }
+
+[id^="infos_"] {
+    height: 453px;
+}

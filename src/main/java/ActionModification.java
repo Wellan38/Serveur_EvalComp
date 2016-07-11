@@ -245,7 +245,6 @@ public class ActionModification extends Action
             
             c.setLibelle(request.getParameter("libelle"));
             c.setType(request.getParameter("categorie"));
-            c.setPropriete(request.getParameter("propriete"));
             c.setSeuilMin(Double.valueOf(request.getParameter("seuil_min")));
             c.setSeuilMax(Double.valueOf(request.getParameter("seuil_max")));
             
@@ -303,7 +302,6 @@ public class ActionModification extends Action
         {
             c.setLibelle(request.getParameter("libelle"));
             c.setType(request.getParameter("categorie"));
-            c.setPropriete(request.getParameter("propriete"));
             
             List<CompetenceS> compSpec = c.getCompG().getCompSpec();
             

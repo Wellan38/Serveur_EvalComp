@@ -243,7 +243,6 @@ function detailsCompS()
         document.getElementById("code_comp").value = comp.code;
         document.getElementById("categorie_comp").value = comp.categorie;
         document.getElementById("libelle_comp").value = comp.libelle;
-        document.getElementById("propriete_comp").value = comp.propriete;
         document.getElementById("ponderation_comp").value = comp.ponderation;
         anciennePond = comp.ponderation;
         code_regle = comp.regle;
@@ -323,7 +322,6 @@ function valider()
                     code: codeS,
                     categorie: document.getElementById("categorie_comp").value,
                     libelle: document.getElementById("libelle_comp").value,
-                    propriete: document.getElementById("propriete_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
                     regle: code_regle
                 },
@@ -358,6 +356,7 @@ function valider()
         }
         else if (mode === "creation")
         {
+            //console.log(competences[0].compSpec);
             $.ajax({
                 url: './ActionServlet',
                 type: 'POST',
@@ -368,7 +367,6 @@ function valider()
                     competence_generale: codeG,
                     categorie: document.getElementById("categorie_comp").value,
                     libelle: document.getElementById("libelle_comp").value,
-                    propriete: document.getElementById("propriete_comp").value,
                     ponderation: document.getElementById("ponderation_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
                     regle: code_regle
@@ -383,7 +381,7 @@ function valider()
                 {
                     document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
                     setTimeout(function() {
-                        location.replace(document.referrer);
+                        //location.replace(document.referrer);
                     }, 1000);
                 }
                 else

@@ -177,7 +177,7 @@ function listerCompetences(id_f)
         //
     });
     document.getElementById("icone_competences").setAttribute("class", "clickable glyphicon glyphicon-plus-sign");
-    document.getElementById("icone_competences").setAttribute("onclick", "window.location.href = 'competence_generale.html?mode=creation'");
+    document.getElementById("icone_competences").setAttribute("onclick", "window.location.href = 'competence_generale.html?mode=creation&formation=" + id_f + "'");
 }
 
 function rechercherFormation()

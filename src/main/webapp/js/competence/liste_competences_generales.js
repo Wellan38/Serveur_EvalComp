@@ -218,10 +218,6 @@ function detailsCompetence(id)
             contenuHtml += "<div class='col-xs-8 col-sm-8 col-md-9'><input type='text' class='form-control' id='libelle_competence__" + c.code + "_' value='" + c.libelle + "'></div>";
             contenuHtml += "</div>";
 
-            contenuHtml += "<div class='form-group'><label for='propriete_competence_' class='col-xs-4 col-sm-4 col-md-3 control-label'>Propriété :</label>";
-            contenuHtml += "<div class='col-xs-8 col-sm-8 col-md-9'><input type='text' class='form-control' id='propriete_competence__" + c.code + "_' value='" + c.propriete + "'></div>";
-            contenuHtml += "</div>";
-
             contenuHtml += "<div class='form-group'><label for='seuil_min_competence_' class='col-xs-4 col-sm-4 col-md-3 control-label'>Seuil minimal :</label>";
             contenuHtml += "<div class='col-xs-8 col-sm-8 col-md-9'><input type='text' class='form-control' id='seuil_min_competence__" + c.code + "_' value='" + c.seuil_min + "'></div>";
             contenuHtml += "</div>";
@@ -299,7 +295,6 @@ function validerModifs(codeG)
             code: document.getElementById("code_competence__" + codeG + "_").value,
             libelle: document.getElementById("libelle_competence__" + codeG + "_").value,
             categorie: document.getElementById("categorie_competence__" + codeG + "_").value,
-            propriete: document.getElementById("propriete_competence__" + codeG + "_").value,
             seuil_min: document.getElementById("seuil_min_competence__" + codeG + "_").value,
             seuil_max: document.getElementById("seuil_max_competence__" + codeG + "_").value,
             compSpec: JSON.stringify(compS)
