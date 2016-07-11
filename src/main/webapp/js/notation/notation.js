@@ -283,10 +283,13 @@ function validerModifs()
     {
         var id = actifs[i].id.split("_");
         
-        var code = id[1];
-        var note = id[2];
-        
-        scores.push({competence: code,note: note});
+        if (id[0] === "note")
+        {
+            var code = id[1];
+            var note = id[2];
+
+            scores.push({competence: code,note: note});
+        }
     }
     
     $.ajax({
