@@ -131,14 +131,6 @@ p.speech {
     border-width: 0;
 }
 
-body {
-  padding-top: 55px;
-}
-
-.navbar.navbar-inverse.navbar-fixed-top {
-    height: 50px;
-}
-
 .glyphicon
 {
     display: inline-block;
