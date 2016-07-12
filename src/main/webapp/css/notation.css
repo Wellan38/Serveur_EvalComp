@@ -15,7 +15,3 @@ and open the template in the editor.
 [id^="comp_"] {
     cursor: auto;
 }
-
-[id^="graphique_"] {
-    visibility: hidden;
-}

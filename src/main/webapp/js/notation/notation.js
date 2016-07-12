@@ -8,19 +8,15 @@ var param = window.location.search.substring(1).split("&");
 var formation = param[0].split("=")[1];
 var apprenant = param[1].split("=")[1];
 
-(function(){
-    listerCompetences();
-})();
-/*
-$('.panel').on('hidden.bs.collapse', function (e) {
-    alert('Event fired on #' + e.currentTarget.id);
-});
-*/
 var liste_formations;
 var liste_apprenants;
 var liste_competences;
 var scores = [];
 var regle;
+
+(function(){
+    listerCompetences();
+})();
 
 function listerCompetences()
 {
@@ -37,7 +33,6 @@ function listerCompetences()
     })
     .done(function(data) {
         liste_competences = data.liste;
-        
         afficherCompetences();
         
         for (var i = 0; i < data.liste.length; i++)
@@ -71,10 +66,7 @@ function afficherCompetences()
     
     for (var i = 0; i < liste_competences.length; i++)
     {
-        detailsComp(liste_competences[i].code);
-        $('#panel_comp_' + liste_competences[i].code + '_').on('hidden.bs.collapse', function () {
-            $('#graphique_' + liste_competences[i].code + '_').hide();
-        });
+        $('#graphique_' + liste_competences[i].code + '_').hide();
     }
 }
 
@@ -153,6 +145,7 @@ function afficherScores(competence)
         for (var i = 0; i < data.liste.length; i++)
         {
             var index = null;
+            
             for (var j = 0; j < scores.length; j++)
             {
                 if (scores[j].competence == data.liste[i].competence)
@@ -173,6 +166,17 @@ function afficherScores(competence)
             
             ajouterScore(competence, data.liste[i].competence, data.liste[i].note);
         }
+        
+        for (var i = 0; i < liste_competences.length; i++)
+    {
+        $('#panel_comp_' + liste_competences[i].code + '_').on('hidden.bs.collapse', function (e) {
+            $('#graphique_' + e.currentTarget.id.split("_")[2] + '_').hide();
+        });
+        
+        $('#panel_comp_' + liste_competences[i].code + '_').on('shown.bs.collapse', function (e) {
+            $('#graphique_' + e.currentTarget.id.split("_")[2] + '_').show();
+        });
+    }
         
 //        for (var i = 0; i < scores.length; i++)
 //        {
@@ -386,8 +390,6 @@ function creerGraphiqueSpecifique(id)
             }
         }
     }
-    
-    console.log(labels);
 
     var ctx = document.getElementById("graphique_" + c.code + "_").getContext("2d");
     var type = 'radar';
