@@ -19,8 +19,7 @@ $('.panel').on('hidden.bs.collapse', function (e) {
 var liste_formations;
 var liste_apprenants;
 var liste_competences;
-var liste_scores;
-
+var scores = [];
 var regle;
 
 function listerCompetences()
@@ -41,7 +40,10 @@ function listerCompetences()
         
         afficherCompetences();
         
-        
+        for (var i = 0; i < data.liste.length; i++)
+        {
+            detailsComp(data.liste[i].code);
+        }
     })
     .fail(function() {
         console.log('Erreur dans le chargement de la liste.');
@@ -57,13 +59,23 @@ function afficherCompetences()
     
     for (var i = 0; i < liste_competences.length; i++)
     {
-        contenuHtml += '<div class="panel panel-default"><div class="panel-heading">';
-        contenuHtml += '<h4 class="panel-title"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_" onclick="detailsComp(\'' + liste_competences[i].code + '\')">' + liste_competences[i].libelle + '</a></h4></div>';
+        contenuHtml += '<div class="row"><div class="col-md-9" style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading">';
+        contenuHtml += '<h4 class="panel-title"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4></div>';
         contenuHtml += '<div id="comp_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
+        contenuHtml += '</div></div>';
+        contenuHtml += '<div class="col-md-3" style="padding: 15px 0px 0px 15px;"><canvas id="graphique_' + liste_competences[i].code + '_"></canvas></div>';
         contenuHtml += '</div>';
     }
 
     $('#competences').html(contenuHtml);
+    
+    for (var i = 0; i < liste_competences.length; i++)
+    {
+        detailsComp(liste_competences[i].code);
+        $('#panel_comp_' + liste_competences[i].code + '_').on('hidden.bs.collapse', function () {
+            $('#graphique_' + liste_competences[i].code + '_').hide();
+        });
+    }
 }
 
 function detailsComp(code)
@@ -107,7 +119,7 @@ function detailsComp(code)
         
         for (var i = 0; i < compSpec.length; i++)
         {
-            detailsCompS(compSpec[i].code);
+            detailsCompS(code, compSpec[i].code);
         }
         
         afficherScores(code);
@@ -137,12 +149,35 @@ function afficherScores(competence)
         dataType: 'json'
     })
     .done(function(data) {
-        var scores = data.liste;
         
-        for (var i = 0; i < scores.length; i++)
+        for (var i = 0; i < data.liste.length; i++)
         {
-            $('#note_' + scores[i].competence_specifique + '_' + scores[i].note).addClass('active').siblings().removeClass('active');
+            var index = null;
+            for (var j = 0; j < scores.length; j++)
+            {
+                if (scores[j].competence == data.liste[i].competence)
+                {
+                    index = j;
+                    break;
+                }
+            }
+            
+            if (index == null)
+            {
+                scores.push(data.liste[i]);
+            }
+            else
+            {
+                scores[index].note = data.liste[i].note;
+            }
+            
+            ajouterScore(competence, data.liste[i].competence, data.liste[i].note);
         }
+        
+//        for (var i = 0; i < scores.length; i++)
+//        {
+//            $('#note_' + scores[i].competence + '_' + scores[i].note).addClass('active').siblings().removeClass('active');
+//        }
     })
     .fail(function() {
         console.log('Erreur dans le chargement de la liste.');
@@ -171,7 +206,7 @@ function selectionnerCompS(code)
     }
 }
 
-function detailsCompS(code)
+function detailsCompS(codeG, codeS)
 {
     $.ajax({
         url: './ActionServlet',
@@ -179,7 +214,7 @@ function detailsCompS(code)
         data: {
             action: 'infos',
             type: 'competence_specifique',
-            code: code.replace(/_/g, "")
+            code: codeS.replace(/_/g, "")
         },
         async:false,
         dataType: 'json'
@@ -189,7 +224,7 @@ function detailsCompS(code)
         var mes = c.miseensituation;
         var code_regle = c.regle;
         
-        document.getElementById("libelle_" + code + "_").innerHTML = c.libelle;
+        document.getElementById("libelle_" + codeS + "_").innerHTML = c.libelle;
         
         var mes = c.miseensituation;
         var texte_mes = "";
@@ -206,13 +241,13 @@ function detailsCompS(code)
             }
         }
         
-        document.getElementById("mes_" + code + "_").innerHTML = texte_mes;
+        document.getElementById("mes_" + codeS + "_").innerHTML = texte_mes;
         
         infosRegle(code_regle);
         
         var r = regle.texte;
         
-        var contenu_regle = '<ul class="list-group" id="score_' + code + '">';
+        var contenu_regle = '<ul class="list-group" id="score_' + codeS + '">';
         
         for (var i = 0; i < r.length; i++)
         {
@@ -227,12 +262,12 @@ function detailsCompS(code)
             
             var texte = tab_regle.join(" ");
             
-            contenu_regle += '<li class="clickable list-group-item" id="note_' + code + '_' + note + '" onclick="$(this).addClass(\'active\').siblings().removeClass(\'active\')">' + texte + '</li>';
+            contenu_regle += '<li class="clickable list-group-item" id="note_' + codeS + '_' + note + '" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')">' + texte + '</li>';
         }
         
         contenu_regle += '</ul>';
         
-        document.getElementById("regle_" + code + "_").innerHTML = contenu_regle;
+        document.getElementById("regle_" + codeS + "_").innerHTML = contenu_regle;
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -275,23 +310,6 @@ function validerModifs()
 {
     $('#icone_retour').attr("class", "glyphicon glyphicon-refresh gly-spin");
     
-    var scores = [];
-    
-    var actifs = document.getElementsByClassName("list-group-item active");
-    
-    for (var i = 0; i < actifs.length; i++)
-    {
-        var id = actifs[i].id.split("_");
-        
-        if (id[0] === "note")
-        {
-            var code = id[1];
-            var note = id[2];
-
-            scores.push({competence: code,note: note});
-        }
-    }
-    
     $.ajax({
         url: './ActionServlet',
         type: 'GET',
@@ -323,4 +341,142 @@ function validerModifs()
     .always(function() {
         //
     });
+}
+
+function creerGraphiqueSpecifique(id)
+{
+    var c = null;
+    
+    for (var i = 0; i < liste_competences.length; i++)
+    {
+        if (liste_competences[i].code === id)
+        {
+            c = liste_competences[i];
+            break;
+        }
+    }
+    
+    var scores_c = [];
+    for (var i = 0; i < scores.length; i++)
+    {
+        for (var j = 0; j < c.compSpec.length; j++)
+        {
+            if (c.compSpec[j].code === scores[i].competence)
+            {
+                scores_c.push(scores[i]);
+                break;
+            }
+        }
+    }
+    
+    var labels = [];
+    var data = [];
+
+    for (var i = 0; i < c.compSpec.length; i++)
+    {
+        for (var j = 0; j < scores_c.length; j++)
+        {
+            if (c.compSpec[i].code === scores_c[j].competence)
+            {
+                var libelle = c.compSpec[i].libelle.split(" ")[0] + " : " + c.compSpec[i].ponderation;
+                labels.push(libelle);
+                data.push(scores_c[j].valeur);
+                
+                break;
+            }
+        }
+    }
+    
+    console.log(labels);
+
+    var ctx = document.getElementById("graphique_" + c.code + "_").getContext("2d");
+    var type = 'radar';
+    var infos = {
+        type: type,
+        data: {
+                labels: labels,
+                datasets: [
+                    {
+                        backgroundColor: "rgba(179,181,198,0.2)",
+                        borderColor: "rgba(179,181,198,1)",
+                        pointBackgroundColor: "rgba(179,181,198,1)",
+                        pointBorderColor: "#fff",
+                        pointHoverBackgroundColor: "#fff",
+                        pointHoverBorderColor: "rgba(179,181,198,1)",
+                        data: data
+                    }
+                ]  
+            },
+        options: {
+            legend: {
+                display:false
+            },
+            scale: {
+                ticks: {
+                    min: 0,
+                    max: 10
+                }
+            }
+        }
+    };
+
+    myRadarChart = new Chart(ctx, infos);
+}
+
+function ajouterScore(codeG, codeS, note)
+{
+    $('#note_' + codeS + '_' + note).addClass('active').siblings().removeClass('active');
+    
+    var index = null;
+    for (var i = 0; i < scores.length; i++)
+    {
+        if (scores[i].competence === codeS)
+        {
+            index = i;
+            break;
+        }
+    }
+    
+    if (index === null)
+    {
+        scores.push({competence: codeS,note: note});
+    }
+    else
+    {
+        scores[index].note = note;
+    }
+    
+    var c = null;
+    for (var i = 0; i < liste_competences.length; i++)
+    {
+        if (liste_competences[i].code === codeG)
+        {
+            c = liste_competences[i];
+            break;
+        }
+    }
+
+    var complet = true;
+    for (var i = 0; i < c.compSpec.length; i++)
+    {
+        var trouve = false;
+        for (var j = 0; j < scores.length; j++)
+        {
+            if (scores[j].competence === c.compSpec[i].code)
+            {
+                trouve = true;
+                break;
+            }
+        }
+        if (!trouve)
+        {
+            complet = false;
+            break;
+        }
+    }
+
+    if (complet)
+    {
+        creerGraphiqueSpecifique(codeG);
+    }
 }

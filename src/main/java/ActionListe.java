@@ -177,7 +177,6 @@ public class ActionListe extends Action
                     break;
                     
                 case "score":
-                    System.out.println(request.getParameter("apprenant"));
                     Apprenant a = servM.trouverApprenantParId(request.getParameter("apprenant"));
                     CompetenceG c = servM.trouverCompetenceGParId(request.getParameter("competence"));
                     if (a != null && c != null)
@@ -189,7 +188,7 @@ public class ActionListe extends Action
                             JsonObject o = new JsonObject();
                             
                             o.addProperty("apprenant", a.getId());
-                            o.addProperty("competence_specifique", sc.getCompetence().getId());
+                            o.addProperty("competence", sc.getCompetence().getId());
                             o.addProperty("note", sc.getScore());
                             
                             liste.add(o);

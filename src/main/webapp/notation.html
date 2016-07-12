@@ -39,16 +39,13 @@ and open the template in the editor.
                 <div class="row">
                             <label class="control-label">Compétences générales</label>
                 </div>
-                <div class="col-md-9" style="padding: 0px;">
-                    <div class="panel-group" id="competences"></div>
-                    <div class="row" id="infos_compS"></div>
-                    <div class="row" id="boutons_modifs" hidden>
+                <div class="panel-group" id="competences"></div>
+                <div class="row" id="boutons_modifs" hidden>
+                    <div class="text-center">
                         <div class="text-center">
-                            <div class="text-center">
-                                <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-                                <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
-                                <h4><span class="glyphicon" id="icone_retour"></span></h4>
-                            </div>
+                            <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                            <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
+                            <h4><span class="glyphicon" id="icone_retour"></span></h4>
                         </div>
                     </div>
                 </div>
@@ -57,6 +54,7 @@ and open the template in the editor.
         
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
         <script src="js/notation/notation.js"></script>
     </body>
 </html>
