@@ -246,26 +246,8 @@ function detailsCompS()
         document.getElementById("ponderation_comp").value = comp.ponderation;
         anciennePond = comp.ponderation;
         code_regle = comp.regle;
-        checkRegle();
-        var actions = comp.miseensituation;
-        
-        if (actions != null)
-        {
-            var contenu = "";
-            var newline = String.fromCharCode(13, 10);
-
-            for (var i = 0; i < actions.length; i++)
-            {
-                contenu += actions[i];
-
-                if (i < actions.length - 1)
-                {
-                    contenu += newline;
-                }
-            }
-
-            document.getElementById('mise_en_situation').value = contenu;
-        }
+        checkRegle();        
+        document.getElementById('mise_en_situation').value = comp.miseensituation;
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -323,7 +305,8 @@ function valider()
                     categorie: document.getElementById("categorie_comp").value,
                     libelle: document.getElementById("libelle_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
-                    regle: code_regle
+                    regle: code_regle,
+                    miseensituation: document.getElementById("mise_en_situation").value
                 },
                 async:false,
                 dataType: 'json'
@@ -369,7 +352,8 @@ function valider()
                     libelle: document.getElementById("libelle_comp").value,
                     ponderation: document.getElementById("ponderation_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
-                    regle: code_regle
+                    regle: code_regle,
+                    miseensituation: document.getElementById("mise_en_situation")
                 },
                 async:false,
                 dataType: 'json'

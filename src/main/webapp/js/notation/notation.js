@@ -86,7 +86,7 @@ function detailsComp(code)
     .done(function(data) {
         var compSpec = data.obj.compSpec;
         
-        var contenuHtml = '<div class="table-responsive"><table class="table table-hover"><thead><tr>';
+        var contenuHtml = '<div class="table-responsive"><table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
         contenuHtml += '<th style="width: 30%">Compétence spécifique</th>';
         contenuHtml += '<th style="width: 35%">Mise en situation</th>';
         contenuHtml += '<th style="width: 35%">Score</th>';
@@ -225,33 +225,19 @@ function detailsCompS(codeG, codeS)
     })
     .done(function(data) {
         var c = data.obj;
-        var mes = c.miseensituation;
         var code_regle = c.regle;
         
         document.getElementById("libelle_" + codeS + "_").innerHTML = c.libelle;
         
         var mes = c.miseensituation;
-        var texte_mes = "";
         
-        var texte_mes = '- ';
-        var newline = String.fromCharCode(13, 10);
-        
-        for (var i = 0; i < mes.length; i++)
-        {
-            texte_mes += mes[i];
-            if (i < mes.length - 1)
-            {
-                texte_mes += '<br/>- ';
-            }
-        }
-        
-        document.getElementById("mes_" + codeS + "_").innerHTML = texte_mes;
+        document.getElementById("mes_" + codeS + "_").innerHTML = mes;
         
         infosRegle(code_regle);
         
         var r = regle.texte;
         
-        var contenu_regle = '<ul class="list-group" id="score_' + codeS + '">';
+        var contenu_regle = '<ul class="list-group" style="margin-bottom: 0px" id="score_' + codeS + '">';
         
         for (var i = 0; i < r.length; i++)
         {

@@ -123,10 +123,11 @@ public class ActionCreation extends Action
         String categorie = request.getParameter("categorie");
         Double ponderation = Double.valueOf(request.getParameter("ponderation"));
         Regle regle = servM.trouverRegleParId(request.getParameter("regle"));
+        String miseEnSituation = request.getParameter("miseensituation");
         
         if (regle != null)
         {
-            CompetenceS cs = servM.creerCompetenceS(code, libelle, categorie, ponderation, regle);
+            CompetenceS cs = servM.creerCompetenceS(code, libelle, categorie, ponderation, regle, miseEnSituation);
             
             if (cs != null)
             {

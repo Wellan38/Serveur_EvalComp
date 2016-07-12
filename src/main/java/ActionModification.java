@@ -302,6 +302,7 @@ public class ActionModification extends Action
         {
             c.setLibelle(request.getParameter("libelle"));
             c.setType(request.getParameter("categorie"));
+            c.setMiseEnSituation(request.getParameter("miseensituation"));
             
             List<CompetenceS> compSpec = c.getCompG().getCompSpec();
             

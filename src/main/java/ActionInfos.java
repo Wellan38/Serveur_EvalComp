@@ -209,23 +209,7 @@ public class ActionInfos extends Action {
             competence.addProperty("categorie", c.getType());
             competence.addProperty("ponderation", c.getPonderation());
             competence.addProperty("regle", c.getRegle().getId());
-            
-            System.out.println(c.getMiseEnSituation());
-            
-            if (c.getMiseEnSituation() != null)
-            {
-                System.out.println("ok");
-                List<String> actions = c.getMiseEnSituation().getActions();
-
-                JsonArray ac = new JsonArray();
-
-                for (String s : actions)
-                {
-                    ac.add(s);
-                }
-
-                competence.add("miseensituation", ac);
-            }
+            competence.addProperty("miseensituation", c.getMiseEnSituation());
         }
         
         return competence;
