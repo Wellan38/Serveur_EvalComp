@@ -30,7 +30,7 @@ var chartIsGeneral = true;
         
         detailsApprenant(); 
         
-        document.getElementById("myChart").onclick = function(evt)
+        document.getElementById("graphique").onclick = function(evt)
         {
             var activePoints = myRadarChart.getElementsAtEvent(evt);
             var index = activePoints[0]["_index"];
@@ -73,7 +73,7 @@ function detailsApprenant()
         {
             document.getElementById("details").setAttribute("class", "col-sm-6");
             document.getElementById("radar").setAttribute("class", "col-sm-6");
-            document.getElementById("radar").innerHTML = '<label id="label_comp">Compétences générales :</label><canvas id="myChart"></canvas>';
+            document.getElementById("radar").innerHTML = '<label id="label_comp">Compétences générales :</label><canvas id="graphique"></canvas>';
             
             for (var i = 0; i < liste_formations.length; i++)
             {
@@ -88,7 +88,6 @@ function detailsApprenant()
             detailsFormation(apprenant.formation);
             
             grades = apprenant.grades;
-            console.log(grades);
             scores = apprenant.scores;
 
             creerGraphiqueGeneral();
@@ -157,9 +156,6 @@ function set_seuils(formation)
     .done(function(data) {
         seuils_min = data.obj.seuils_min;
         seuils_max = data.obj.seuils_max;
-        
-        console.log(seuils_min);
-        console.log(seuils_max);
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -199,8 +195,6 @@ function validerModifs()
     var formation = document.getElementById("formation_apprenant");
     
     var id_form = formation[formation.selectedIndex].id.split("_")[1].replace(/'/g, "");
-    
-    console.log(id_form);
     
     if (mode === "modification")
     {

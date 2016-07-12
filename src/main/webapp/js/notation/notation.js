@@ -14,6 +14,8 @@ var liste_competences;
 var scores = [];
 var regle;
 
+var myRadarChart = null;
+
 (function(){
     listerCompetences();
 })();
@@ -54,12 +56,10 @@ function afficherCompetences()
     
     for (var i = 0; i < liste_competences.length; i++)
     {
-        contenuHtml += '<div class="row"><div class="col-md-9" style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading">';
-        contenuHtml += '<h4 class="panel-title"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4></div>';
+        contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading clearfix">';
+        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i class="glyphicon" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
         contenuHtml += '<div id="comp_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
-        contenuHtml += '</div></div>';
-        contenuHtml += '<div class="col-md-3" style="padding: 15px 0px 0px 15px;"><canvas id="graphique_' + liste_competences[i].code + '_"></canvas></div>';
-        contenuHtml += '</div>';
+        contenuHtml += '</div></div></div>';
     }
 
     $('#competences').html(contenuHtml);
@@ -391,9 +391,15 @@ function creerGraphiqueSpecifique(id)
         }
     }
     
-    console.log(labels);
+    if (myRadarChart !== null)
+    {
+        myRadarChart.destroy();
+    }
+    
+    
+    document.getElementById("libelle_compG").innerHTML = c.libelle;
 
-    var ctx = document.getElementById("graphique_" + c.code + "_").getContext("2d");
+    var ctx = document.getElementById("graph_spec").getContext("2d");
     var type, options;
     if (c.compSpec.length > 2)
     {
@@ -503,6 +509,16 @@ function ajouterScore(codeG, codeS, note)
 
     if (complet)
     {
-        creerGraphiqueSpecifique(codeG);
+        $('#icone_' + codeG + '_').addClass("clickable glyphicon-stats").attr("onclick", "afficherGraph('" + codeG + "')");
     }
+    else
+    {
+        $('#icone_' + codeG + '_').removeClass("clickable glyphicon-stats").attr("onclick", "");
+    }
+}
+
+function afficherGraph(code)
+{
+    creerGraphiqueSpecifique(code);
+    $('#myModal').modal('show');
 }

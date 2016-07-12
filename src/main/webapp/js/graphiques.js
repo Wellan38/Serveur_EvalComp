@@ -4,6 +4,8 @@ var scores;
 var seuils_min;
 var seuils_max;
 
+var chart_spec = null;
+
 function creerGraphiqueGeneral()
 {
     var labels = [];
@@ -58,8 +60,8 @@ function creerGraphiqueGeneral()
         }
     }
     
-    var ctx = document.getElementById("myChart").getContext("2d");
-    document.getElementById("myChart").setAttribute("width", $('#radar').width() * 0.32);
+    var ctx = document.getElementById("graphique").getContext("2d");
+    document.getElementById("graphique").setAttribute("width", $('#radar').width() * 0.32);
     
     var type, options;
     
@@ -67,12 +69,15 @@ function creerGraphiqueGeneral()
     {
         type = 'radar';
         options = {
-                scale: {
-                    ticks: {
-                        min: 0,
-                        max: 10
-                    }
+            scale: {
+                ticks: {
+                    min: 0,
+                    max: 10
                 }
+            },
+            tooltips : {
+                enabled : false
+            }
         };
     }
     else
@@ -87,6 +92,9 @@ function creerGraphiqueGeneral()
                         stepSize: 1
                     }
                 }]
+            },
+            tooltips : {
+                enabled : false
             }
         };
     }
@@ -163,25 +171,19 @@ function creerGraphiqueSpecifique(id)
             }
         }
         
-        var ctx = document.getElementById("myChart").getContext("2d");
-        var type = 'radar';
-        var infos = {
-            type: type,
-            data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            backgroundColor: "rgba(179,181,198,0.2)",
-                            borderColor: "rgba(179,181,198,1)",
-                            pointBackgroundColor: "rgba(179,181,198,1)",
-                            pointBorderColor: "#fff",
-                            pointHoverBackgroundColor: "#fff",
-                            pointHoverBorderColor: "rgba(179,181,198,1)",
-                            data: data
-                        }
-                    ]  
-                },
-            options: {
+        if (chart_spec !== null)
+        {
+            chart_spec.destroy();
+        }
+        
+        var ctx = document.getElementById("graph_spec").getContext("2d");
+        ctx.innerHTML = "";
+        var type, options;
+
+        if (competence.compSpec.length > 2)
+        {
+            type = 'radar';
+            options = {
                 legend: {
                     display:false
                 },
@@ -190,11 +192,55 @@ function creerGraphiqueSpecifique(id)
                         min: 0,
                         max: 10
                     }
+                },
+                tooltips : {
+                    enabled : false
                 }
-            }
+            };
+        }
+        else
+        {
+            type = 'bar';
+            options = {
+                legend: {
+                    display:false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 10,
+                            min: 0,
+                            stepSize: 1
+                        }
+                    }]
+                },
+                tooltips : {
+                    enabled : false
+                }
+            };
+        }
+        var infos = {
+            type: type,
+            data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            backgroundColor: "rgba(0,0,255,0.2)",
+                            borderColor: "rgba(0,0,255,1)",
+                            borderWidth: 2,
+                            pointBackgroundColor: "rgba(0,0,255,1)",
+                            pointBorderColor: "#fff",
+                            data: data
+                        }
+                    ]  
+                },
+            options: options
         };
         
-        myRadarChart = new Chart(ctx, infos);
+        chart_spec = new Chart(ctx, infos);
+        
+        document.getElementById("libelle_compG").innerHTML = competence.libelle;
+        $('#myModal').modal('show');
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');

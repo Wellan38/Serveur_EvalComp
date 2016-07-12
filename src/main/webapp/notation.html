@@ -26,7 +26,7 @@ and open the template in the editor.
                 </div>
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a><span class="glyphicon glyphicon-question-sign"></span></a></li>
+                        <li><a><span class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#aide"></span></a></li>
                         <li><a><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                         <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     </ul>
@@ -42,19 +42,42 @@ and open the template in the editor.
                 <div class="panel-group" id="competences"></div>
                 <div class="row" id="boutons_modifs" hidden>
                     <div class="text-center">
-                        <div class="text-center">
-                            <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
-                            <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
-                            <h4><span class="glyphicon" id="icone_retour"></span></h4>
-                        </div>
+                        <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
+                        <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
+                        <h4><span class="glyphicon" id="icone_retour"></span></h4>
                     </div>
                 </div>
+                <div class="modal fade" id="aide" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title" id="titre_aide"></h4>
+                            </div>
+                            <div class="modal-body" id="contenu_aide"></div>
+                        </div>
+                    </div>
+		</div>
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title" id="libelle_compG"></h4>
+                                </div>
+                                <div class="modal-body">
+                                    <canvas id="graph_spec"></canvas>
+                                </div>
+                        </div>
+                    </div>
+		</div>
             </fieldset>
         </div>
         
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
+        <script src="js/aide.js"></script>
         <script src="js/notation/notation.js"></script>
     </body>
 </html>
