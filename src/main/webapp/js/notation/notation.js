@@ -384,42 +384,66 @@ function creerGraphiqueSpecifique(id)
             {
                 var libelle = c.compSpec[i].libelle.split(" ")[0] + " : " + c.compSpec[i].ponderation;
                 labels.push(libelle);
-                data.push(scores_c[j].valeur);
+                data.push(scores_c[j].note);
                 
                 break;
             }
         }
     }
+    
+    console.log(labels);
 
     var ctx = document.getElementById("graphique_" + c.code + "_").getContext("2d");
-    var type = 'radar';
+    var type, options;
+    if (c.compSpec.length > 2)
+    {
+        type = 'radar';
+        options = {
+            legend: {
+                display:false
+            },
+                scale: {
+                    ticks: {
+                        min: 0,
+                        max: 10
+                    }
+                }
+        };
+    }
+    else
+    {
+        type = 'bar';
+        options = {
+            legend: {
+                display:false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        max: 10,
+                        min: 0
+                    }
+                }]
+            }
+        };
+    }
+    
     var infos = {
         type: type,
         data: {
                 labels: labels,
                 datasets: [
                     {
-                        backgroundColor: "rgba(179,181,198,0.2)",
-                        borderColor: "rgba(179,181,198,1)",
-                        pointBackgroundColor: "rgba(179,181,198,1)",
+                        backgroundColor: "rgba(0,0,255,0.2)",
+                        borderColor: "rgba(0,0,255,1)",
+                        borderWidth: 2,
+                        pointBackgroundColor: "rgba(0,0,255,1)",
                         pointBorderColor: "#fff",
-                        pointHoverBackgroundColor: "#fff",
-                        pointHoverBorderColor: "rgba(179,181,198,1)",
                         data: data
                     }
                 ]  
             },
-        options: {
-            legend: {
-                display:false
-            },
-            scale: {
-                ticks: {
-                    min: 0,
-                    max: 10
-                }
-            }
-        }
+        options: options
     };
 
     myRadarChart = new Chart(ctx, infos);
