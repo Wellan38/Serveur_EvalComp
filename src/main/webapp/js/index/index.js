@@ -147,7 +147,7 @@ function listerApprenants(id_f)
         //
     });
     document.getElementById("icone_apprenants").setAttribute("class", "clickable glyphicon glyphicon-plus-sign");
-    document.getElementById("icone_apprenants").setAttribute("onclick", "window.location.href='apprenant.html?mode=creation'");
+    document.getElementById("icone_apprenants").setAttribute("onclick", "window.location.href='apprenant.html?mode=creation&formation=" + id_f + "'");
 }
 
 function listerCompetences(id_f)

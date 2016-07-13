@@ -57,7 +57,7 @@ function afficherCompetences()
     for (var i = 0; i < liste_competences.length; i++)
     {
         contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading clearfix">';
-        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i class="glyphicon" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
+        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i class="fa fa-clock-o" style="padding-right: 10px;"></i><i class="fa fa-spinner fa-pulse" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
         contenuHtml += '<div id="comp_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
         contenuHtml += '</div></div></div>';
     }
@@ -90,6 +90,7 @@ function detailsComp(code)
         contenuHtml += '<th style="width: 30%">Compétence spécifique</th>';
         contenuHtml += '<th style="width: 35%">Mise en situation</th>';
         contenuHtml += '<th style="width: 35%">Score</th>';
+        contenuHtml += '<th class="minimal-cell"></th>';
         contenuHtml += '</tr></thead>';
         contenuHtml += '<tbody>';
         
@@ -99,6 +100,7 @@ function detailsComp(code)
             contenuHtml += '<tr><td id="libelle_' + c.code + '_"></td>';
             contenuHtml += '<td id="mes_' + c.code + '_"></td>';
             contenuHtml += '<td id="regle_' + c.code + '_"></td>';
+            contenuHtml += '<td style="padding-left: 0px;"><div class="text-center"><i class="clickable glyphicon glyphicon-list" id="visu_' + c.code + '_" onclick="window.location.href=\'competence_specifique.html?mode=modification&codeG=' + data.obj.code + '&codeS=' + c.code + '\'"></i></div></td>';
             contenuHtml += '</tr>';
         }
         
@@ -141,6 +143,14 @@ function afficherScores(competence)
         dataType: 'json'
     })
     .done(function(data) {
+        
+        if (data.liste.length === 0)
+        {
+            for (var i = 0; i < liste_competences.length; i++)
+            {
+                $('#icone_' + liste_competences[i].code + '_').removeClass("fa-spinner fa-pulse");
+            }
+        }
         
         for (var i = 0; i < data.liste.length; i++)
         {
@@ -495,11 +505,29 @@ function ajouterScore(codeG, codeS, note)
 
     if (complet)
     {
-        $('#icone_' + codeG + '_').addClass("clickable glyphicon-stats").attr("onclick", "afficherGraph('" + codeG + "')");
+        var compG = null;
+        
+        for (var i = 0; i < liste_competences.length; i++)
+        {
+            if (liste_competences[i].code === codeG)
+            {
+                compG = liste_competences[i];
+                break;
+            }
+        }
+        
+        var moyenne = 0;
+        
+        for (var i = 0; i < compG.compSpec.length; i++)
+        {
+            moyenne += 
+        }
+        
+        $('#icone_' + codeG + '_').removeClass("fa-spinner fa-pulse").addClass("clickable fa-bar-chart").attr("onclick", "afficherGraph('" + codeG + "')");
     }
     else
     {
-        $('#icone_' + codeG + '_').removeClass("clickable glyphicon-stats").attr("onclick", "");
+        $('#icone_' + codeG + '_').removeClass("fa-spinner fa-pulse").attr("onclick", "");
     }
 }
 

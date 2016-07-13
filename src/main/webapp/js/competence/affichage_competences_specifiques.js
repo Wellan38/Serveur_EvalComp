@@ -6,6 +6,8 @@
 
 var url_array = window.location.href.split("?")[0].split("/");
 var url = url_array[url_array.length - 1];
+
+$("[data-toggle=tooltip]").tooltip({html:true});
     
 var competences = [];
 

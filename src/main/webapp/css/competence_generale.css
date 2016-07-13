@@ -19,3 +19,7 @@ and open the template in the editor.
     text-align:center;
     border-radius: 50%;
 }
+
+#boutons_modif {
+    margin-top: 20px;
+}

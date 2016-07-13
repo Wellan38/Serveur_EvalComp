@@ -7,9 +7,11 @@
 var param = window.location.search.substring(1).split("&");
 var mode = param[0].split("=")[1];
 var code;
+var competence = null;
 var formation = null;
 var anciennePond;
 var compS;
+var essai_submit = false;
 
 (function() {
     init();
@@ -19,18 +21,18 @@ function init()
 {
     if (mode === "creation")
     {
-        document.getElementById("btn_annuler").innerHTML += ' Retour aux compétences';
-        document.getElementById("btn_valider").innerHTML += ' Créer la compétence';
+        document.getElementById("btn_annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Retour aux compétences';
+        document.getElementById("btn_valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Créer la compétence';
         formation = param[1].split("=")[1];
-        console.log(formation);
     }
     else if (mode === "modification")
     {
         code = param[1].split("=")[1];
-        document.getElementById("btn_annuler").innerHTML += ' Annuler les modifications';
-        document.getElementById("btn_valider").innerHTML += ' Valider les modifications';
-        document.getElementById("infos").setAttribute("class", "col-md-6");
-        document.getElementById("comp_spec").setAttribute("class", "col-md-6");
+        $('#code_competence').attr("disabled", "true");
+        document.getElementById("btn_annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Annuler les modifications';
+        document.getElementById("btn_valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Valider les modifications';
+        $("#infos").attr("class", "col-md-6").attr("style", "padding: 0px");
+        $("#comp_spec").attr("class", "col-md-6").attr("style", "padding: 0px; height: 453px;");
         
         detailsCompetence();
     }   
@@ -63,7 +65,7 @@ function detailsCompetence()
         afficherCompS();
     })
     .fail(function() {
-        console.log('Erreur dans le chargement des informations.');
+        console.log('Erreur dans le chargement des incompetences.');
     })
     .always(function() {
         //
@@ -72,91 +74,103 @@ function detailsCompetence()
 
 function valider()
 {
-    if (mode === "creation")
+    essai_submit = true;
+    
+    var valide = checkData();
+    
+    if (!valide)
     {
-        $.ajax({
-            url: './ActionServlet',
-            type: 'POST',
-            data: {
-                action: 'creation',
-                type: 'competence_generale',
-                code: document.getElementById("code_competence").value,
-                categorie: document.getElementById("categorie_competence").value,
-                seuil_min: document.getElementById("seuil_min_competence").value,
-                seuil_max: document.getElementById("seuil_max_competence").value,
-                formation: formation
-            },
-            async:false,
-            dataType: 'json'
-        })
-        .done(function(data) {
-            var retour = data.retour;
+        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove"); 
+    }
+    else
+    {
+        if (mode === "creation")
+        {
+            $.ajax({
+                url: './ActionServlet',
+                type: 'POST',
+                data: {
+                    action: 'creation',
+                    type: 'competence_generale',
+                    code: document.getElementById("code_competence").value,
+                    categorie: document.getElementById("categorie_competence").value,
+                    seuil_min: document.getElementById("seuil_min_competence").value,
+                    seuil_max: document.getElementById("seuil_max_competence").value,
+                    formation: formation
+                },
+                async:false,
+                dataType: 'json'
+            })
+            .done(function(data) {
+                var retour = data.retour;
 
-            if (retour.valide)
-            {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                if (retour.valide)
+                {
+                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                    setTimeout(function() {
+                        window.location.href = "competence_generale.html?mode=modification&code=" + document.getElementById("code_competence").value;
+                    }, 1000);
+                }
+                else
+                {
+                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
+                    setTimeout(function() {
+                        document.getElementById("icone_retour").setAttribute("class", "glyphicon");
+                    }, 2000);
+                }
+
+            })
+            .fail(function() {
+                console.log('Erreur dans le chargement des incompetences.');
+            })
+            .always(function() {
+                //
+            });
+        }
+        else if (mode === "modification")
+        {
+            $.ajax({
+                url: "./ActionServlet",
+                type: "POST",
+                data: {
+                    action: "modification",
+                    type: "competence_generale",
+                    code: document.getElementById("code_competence").value,
+                    libelle: document.getElementById("libelle_competence").value,
+                    categorie: document.getElementById("categorie_competence").value,
+                    seuil_min: document.getElementById("seuil_min_competence").value,
+                    seuil_max: document.getElementById("seuil_max_competence").value,
+                    compSpec: JSON.stringify(compS)
+                },
+                async:false,
+                dataType: "json"
+            })
+            .done(function(data) {
+
+                var retour = data.retour;
+
+                if (retour.valide)
+                {
+                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-ok');
+                }
+                else
+                {
+                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-remove');
+                }
+
                 setTimeout(function() {
-                    window.location.href = "competence_generale.html?mode=modification&code=" + document.getElementById("code_competence").value;
-                }, 1000);
-            }
-            else
-            {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-                setTimeout(function() {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon");
+                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon');
                 }, 2000);
-            }
-
-        })
-        .fail(function() {
-            console.log('Erreur dans le chargement des informations.');
-        })
-        .always(function() {
-            //
-        });
+            })
+            .fail(function() {
+                console.log("Erreur dans le chargement des incompetences.");
+            })
+            .always(function() {
+                //
+            });
+        }
     }
-    else if (mode === "modification")
-    {
-        $.ajax({
-            url: "./ActionServlet",
-            type: "POST",
-            data: {
-                action: "modification",
-                type: "competence_generale",
-                code: document.getElementById("code_competence").value,
-                libelle: document.getElementById("libelle_competence").value,
-                categorie: document.getElementById("categorie_competence").value,
-                seuil_min: document.getElementById("seuil_min_competence").value,
-                seuil_max: document.getElementById("seuil_max_competence").value,
-                compSpec: JSON.stringify(compS)
-            },
-            async:false,
-            dataType: "json"
-        })
-        .done(function(data) {
-
-            var retour = data.retour;
-
-            if (retour.valide)
-            {
-                document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-ok');
-            }
-            else
-            {
-                document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-remove');
-            }
-
-            setTimeout(function() {
-                document.getElementById('icone_retour').setAttribute('class', 'glyphicon');
-            }, 2000);
-        })
-        .fail(function() {
-            console.log("Erreur dans le chargement des informations.");
-        })
-        .always(function() {
-            //
-        });
-    }
+    
 }
 
 function annuler()
@@ -407,4 +421,238 @@ function diminuerPond(codeS)
 function ajouterCompS()
 {
     window.location.href = './competence_specifique.html?mode=creation&code=' + code;
+}
+
+function checkCode()
+{
+    if (essai_submit)
+    {
+        var code_g = document.getElementById("code_competence");
+
+        var valide = true;
+
+        if (code_g.value === "")
+        {
+            valide = false;
+            $('#code_competence').attr('data-original-title', 'Le code ne peut pas être vide').tooltip('fixTitle').tooltip('show');
+        }
+        else
+        {
+            for (var i = 0; i < code_g.value.length; i++)
+            {
+                if (!code_g.value[i].match(/[a-z]/i) && !code_g.value[i].match(/[0-9]/i) && code_g.value[i] !== "-" && code_g.value[i] !== "_")
+                {
+                    valide = false;
+                    $('#code_competence').attr('data-original-title', 'Le code ne doit contenir que des caractères alphanumériques, des tirets ou des undersocres').tooltip('fixTitle').tooltip('show');
+                    break;
+                }
+            }
+        }
+
+        if (!valide)
+        {
+            code_g.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+        }
+        else
+        {
+            $('#code_competence').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            code_g.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+        }
+    }
+    
+    return valide;
+}
+
+function checkData()
+{
+    var valide = true;
+    
+    if (!checkCode())
+    {
+        valide = false;
+    }
+    if (!checkLibelle())
+    {
+        valide = false;
+    }
+    if (!checkCategorie())
+    {
+        valide = false;
+    }
+    if (!checkCategorie())
+    {
+        valide = false;
+    }
+    if (!checkSeuilMin())
+    {
+        valide = false;
+    }
+    if (!checkSeuilMax())
+    {
+        valide = false;
+    }
+    
+    return valide;
+}
+
+function checkLibelle()
+{
+    if (essai_submit)
+    {
+        var libelle_c = document.getElementById("libelle_competence");
+
+        var valide = true;
+
+        if (libelle_c.value === "")
+        {
+            valide = false;
+            $('#libelle_competence').attr('data-original-title', 'Le libellé ne peut pas être vide').tooltip('fixTitle').tooltip('show');
+        }
+        else
+        {
+            for (var i = 0; i < libelle_c.value.length; i++)
+            {
+                if (libelle_c.value[i] === '"')
+                {
+                    valide = false;
+                    $('#libelle_competence').attr('data-original-title', 'Le libellé ne doit pas contenir de guillemets').tooltip('fixTitle').tooltip('show');
+                    break;
+                }
+            }
+        }
+
+        if (!valide)
+        {
+            libelle_c.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+        }
+        else
+        {
+            $('#libelle_competence').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            libelle_c.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+        }
+    }
+    
+    return valide;
+}
+
+function checkCategorie()
+{
+    if (essai_submit)
+    {
+        var categorie_c = document.getElementById("categorie_competence");
+
+        var valide = true;
+
+        if (categorie_c.value === "")
+        {
+            valide = false;
+            $('#categorie_competence').attr('data-original-title', 'La catégorie ne peut pas être vide').tooltip('fixTitle').tooltip('show');
+        }
+        else
+        {
+            for (var i = 0; i < categorie_c.value.length; i++)
+            {
+                if (categorie_c.value[i] === '"')
+                {
+                    valide = false;
+                    $('#categorie_competence').attr('data-original-title', 'La catégorie ne doit pas contenir de guillemets').tooltip('fixTitle').tooltip('show');
+                    break;
+                }
+            }
+        }
+
+        if (!valide)
+        {
+            categorie_c.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+        }
+        else
+        {
+            $('#categorie_competence').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            categorie_c.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+        }
+    }
+    
+    return valide;
+}
+
+function checkSeuilMin()
+{
+    if (essai_submit)
+    {
+        var seuil_min_c = document.getElementById("seuil_min_competence");
+
+        var valide = true;
+
+        if (seuil_min_c.value === "")
+        {
+            valide = false;
+            $('#seuil_min_competence').attr('data-original-title', 'Le seuil minimal doit être précisé').tooltip('fixTitle').tooltip('show');
+        }
+        else
+        {
+            if (isNaN(seuil_min_c.value))
+            {
+                valide = false;
+                $('#seuil_min_competence').attr('data-original-title', 'Le seuil minimal doit être un nombre valide').tooltip('fixTitle').tooltip('show');
+            }
+            else if (seuil_min_c.value <= 0)
+            {
+                valide = false;
+                $('#seuil_min_competence').attr('data-original-title', 'Le seuil minimal doit être un nombre strictement positif').tooltip('fixTitle').tooltip('show');
+            }
+        }
+
+        if (!valide)
+        {
+            seuil_min_c.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+        }
+        else
+        {
+            $('#seuil_min_competence').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            seuil_min_c.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+        }
+    }
+    
+    return valide;
+}
+
+function checkSeuilMax()
+{
+    if (essai_submit)
+    {
+        var seuil_max_c = document.getElementById("seuil_max_competence");
+
+        var valide = true;
+
+        if (seuil_max_c.value === "")
+        {
+            valide = false;
+            $('#seuil_max_competence').attr('data-original-title', 'Le seuil maximal doit être précisé').tooltip('fixTitle').tooltip('show');
+        }
+        else
+        {
+            if (isNaN(seuil_max_c.value))
+            {
+                valide = false;
+                $('#seuil_max_competence').attr('data-original-title', 'Le seuil maximal doit être un nombre valide').tooltip('fixTitle').tooltip('show');
+            }
+            else if (seuil_max_c.value <= 0)
+            {
+                valide = false;
+                $('#seuil_max_competence').attr('data-original-title', 'Le seuil maximal doit être un nombre strictement positif').tooltip('fixTitle').tooltip('show');
+            }
+        }
+
+        if (!valide)
+        {
+            seuil_max_c.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+        }
+        else
+        {
+            $('#seuil_max_competence').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            seuil_max_c.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+        }
+    }
+    
+    return valide;
 }

@@ -11,3 +11,11 @@ and open the template in the editor.
 [id^="icone"] {
     position: absolute;
 }
+
+#boutons_modif {
+    margin-top: 20px;
+}
+
+#row_mes {
+    margin-top: 15px;
+}

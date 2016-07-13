@@ -94,89 +94,75 @@ function validerModifs()
     document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
     essai_submit = true;
     
-    if (mode === "modification")
+    var valide = checkData();
+
+    if (!valide)
     {
-        $.ajax({
-            url: './ActionServlet',
-            type: 'POST',
-            data: {
-                action: 'modification',
-                type: 'formation',
-                code: document.getElementById('code_formation').value,
-                libelle: document.getElementById('libelle_formation').value,
-                domaine: document.getElementById('domaine_formation').value,
-                url: document.getElementById('url_formation').value,
-                duree: document.getElementById('duree_formation').value,
-                date: document.getElementById('date_formation').value
-            },
-            async:false,
-            dataType: 'json'
-        })
-        .done(function(data) {
+        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");            
+    }
+    else
+    {
+        if (mode === "modification")
+        {
+            var valide = checkData();
 
-            var retour = data.retour;
-
-            if (retour.valide)
+            if (!valide)
             {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
-                afficherInfos();
+                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");            
             }
             else
             {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-            }
+                $.ajax({
+                    url: './ActionServlet',
+                    type: 'POST',
+                    data: {
+                        action: 'modification',
+                        type: 'formation',
+                        code: document.getElementById('code_formation').value,
+                        libelle: document.getElementById('libelle_formation').value,
+                        domaine: document.getElementById('domaine_formation').value,
+                        url: document.getElementById('url_formation').value,
+                        duree: document.getElementById('duree_formation').value,
+                        date: document.getElementById('date_formation').value
+                    },
+                    async:false,
+                    dataType: 'json'
+                })
+                .done(function(data) {
 
-            setTimeout(function() {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon col-xs-2");
-            }, 2000);
-        })
-        .fail(function() {
-            console.log('Erreur dans le chargement des informations.');
-        })
-        .always(function() {
-            //
-        });
-    }
-    else if (mode === "creation")
-    {
-        var code_f = document.getElementById('code_formation');
-        var libelle_f = document.getElementById('libelle_formation');
-        var domaine_f = document.getElementById('domaine_formation');
-        var url_f = document.getElementById('url_formation');
-        var duree_f = document.getElementById('duree_formation');
-        var date_f = document.getElementById('date_formation');
-        
-        var valide = true;
-        
-        if (!checkCode())
-        {
-            valide = false;
+                    var retour = data.retour;
+
+                    if (retour.valide)
+                    {
+                        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                        afficherInfos();
+                    }
+                    else
+                    {
+                        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
+                    }
+
+                    setTimeout(function() {
+                        document.getElementById("icone_retour").setAttribute("class", "glyphicon col-xs-2");
+                    }, 2000);
+                })
+                .fail(function() {
+                    console.log('Erreur dans le chargement des informations.');
+                })
+                .always(function() {
+                    //
+                });
+            }
         }
-        if (!checkLibelle())
+        else if (mode === "creation")
         {
-            valide = false;
-        }
-        if (!checkDomaine())
-        {
-            valide = false;
-        }
-        
-        if (!checkDuree())
-        {
-            valide = false;
-        }
-        
-        if (!checkDate())
-        {
-            valide = false;
-        }
-        
-        if (!valide)
-        {
-            document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");            
-        }
-        else
-        {
+            var code_f = document.getElementById('code_formation');
+            var libelle_f = document.getElementById('libelle_formation');
+            var domaine_f = document.getElementById('domaine_formation');
+            var url_f = document.getElementById('url_formation');
+            var duree_f = document.getElementById('duree_formation');
+            var date_f = document.getElementById('date_formation');
+
             $.ajax({
                 url: './ActionServlet',
                 type: 'POST',
@@ -221,8 +207,6 @@ function validerModifs()
                 //
             });
         }
-        
-        
     }
 }
 
@@ -449,4 +433,34 @@ function testDate(str)
         return true;   
     }
     return false;
+}
+
+function checkData()
+{
+    var valide = true;
+
+    if (!checkCode())
+    {
+        valide = false;
+    }
+    if (!checkLibelle())
+    {
+        valide = false;
+    }
+    if (!checkDomaine())
+    {
+        valide = false;
+    }
+
+    if (!checkDuree())
+    {
+        valide = false;
+    }
+
+    if (!checkDate())
+    {
+        valide = false;
+    }
+    
+    return valide;
 }

@@ -40,42 +40,45 @@ and open the template in the editor.
                 <legend id="legende">Formation :</legend>
                 <form class='form-horizontal'>
                     <div class='form-group'>
-                        <label for='code_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Code* :</label>
-                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                        <label for='code_formation' class='col-sm-3 col-md-2 control-label'>Code* :</label>
+                        <div class='col-sm-9 col-md-10'>
                             <input type='text' class='form-control' id='code_formation' onkeyup="checkCode()" required>
                         </div>
                     </div>
                     <div class='form-group'>
-                        <label for='libelle_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Libellé* :</label>
-                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                        <label for='libelle_formation' class='col-sm-3 col-md-2 control-label'>Libellé* :</label>
+                        <div class='col-sm-9 col-md-10'>
                             <input type='text' class='form-control' id='libelle_formation' onkeyup="checkLibelle()" required>
                         </div>
                     </div>
                     <div class='form-group'>
-                        <label for='domaine_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Domaine* :</label>
-                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                        <label for='domaine_formation' class='col-sm-3 col-md-2 control-label'>Domaine* :</label>
+                        <div class='col-sm-9 col-md-10'>
                             <input type='text' class='form-control' id='domaine_formation' onkeyup="checkDomaine()" required>
                         </div>
                     </div>
                     <div class='form-group'>
-                        <label for='url_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>URL :</label>
-                        <div class='col-xs-9 col-sm-9 col-md-10'>
+                        <label for='url_formation' class='col-sm-3 col-md-2 control-label'>URL :</label>
+                        <div class='col-sm-9 col-md-10'>
                             <input type='url' class='form-control' id='url_formation'>
                         </div>
                     </div>
                     <div class='form-group'>
-                        <label for='duree_formation' class='col-xs-3 col-sm-3 col-md-2 control-label'>Durée* :</label>
-                        <div class='col-xs-2'>
-                            <input type='text' class='form-control' id='duree_formation' onkeyup="checkDuree()" required>
+                        <label for='duree_formation' class='col-sm-3 col-md-2 control-label'>Durée* :</label>
+                        <div class="col-sm-4">
+                            <div class='col-xs-4' style="padding-left: 0px;">
+                                <input type='text' class='form-control' id='duree_formation' onkeyup="checkDuree()" required>
+                            </div>
+                            <label class='control-label'>jours</label>
                         </div>
-                        <label class='control-label'>jours</label>
+                        
                     </div>
                     <div class="form-group">
-                        <label for='date_formation' class='col-xs-3 col-md-2 control-label'>Date de début* :</label>
-                        <div class="col-xs-2">
+                        <label for='date_formation' class='col-sm-3 col-md-2 control-label'>Date de début* :</label>
+                        <div class="col-sm-2">
                             <input type="text" class="datepicker" id='date_formation' onkeyup="checkDate()" required>
                         </div>
-                        <div class="col-xs-7 col-md-8" id="boutons_modif"></div>
+                        <div class="col-sm-7 col-md-8" id="boutons_modif"></div>
                     </div>
                     <div class="text-center">
                         <button type="button" class="btn btn-danger" id="annuler" onclick="afficherInfos()"><span class="glyphicon glyphicon-remove"></span></button>

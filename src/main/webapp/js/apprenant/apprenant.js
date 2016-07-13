@@ -6,7 +6,9 @@
 
 var param = window.location.search.substring(1).split("&");
 var mode = param[0].split("=")[1];
+var formation = null;
 var code;
+var apprenant = null;
 var liste_formations;
 var compSpec;
 var myRadarChart;
@@ -15,7 +17,9 @@ var chartIsGeneral = true;
 (function() {
     if (mode === "creation")
     {
+        formation = param[1].split("=")[1];
         document.getElementById("details").setAttribute("class", "col-sm-12");
+        
         document.getElementById("annuler").innerHTML += ' Retour aux apprenants';
         document.getElementById("valider").innerHTML += ' Créer l\'apprenant';
         listerFormations();
@@ -25,6 +29,22 @@ var chartIsGeneral = true;
     {
         code = param[1].split("=")[1];
         document.getElementById("code_apprenant").disabled = "true";
+        
+        $('#label_code').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
+        $('#col_code').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        
+        $('#label_nom').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
+        $('#col_nom').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        
+        $('#label_fonction').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
+        $('#col_fonction').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        
+        $('#label_entreprise').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
+        $('#col_entreprise').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        
+        $('#label_formation').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
+        $('#col_formation').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        
         document.getElementById("annuler").innerHTML += ' Annuler les modifications';
         document.getElementById("valider").innerHTML += ' Valider les modifications';
         
@@ -57,7 +77,7 @@ function detailsApprenant()
         dataType: 'json'
     })
     .done(function(data) {
-        var apprenant = data.obj;
+        apprenant = data.obj;
         
         document.getElementById("legende").innerHTML = "Apprenant : " + apprenant.nom;
         document.getElementById("code_apprenant").value = apprenant.code;
@@ -71,19 +91,9 @@ function detailsApprenant()
         
         if (apprenant.formation != null)
         {
-            document.getElementById("details").setAttribute("class", "col-sm-6");
-            document.getElementById("radar").setAttribute("class", "col-sm-6");
+            $("#details").attr("class", "col-sm-6");
+            $("#radar").attr("class", "col-sm-6");
             document.getElementById("radar").innerHTML = '<label id="label_comp">Compétences générales :</label><canvas id="graphique"></canvas>';
-            
-            for (var i = 0; i < liste_formations.length; i++)
-            {
-                if (apprenant.formation === liste_formations[i].code)
-                {
-                    var f = liste_formations[0];
-                    liste_formations[0] = liste_formations[i];
-                    liste_formations[i] = f;
-                }
-            }
 
             detailsFormation(apprenant.formation);
             
@@ -105,6 +115,20 @@ function detailsApprenant()
 
 function afficherFormations()
 {
+    for (var i = 0; i < liste_formations.length; i++)
+    {
+        if ((apprenant !== null && apprenant.formation === liste_formations[i].code) || (formation !== null &&formation === liste_formations[i].code))
+        {
+            if (mode === "creation")
+            {
+                document.getElementById("legende").innerHTML = "Création d'un apprenant pour la formation : " + liste_formations[i].libelle;
+            }
+            var f = liste_formations[0];
+            liste_formations[0] = liste_formations[i];
+            liste_formations[i] = f;
+        }
+    }
+    
     var contenuHtml = '';
     
     for (var i = 0; i < liste_formations.length; i++)

@@ -41,47 +41,46 @@ and open the template in the editor.
                     <div id="infos">
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label for="code_competence" class="col-sm-4 col-md-3 control-label">Code :</label>
+                                <label for="code_competence" class="col-sm-4 col-md-3 control-label">Code* :</label>
                                 <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="code_competence">
+                                    <input type="text" class="form-control" id="code_competence" onkeyup="checkCode()" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="categorie_competence" class="col-sm-4 col-md-3 control-label">Catégorie :</label>
+                                <label for="categorie_competence" class="col-sm-4 col-md-3 control-label">Catégorie* :</label>
                                 <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="categorie_competence">
+                                    <input type="text" class="form-control" id="categorie_competence" onkeyup="checkCategorie()" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="libelle_competence" class="col-sm-4 col-md-3 control-label">Libellé :</label>
+                                <label for="libelle_competence" class="col-sm-4 col-md-3 control-label">Libellé* :</label>
                                 <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="libelle_competence">
+                                    <input type="text" class="form-control" id="libelle_competence" onkeyup="checkLibelle()" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="seuil_min_competence" class="col-sm-4 col-md-3 control-label">Seuil minimal :</label>
+                                <label for="seuil_min_competence" class="col-sm-4 col-md-3 control-label">Seuil minimal* :</label>
                                 <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="seuil_min_competence">
+                                    <input type="text" class="form-control" id="seuil_min_competence" onkeyup="checkSeuilMin()" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="seuil_max_competence" class="col-sm-4 col-md-3 control-label">Seuil maximal :</label>
+                                <label for="seuil_max_competence" class="col-sm-4 col-md-3 control-label">Seuil maximal* :</label>
                                 <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="seuil_max_competence">
+                                    <input type="text" class="form-control" id="seuil_max_competence" onkeyup="checkSuilMax()" required>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="text-center">
-                                    <button type="button" class="btn btn-danger" id="btn_annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
-                                    <button type="button" class="btn btn-success" id="btn_valider" onclick="valider()"><span class="glyphicon glyphicon-check"></span></button>
-                                    <i class="pull-right glyphicon" id="icone_retour"></i>
-                                </div>
-                            </div>
-                            
                         </form>
                     </div>
                     <div id="comp_spec"></div>
                 </div>
+                <div class="row" id="boutons_modif">
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-danger" id="btn_annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
+                                    <button type="button" class="btn btn-success" id="btn_valider" onclick="valider()" ng-click="submitted"><span class="glyphicon glyphicon-check"></span></button>
+                                    <i class="pull-right glyphicon" id="icone_retour"></i>
+                                </div>
+                            </div>
             </fieldset>
         </div>
         
