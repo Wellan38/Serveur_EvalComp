@@ -59,11 +59,11 @@ function afficherInfos()
         if (mode === "modification")
         {
             var contenuHtml = '<div class="col-md-6 center-block">';
-            contenuHtml += '<button type="button" class="btn btn-primary center-block" id="visu_compg" onclick="voirCompetences(); return false;"><span class="glyphicon glyphicon-list-alt"></span> Visualiser les compétences</button>';
+            contenuHtml += '<button type="button" class="btn btn-primary center-block" id="visu_compg" onclick="voirCompetences(); return false;"><span class="fa fa-list"></span> Visualiser les compétences</button>';
             contenuHtml += '<button type="button" class="btn btn-primary center-block" id="export_pdf"><i class="fa fa-file-pdf-o"></i> Exporter en PDF</button>';
             contenuHtml += '</div>';
             contenuHtml += '<div class="col-md-6 center-block">';
-            contenuHtml += '<button type="button" class="btn btn-primary center-block" id="ajouter_app"><span class="glyphicon glyphicon-user"></span> Ajouter un apprenant</button>';
+            contenuHtml += '<button type="button" class="btn btn-primary center-block" id="ajouter_app"><span class="fa fa-user-plus"></span> Ajouter un apprenant</button>';
             contenuHtml += '<button type="button" class="btn btn-primary center-block" id="supp_form"><span class="glyphicon glyphicon-trash"></span> Supprimer la formation</button>';
             contenuHtml += '</div>';
             
@@ -71,14 +71,14 @@ function afficherInfos()
 
             document.getElementById("boutons_modif").innerHTML = contenuHtml;
             
-            document.getElementById("annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Annuler les modifications';
-            document.getElementById("valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Valider les modifications';
+            document.getElementById("annuler").innerHTML = '<span class="fa fa-times"></span> Annuler les modifications';
+            document.getElementById("valider").innerHTML = '<span class="fa fa-check"></span> Valider les modifications';
         }
         
         if (mode === "creation")
         {
-            document.getElementById("annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Revenir aux formations';
-            document.getElementById("valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Créer la formation';
+            document.getElementById("annuler").innerHTML = '<span class="fa fa-times"></span> Revenir aux formations';
+            document.getElementById("valider").innerHTML = '<span class="fa fa-check"></span> Créer la formation';
         }
     })
     .fail(function() {

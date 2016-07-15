@@ -1,4 +1,4 @@
-/* 
+ /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -100,7 +100,7 @@ function detailsComp(code)
             contenuHtml += '<tr><td id="libelle_' + c.code + '_"></td>';
             contenuHtml += '<td id="mes_' + c.code + '_"></td>';
             contenuHtml += '<td id="regle_' + c.code + '_"></td>';
-            contenuHtml += '<td style="padding-left: 0px;"><div class="text-center"><i class="clickable glyphicon glyphicon-list" id="visu_' + c.code + '_" onclick="window.location.href=\'competence_specifique.html?mode=modification&codeG=' + data.obj.code + '&codeS=' + c.code + '\'"></i></div></td>';
+            contenuHtml += '<td style="padding-left: 0px;"><div class="text-center"><i class="clickable fa fa-list" id="visu_' + c.code + '_" onclick="window.location.href=\'competence_specifique.html?mode=modification&codeG=' + data.obj.code + '&codeS=' + c.code + '\'"></i></div></td>';
             contenuHtml += '</tr>';
         }
         

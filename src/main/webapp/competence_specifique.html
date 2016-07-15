@@ -30,9 +30,9 @@ and open the template in the editor.
                 </div>
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a><span class="glyphicon glyphicon-question-sign" data-toggle="modal" data-target="#aide"></span></a></li>
-                        <li><a><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a><span class="fa fa-question-circle" data-toggle="modal" data-target="#aide"></span></a></li>
+                        <li><a><span class="fa fa-user-plus"></span> Sign Up</a></li>
+                        <li><a><span class="fa fa-sign-in"></span> Login</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,7 +68,7 @@ and open the template in the editor.
                             <div class="form-group">
                                 <div class="col-sm-3 col-md-3">
                                     <label for="libelle_comp" class="control-label">Libellé :</label>
-                                    <i class="clickable glyphicon glyphicon-tags pull-right" onclick="afficherTags()"></i>
+                                    <i class="clickable fa fa-tags pull-right" onclick="afficherTags()"></i>
                                 </div>
                                 <div class="col-sm-9 col-md-9">
                                     <input type="text" class="form-control" id="libelle_comp">
@@ -112,9 +112,8 @@ and open the template in the editor.
                 
                 <div class="row" id="boutons_modif">
                     <div class="text-center">
-                        <button type="button" class="btn btn-danger" id="annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
-                        <button type="button" class="btn btn-success" id="valider" onclick="valider()"><span class="glyphicon glyphicon-check"></span></button>
-                        <h4><span class="glyphicon" id="icone_retour"></span></h4>
+                        <button type="button" class="btn btn-danger" id="annuler" onclick="annuler()"><span class="fa fa-times"></span></button>
+                        <button type="button" class="btn btn-success" id="valider" onclick="valider()"><span class="fa fa-check"></span></button>
                     </div>
                 </div>
                 <div class="modal fade" id="aide" role="dialog">

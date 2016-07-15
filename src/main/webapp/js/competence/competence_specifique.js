@@ -22,16 +22,16 @@ function init()
     if (mode === "modification")
     {
         codeS = param[2].split("=")[1];
-        document.getElementById("valider_" + codeG + "_").innerHTML = '<span class="glyphicon glyphicon-check"></span> Valider les modifications';
-        document.getElementById("annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Annuler les modifications';
+        document.getElementById("valider_" + codeG + "_").innerHTML = '<span class="fa fa-check"></span> Valider les modifications';
+        document.getElementById("annuler").innerHTML = '<span class="fa fa-times"></span> Annuler les modifications';
         detailsCompS();
         detailsCompG();
     }
     else if (mode === "creation")
     {
         document.getElementById("code_comp").disabled = false;
-        document.getElementById("valider_" + codeG + "_").innerHTML = '<span class="glyphicon glyphicon-check"></span> Créer la compétence';
-        document.getElementById("annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Revenir aux compétences générales';
+        document.getElementById("valider_" + codeG + "_").innerHTML = '<span class="fa fa-check"></span> Créer la compétence';
+        document.getElementById("annuler").innerHTML = '<span class="fa fa-times"></span> Revenir aux compétences générales';
         detailsCompG();
         listerRegles();
         

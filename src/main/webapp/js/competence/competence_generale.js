@@ -21,16 +21,16 @@ function init()
 {
     if (mode === "creation")
     {
-        document.getElementById("btn_annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Retour aux compétences';
-        document.getElementById("btn_valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Créer la compétence';
+        document.getElementById("btn_annuler").innerHTML = '<span class="fa fa-times"></span> Retour aux compétences';
+        document.getElementById("btn_valider").innerHTML = '<span class="fa fa-check"></span> Créer la compétence';
         formation = param[1].split("=")[1];
     }
     else if (mode === "modification")
     {
         code = param[1].split("=")[1];
         $('#code_competence').attr("disabled", "true");
-        document.getElementById("btn_annuler").innerHTML = '<span class="glyphicon glyphicon-remove"></span> Annuler les modifications';
-        document.getElementById("btn_valider").innerHTML = '<span class="glyphicon glyphicon-check"></span> Valider les modifications';
+        document.getElementById("btn_annuler").innerHTML = '<span class="fa fa-times"></span> Annuler les modifications';
+        document.getElementById("btn_valider").innerHTML = '<span class="fa fa-check"></span> Valider les modifications';
         $("#infos").attr("class", "col-md-6").attr("style", "padding: 0px");
         $("#comp_spec").attr("class", "col-md-6").attr("style", "padding: 0px; height: 453px;");
         
@@ -116,9 +116,6 @@ function valider()
                 else
                 {
                     afficherRetour("creation_competence_g_refusee");
-                    setTimeout(function() {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon");
-                    }, 2000);
                 }
 
             })
@@ -274,8 +271,8 @@ function afficherCompS()
                 
                 contenuHtml += '<span id="icone_trash\'' + compS[i].code + '\'" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
                 
-                contenuHtml += '<span id="icone_plus\'' + compS[i].code + '\'" class="clickable glyphicon glyphicon-plus-sign" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
-                contenuHtml += '<span id="icone_minus\'' + compS[i].code + '\'" class="clickable glyphicon glyphicon-minus-sign" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
+                contenuHtml += '<span id="icone_plus\'' + compS[i].code + '\'" class="clickable fa fa-plus-circle" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
+                contenuHtml += '<span id="icone_minus\'' + compS[i].code + '\'" class="clickable fa fa-minus-circle" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
                 
                 contenuHtml += '</div>';
             }
@@ -290,7 +287,7 @@ function afficherCompS()
         var h_ajout = h/2 + 15;
     }
     
-    contenuHtml += '<h2 class="clickable glyphicon glyphicon-plus-sign" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></h2>';
+    contenuHtml += '<h2><i class="clickable fa fa-plus-circle" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></i></h2>';
     
     contenuHtml += '</div>';
     

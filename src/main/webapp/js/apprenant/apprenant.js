@@ -62,9 +62,7 @@ var chartIsGeneral = true;
 }());
 
 function detailsApprenant()
-{
-    document.getElementById("legende").innerHTML = 'Apprenant : <h4><i class="glyphicon glyphicon-refresh gly-spin"></h4>';
-    
+{    
     $.ajax({
         url: './ActionServlet',
         type: 'GET',
