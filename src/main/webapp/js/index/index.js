@@ -14,10 +14,6 @@ jQuery(document).ready(function($) {
     });
 });
 
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 (function()
 {    
     listerFormations();
@@ -51,11 +47,13 @@ function afficherFormations(formations)
         var f = formations[i];
 
         contenuHtml += '<tr id="formation_' + f.code + '_" onclick="selectionnerFormation(\'' + f.code + '\')"><td>' + f.libelle + '</td><td>' + f.domaine + '</td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-list" id="voir_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="window.location.href=\'formation.html?mode=modification&code=' + f.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette formation"></i></div></td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="demandeSuppressionFormation(\'' + f.code + '\')" data-toggle="tooltip" data-placement="top" data-original-title="Supprimer cette formation"></i></div></td></tr>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="window.location.href=\'formation.html?mode=modification&code=' + f.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette formation"></i></div></td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="demandeSuppressionFormation(\'' + f.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette formation"></i></div></td></tr>';
     }
 
     $('#formations_body').html(contenuHtml);
+    
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function afficherApprenants(apprenants)
@@ -68,12 +66,14 @@ function afficherApprenants(apprenants)
         
         contenuHtml += '<tr id="apprenant_' + a.code + '_"><td>' + a.nom + '</td><td>' + a.fonction + '</td><td>' + a.entreprise + '</td>';
         
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-pencil" id="noter_' + a.code + '_" onclick="window.location.href=\'notation.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Attribuer une note à cet apprenant"></i></div></td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-list" id="voir_' + a.code + '_" onclick="window.location.href=\'apprenant.html?mode=modification&code=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cet apprenant"></i></div></td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + a.code + '_" onclick="demandeSuppressionApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" data-original-title="Supprimer cet apprenant"></i></div></td></tr>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + a.code + '_" onclick="window.location.href=\'notation.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Attribuer une note à cet apprenant"></i></div></td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + a.code + '_" onclick="window.location.href=\'apprenant.html?mode=modification&code=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cet apprenant"></i></div></td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + a.code + '_" onclick="demandeSuppressionApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cet apprenant"></i></div></td></tr>';
     }
 
     $('#apprenants_body').html(contenuHtml);
+    
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function afficherCompetences(competences)
@@ -85,16 +85,18 @@ function afficherCompetences(competences)
         var c = competences[i];
 
         contenuHtml += '<tr id="competence_' + c.code + '_"><td>' + c.libelle + '</td><td>' + c.categorie + '</td><td>' + c.nb_comp + '</td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-list" id="voir_' + c.code + '_" onclick="window.location.href=\'competence_generale.html?mode=modification&code=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette compétence"></i></div></td>';
-        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" data-original-title="Supprimer cette compétence"></i></div></td></tr>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + c.code + '_" onclick="window.location.href=\'competence_generale.html?mode=modification&code=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette compétence"></i></div></td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette compétence"></i></div></td></tr>';
     }
 
     $('#competences_body').html(contenuHtml);
+    
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function listerFormations()
 {
-    $('#icone_formations').removeClass("clickable glyphicon-plus-sign").addClass("glyphicon-refresh gly-spin").attr("onclick", "");
+    $('#icone_formations').removeClass("clickable fa-plus-circle").addClass("fa-spinner fa-pulse").attr("onclick", "");
     
     $.ajax({
         url: './ActionServlet',
@@ -117,12 +119,12 @@ function listerFormations()
         //
     });
     
-    $('#icone_formations').removeClass("glyphicon-refresh gly-spin").addClass("clickable glyphicon-plus-sign").attr("onclick", "window.location.href = 'formation.html?mode=creation'");
+    $('#icone_formations').removeClass("fa-spinner fa-pulse").addClass("clickable fa-plus-circle").attr("onclick", "window.location.href = 'formation.html?mode=creation'");
 }
 
 function listerApprenants(id_f)
 {
-    document.getElementById("icone_apprenants").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
+    document.getElementById("icone_apprenants").setAttribute("class", "fa fa-spinner fa-pulse");
     document.getElementById("icone_apprenants").setAttribute("onclick", "");
     
     $.ajax({
@@ -146,13 +148,13 @@ function listerApprenants(id_f)
     .always(function() {
         //
     });
-    document.getElementById("icone_apprenants").setAttribute("class", "clickable glyphicon glyphicon-plus-sign");
+    document.getElementById("icone_apprenants").setAttribute("class", "clickable fa fa-plus-circle");
     document.getElementById("icone_apprenants").setAttribute("onclick", "window.location.href='apprenant.html?mode=creation&formation=" + id_f + "'");
 }
 
 function listerCompetences(id_f)
 {
-    document.getElementById("icone_competences").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
+    document.getElementById("icone_competences").setAttribute("class", "fa fa-spinner fa-pulse");
     document.getElementById("icone_competences").setAttribute("onclick", "");
     
     $.ajax({
@@ -176,7 +178,7 @@ function listerCompetences(id_f)
     .always(function() {
         //
     });
-    document.getElementById("icone_competences").setAttribute("class", "clickable glyphicon glyphicon-plus-sign");
+    document.getElementById("icone_competences").setAttribute("class", "clickable fa fa-plus-circle");
     document.getElementById("icone_competences").setAttribute("onclick", "window.location.href = 'competence_generale.html?mode=creation&formation=" + id_f + "'");
 }
 
@@ -312,10 +314,10 @@ function deroulerCompetences()
 
 function demandeSuppressionFormation(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-remove-sign");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-ok-sign");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Valider').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Annuler').tooltip('fixTitle');
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "supprimerFormation('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "annulerSuppressionFormation('" + id + "')");
     
@@ -323,10 +325,11 @@ function demandeSuppressionFormation(id)
 
 function demandeSuppressionApprenant(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-remove-sign");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-ok-sign");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Valider').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Annuler').tooltip('fixTitle');
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    $('#noter_' + id + '_').removeClass("fa-pencil");
+    $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "supprimerApprenant('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "annulerSuppressionApprenant('" + id + "')");
     
@@ -334,10 +337,10 @@ function demandeSuppressionApprenant(id)
 
 function demandeSuppressionCompG(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-remove-sign");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-ok-sign");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Valider').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Annuler').tooltip('fixTitle');
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "supprimerCompG('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "annulerSuppressionCompG('" + id + "')");
     
@@ -347,9 +350,9 @@ function supprimerFormation(id)
 {
     $('#supprimer_' + id + '_').tooltip('hide');
     document.getElementById("voir_" + id + "_").setAttribute("class", "");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cette formation').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cette formation').tooltip('fixTitle');
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "fa fa-spinner fa-pulse");
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cette formation').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cette formation').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionFormation('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='formation.html?mode=modification&code=" + id + "'");
     
@@ -380,9 +383,9 @@ function supprimerApprenant(id)
 {
     $('#supprimer_' + id + '_').tooltip('hide');
     document.getElementById("voir_" + id + "_").setAttribute("class", "");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cet apprenant').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cet apprenant').tooltip('fixTitle');
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "fa fa-spinner fa-pulse");
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cet apprenant').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cet apprenant').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionApprenant('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='apprenant.html?mode=modification&code=" + id + "'");
     
@@ -413,9 +416,9 @@ function supprimerCompG(id)
 {
     $('#supprimer_' + id + '_').tooltip('hide');
     document.getElementById("voir_" + id + "_").setAttribute("class", "");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cette compétence').tooltip('fixTitle').tooltip('show');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cette compétence').tooltip('fixTitle');
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "fa fa-spinner fa-pulse");
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cette compétence').tooltip('fixTitle').tooltip('show');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cette compétence').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionCompG('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='competence_generale.html?mode=modification&code=" + id + "'");
     
@@ -444,30 +447,31 @@ function supprimerCompG(id)
 
 function annulerSuppressionFormation(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-list");
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-list");
     document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-trash");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cette formation').tooltip('fixTitle');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cette formation').tooltip('fixTitle').tooltip('show');
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cette formation').tooltip('fixTitle');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cette formation').tooltip('fixTitle').tooltip('show');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionFormation('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='formation.html?mode=modification&code=" + id + "'");
 }
 
 function annulerSuppressionApprenant(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-list");
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-list");
     document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-trash");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cet apprenant').tooltip('fixTitle');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cet apprenant').tooltip('fixTitle').tooltip('show');
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cet apprenant').tooltip('fixTitle');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cet apprenant').tooltip('fixTitle').tooltip('show');
+    $('#noter_' + id + '_').addClass("fa-pencil");
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionApprenant('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='apprenant.html?mode=modification&code=" + id + "'");
 }
 
 function annulerSuppressionCompG(id)
 {
-    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-list");
+    document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-list");
     document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable glyphicon glyphicon-trash");
-    $('#supprimer_' + id + '_').attr('data-original-title', 'Supprimer cette compétence').tooltip('fixTitle');
-    $('#voir_' + id + '_').attr('data-original-title', 'Visualiser cette compétence').tooltip('fixTitle').tooltip('show');
+    $('#supprimer_' + id + '_').attr('title', 'Supprimer cette compétence').tooltip('fixTitle');
+    $('#voir_' + id + '_').attr('title', 'Visualiser cette compétence').tooltip('fixTitle').tooltip('show');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "demandeSuppressionCompG('" + id + "')");
     document.getElementById("voir_" + id + "_").setAttribute("onclick", "window.location.href='competence_generale.html?mode=modification&code=" + id + "'");
 }
