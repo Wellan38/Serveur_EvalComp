@@ -78,14 +78,16 @@ function valider()
     
     var valide = checkData();
     
-    if (!valide)
+    if (mode === "creation")
     {
-        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove"); 
-    }
-    else
-    {
-        if (mode === "creation")
+        if (!valide)
         {
+            afficherRetour("creation_competence_g_refusee");
+        }   
+        else
+        {
+            afficherRetour("creation_competence_g_en_cours");
+            
             $.ajax({
                 url: './ActionServlet',
                 type: 'POST',
@@ -106,14 +108,14 @@ function valider()
 
                 if (retour.valide)
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                    afficherRetour("creation_competence_g_acceptee");
                     setTimeout(function() {
                         window.location.href = "competence_generale.html?mode=modification&code=" + document.getElementById("code_competence").value;
-                    }, 1000);
+                    }, 2000);
                 }
                 else
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
+                    afficherRetour("creation_competence_g_refusee");
                     setTimeout(function() {
                         document.getElementById("icone_retour").setAttribute("class", "glyphicon");
                     }, 2000);
@@ -127,8 +129,17 @@ function valider()
                 //
             });
         }
-        else if (mode === "modification")
+    }
+    else if (mode === "modification")
+    {
+        if (!valide)
         {
+            afficherRetour("modifs_refusees");
+        }   
+        else
+        {
+            afficherRetour("modifs_en_cours");
+            
             $.ajax({
                 url: "./ActionServlet",
                 type: "POST",
@@ -151,16 +162,12 @@ function valider()
 
                 if (retour.valide)
                 {
-                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-ok');
+                    afficherRetour("modifs_acceptees");
                 }
                 else
                 {
-                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon glyphicon-remove');
+                    afficherRetour("modifs_refusees");
                 }
-
-                setTimeout(function() {
-                    document.getElementById('icone_retour').setAttribute('class', 'glyphicon');
-                }, 2000);
             })
             .fail(function() {
                 console.log("Erreur dans le chargement des incompetences.");
@@ -170,7 +177,6 @@ function valider()
             });
         }
     }
-    
 }
 
 function annuler()

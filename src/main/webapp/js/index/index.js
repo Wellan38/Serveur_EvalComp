@@ -6,6 +6,7 @@
 
 var param = window.location.search.substring(1).split("&");
 var type = param[0].split("=")[1];
+var formation = null;
 
 jQuery(document).ready(function($) {
     $('#formations').collapse("show");
@@ -122,7 +123,7 @@ function listerFormations()
     $('#icone_formations').removeClass("fa-spinner fa-pulse").addClass("clickable fa-plus-circle").attr("onclick", "window.location.href = 'formation.html?mode=creation'");
 }
 
-function listerApprenants(id_f)
+function listerApprenants()
 {
     document.getElementById("icone_apprenants").setAttribute("class", "fa fa-spinner fa-pulse");
     document.getElementById("icone_apprenants").setAttribute("onclick", "");
@@ -133,7 +134,7 @@ function listerApprenants(id_f)
         data: {
             action: 'liste',
             type: 'apprenant',
-            formation: id_f
+            formation: formation
         },
         async:false,
         dataType: 'json'
@@ -149,10 +150,10 @@ function listerApprenants(id_f)
         //
     });
     document.getElementById("icone_apprenants").setAttribute("class", "clickable fa fa-plus-circle");
-    document.getElementById("icone_apprenants").setAttribute("onclick", "window.location.href='apprenant.html?mode=creation&formation=" + id_f + "'");
+    document.getElementById("icone_apprenants").setAttribute("onclick", "window.location.href='apprenant.html?mode=creation&formation=" + formation + "'");
 }
 
-function listerCompetences(id_f)
+function listerCompetences()
 {
     document.getElementById("icone_competences").setAttribute("class", "fa fa-spinner fa-pulse");
     document.getElementById("icone_competences").setAttribute("onclick", "");
@@ -163,7 +164,7 @@ function listerCompetences(id_f)
         data: {
             action: 'liste',
             type: 'competence_generale',
-            formation: id_f
+            formation: formation
         },
         async:false,
         dataType: 'json'
@@ -179,7 +180,7 @@ function listerCompetences(id_f)
         //
     });
     document.getElementById("icone_competences").setAttribute("class", "clickable fa fa-plus-circle");
-    document.getElementById("icone_competences").setAttribute("onclick", "window.location.href = 'competence_generale.html?mode=creation&formation=" + id_f + "'");
+    document.getElementById("icone_competences").setAttribute("onclick", "window.location.href = 'competence_generale.html?mode=creation&formation=" + formation + "'");
 }
 
 function rechercherFormation()
@@ -315,7 +316,7 @@ function deroulerCompetences()
 function demandeSuppressionFormation(id)
 {
     document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check-circle");
     $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
     $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "supprimerFormation('" + id + "')");
@@ -326,7 +327,7 @@ function demandeSuppressionFormation(id)
 function demandeSuppressionApprenant(id)
 {
     document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check-circle");
     $('#noter_' + id + '_').removeClass("fa-pencil");
     $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
     $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
@@ -338,7 +339,7 @@ function demandeSuppressionApprenant(id)
 function demandeSuppressionCompG(id)
 {
     document.getElementById("voir_" + id + "_").setAttribute("class", "clickable fa fa-times-circle");
-    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check");
+    document.getElementById("supprimer_" + id + "_").setAttribute("class", "clickable fa fa-check-circle");
     $('#supprimer_' + id + '_').attr('title', 'Valider').tooltip('fixTitle').tooltip('show');
     $('#voir_' + id + '_').attr('title', 'Annuler').tooltip('fixTitle');
     document.getElementById("supprimer_" + id + "_").setAttribute("onclick", "supprimerCompG('" + id + "')");
@@ -478,9 +479,10 @@ function annulerSuppressionCompG(id)
 
 function selectionnerFormation(id)
 {
+    formation = id;
     $('#formation_' + id + '_').addClass('active').siblings().removeClass('active');
-    listerApprenants(id);
-    listerCompetences(id);
+    listerApprenants();
+    listerCompetences();
     $('#ligne_apprenants').css("visibility", "visible");
     $('#ligne_competences').css("visibility", "visible");
 }

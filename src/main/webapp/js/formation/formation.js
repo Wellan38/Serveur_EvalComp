@@ -91,70 +91,63 @@ function afficherInfos()
 
 function validerModifs()
 {
-    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
     essai_submit = true;
     
     var valide = checkData();
 
-    if (!valide)
+    if (mode === "modification")
     {
-        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");            
-    }
-    else
-    {
-        if (mode === "modification")
+        if (!valide)
         {
-            var valide = checkData();
-
-            if (!valide)
-            {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");            
-            }
-            else
-            {
-                $.ajax({
-                    url: './ActionServlet',
-                    type: 'POST',
-                    data: {
-                        action: 'modification',
-                        type: 'formation',
-                        code: document.getElementById('code_formation').value,
-                        libelle: document.getElementById('libelle_formation').value,
-                        domaine: document.getElementById('domaine_formation').value,
-                        url: document.getElementById('url_formation').value,
-                        duree: document.getElementById('duree_formation').value,
-                        date: document.getElementById('date_formation').value
-                    },
-                    async:false,
-                    dataType: 'json'
-                })
-                .done(function(data) {
-
-                    var retour = data.retour;
-
-                    if (retour.valide)
-                    {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
-                        afficherInfos();
-                    }
-                    else
-                    {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-                    }
-
-                    setTimeout(function() {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon col-xs-2");
-                    }, 2000);
-                })
-                .fail(function() {
-                    console.log('Erreur dans le chargement des informations.');
-                })
-                .always(function() {
-                    //
-                });
-            }
+            afficherRetour("modifs_refusees");          
         }
-        else if (mode === "creation")
+        else
+        {
+            $.ajax({
+                url: './ActionServlet',
+                type: 'POST',
+                data: {
+                    action: 'modification',
+                    type: 'formation',
+                    code: document.getElementById('code_formation').value,
+                    libelle: document.getElementById('libelle_formation').value,
+                    domaine: document.getElementById('domaine_formation').value,
+                    url: document.getElementById('url_formation').value,
+                    duree: document.getElementById('duree_formation').value,
+                    date: document.getElementById('date_formation').value
+                },
+                async:false,
+                dataType: 'json'
+            })
+            .done(function(data) {
+
+                var retour = data.retour;
+
+                if (retour.valide)
+                {
+                    afficherRetour("modifs_acceptees");
+                    afficherInfos();
+                }
+                else
+                {
+                    afficherRetour("modifs_refusees");
+                }
+            })
+            .fail(function() {
+                console.log('Erreur dans le chargement des informations.');
+            })
+            .always(function() {
+                //
+            });
+        }
+    }
+    else if (mode === "creation")
+    {
+        if (!valide)
+        {
+            afficherRetour("creation_refusee");          
+        }
+        else
         {
             var code_f = document.getElementById('code_formation');
             var libelle_f = document.getElementById('libelle_formation');
@@ -185,17 +178,14 @@ function validerModifs()
 
                 if (retour.valide)
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                    afficherRetour("creation_formation_acceptee");
                     setTimeout(function() {
                         window.location.href = "formation.html?mode=modification&code=" + retour.code;
                     }, 1000);
                 }
                 else
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-                    setTimeout(function() {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon col-xs-2");
-                    }, 2000);
+                    afficherRetour("creation_formation_refusee");
                 }
 
 

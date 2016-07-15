@@ -278,21 +278,17 @@ function valider()
 {
     var code_regle = $("input[type='radio'][name='regle']:checked").val();
     
-    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
-    
     if (code_regle == null)
     {
-        document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-        
-        setTimeout(function() {
-            document.getElementById("icone_retour").setAttribute("class", "glyphicon");
-        }, 2000);
+        afficherRetour("modifs_refusees");
     }
     else
     {
         code_regle = code_regle.replace(/_/g, "");
         if (mode === "modification")
         {
+            afficherRetour("modifs_en_cours");
+            
             $.ajax({
                 url: './ActionServlet',
                 type: 'POST',
@@ -314,17 +310,14 @@ function valider()
 
                 if (retour.valide)
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                    afficherRetour("modifs_acceptees");
                     setTimeout(function() {
                         location.replace(document.referrer);
                     }, 1000);
                 }
                 else
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-                    setTimeout(function() {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon");
-                    }, 2000);
+                    afficherRetour("modifs_refusees");
                 }
                 
             })
@@ -337,7 +330,7 @@ function valider()
         }
         else if (mode === "creation")
         {
-            //console.log(competences[0].compSpec);
+            afficherRetour("creation_competence_s_en_cours");
             $.ajax({
                 url: './ActionServlet',
                 type: 'POST',
@@ -351,7 +344,7 @@ function valider()
                     ponderation: document.getElementById("ponderation_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
                     regle: code_regle,
-                    miseensituation: document.getElementById("mise_en_situation")
+                    miseensituation: document.getElementById("mise_en_situation").value
                 },
                 async:false,
                 dataType: 'json'
@@ -361,17 +354,11 @@ function valider()
 
                 if (retour.valide)
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
-                    setTimeout(function() {
-                        //location.replace(document.referrer);
-                    }, 1000);
+                    afficherRetour("creation_competence_s_acceptee");
                 }
                 else
                 {
-                    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
-                    setTimeout(function() {
-                        document.getElementById("icone_retour").setAttribute("class", "glyphicon");
-                    }, 2000);
+                    afficherRetour("creation_competence_s_refusee");
                 }
                 
             })

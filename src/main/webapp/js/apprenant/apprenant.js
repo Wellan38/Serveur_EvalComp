@@ -213,15 +213,15 @@ function listerFormations()
 }
 
 function validerModifs()
-{
-    document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-refresh gly-spin");
-    
+{    
     var formation = document.getElementById("formation_apprenant");
     
     var id_form = formation[formation.selectedIndex].id.split("_")[1].replace(/'/g, "");
     
     if (mode === "modification")
     {
+        afficherRetour("modifs_en_cours");
+        
         $.ajax({
             url: './ActionServlet',
             type: 'POST',
@@ -243,16 +243,12 @@ function validerModifs()
 
             if (retour.valide)
             {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+                afficherRetour("modifs_acceptees");
             }
             else
             {
-                document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
+                afficherRetour("modifs_refusees");
             }
-
-            setTimeout(function() {
-                document.getElementById("icone_retour").setAttribute("class", "");
-            }, 2000);
         })
         .fail(function() {
             console.log('Erreur dans le chargement des informations.');
@@ -263,6 +259,8 @@ function validerModifs()
     }
     else if (mode === "creation")
     {
+        afficherRetour("creation_apprenant_en_cours");
+        
         $.ajax({
         url: './ActionServlet',
         type: 'POST',
@@ -284,11 +282,11 @@ function validerModifs()
         
         if (retour.valide)
         {
-            document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-ok");
+            afficherRetour("creation_apprenant_acceptee");
         }
         else
         {
-            document.getElementById("icone_retour").setAttribute("class", "glyphicon glyphicon-remove");
+            afficherRetour("creation_apprenant_refusee");
         }
         
         setTimeout(function() {

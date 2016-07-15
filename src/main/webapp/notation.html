@@ -10,6 +10,8 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
+        <link href="assets/snackbar/css/material.css" rel="stylesheet">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="css/common.css" rel="stylesheet">
         <link href="css/notation.css" rel="stylesheet">
@@ -45,7 +47,6 @@ and open the template in the editor.
                     <div class="text-center">
                         <button class="btn btn-danger" onclick="annulerModifs()"><span class="glyphicon glyphicon-remove"></span> Annuler</button>
                         <button class="btn btn-success" onclick="validerModifs()"><span class="glyphicon glyphicon-check"></span> Valider</button>
-                        <h4><span class="glyphicon" id="icone_retour"></span></h4>
                     </div>
                 </div>
                 <div class="modal fade" id="aide" role="dialog">
@@ -77,8 +78,10 @@ and open the template in the editor.
         
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
         <script src="js/aide.js"></script>
+        <script src="js/snackbar.js"></script>
         <script src="js/notation/notation.js"></script>
     </body>
 </html>

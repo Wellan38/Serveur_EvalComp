@@ -308,7 +308,7 @@ function annulerModifs()
 
 function validerModifs()
 {
-    $('#icone_retour').attr("class", "glyphicon glyphicon-refresh gly-spin");
+    afficherRetour("notation_en_cours");
     
     $.ajax({
         url: './ActionServlet',
@@ -324,16 +324,12 @@ function validerModifs()
     .done(function(data) {
         if (data.retour.valide)
         {
-            $('#icone_retour').attr("class", "glyphicon glyphicon-ok");
+            afficherRetour("notation_acceptee");
         }
         else
         {
-            $('#icone_retour').attr("class", "glyphicon glyphicon-remove");
+            afficherRetour("notation_refusee");
         }
-        
-        setTimeout(function() {
-            $('#icone_retour').attr("class", "glyphicon");
-        }, 2000);
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
