@@ -190,6 +190,7 @@ public class ActionListe extends Action
                             o.addProperty("apprenant", a.getId());
                             o.addProperty("competence", sc.getCompetence().getId());
                             o.addProperty("note", sc.getScore());
+                            o.addProperty("ponderation", sc.getCompetence().getPonderation());
                             
                             liste.add(o);
                         }

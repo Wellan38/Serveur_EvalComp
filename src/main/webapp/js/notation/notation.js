@@ -57,7 +57,7 @@ function afficherCompetences()
     for (var i = 0; i < liste_competences.length; i++)
     {
         contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading clearfix">';
-        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i class="fa fa-clock-o" style="padding-right: 10px;"></i><i class="fa fa-spinner fa-pulse" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
+        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i id="grade_' + liste_competences[i].code + '_" style="padding-right: 10px;"></i><i class="fa fa-spinner fa-pulse" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
         contenuHtml += '<div id="comp_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
         contenuHtml += '</div></div></div>';
     }
@@ -453,6 +453,16 @@ function creerGraphiqueSpecifique(id)
 
 function ajouterScore(codeG, codeS, note)
 {
+    var c = null;
+    for (var i = 0; i < liste_competences.length; i++)
+    {
+        if (liste_competences[i].code === codeG)
+        {
+            c = liste_competences[i];
+            break;
+        }
+    }
+    
     $('#note_' + codeS + '_' + note).addClass('active').siblings().removeClass('active');
     
     var index = null;
@@ -465,24 +475,26 @@ function ajouterScore(codeG, codeS, note)
         }
     }
     
+    var compS = null;
+    for (var i = 0; i < c.compSpec.length; i++)
+    {
+        if (c.compSpec[i].code === codeS)
+        {
+            compS = c.compSpec[i];
+            break;
+        }
+    }
+    
     if (index === null)
     {
-        scores.push({competence: codeS,note: note});
+        scores.push({competence: codeS,note: note,ponderation:compS.ponderation});
     }
     else
     {
         scores[index].note = note;
     }
     
-    var c = null;
-    for (var i = 0; i < liste_competences.length; i++)
-    {
-        if (liste_competences[i].code === codeG)
-        {
-            c = liste_competences[i];
-            break;
-        }
-    }
+    
 
     var complet = true;
     for (var i = 0; i < c.compSpec.length; i++)
@@ -518,9 +530,30 @@ function ajouterScore(codeG, codeS, note)
         
         var moyenne = 0;
         
-        for (var i = 0; i < compG.compSpec.length; i++)
+        for (var i = 0; i < scores.length; i++)
         {
-            moyenne += 
+            for (var j = 0; j < compG.compSpec.length; j++)
+            {
+                if (compG.compSpec[j].code === scores[i].competence)
+                {
+                    moyenne += scores[i].note * scores[i].ponderation;
+                }
+            }
+        }
+        
+        console.log(scores);
+        
+        if (moyenne >= compG.seuil_max)
+        {
+            $('#grade_' + codeG + '_').attr("class", "fa fa-check-circle-o").css("color", "#00FF00");
+        }
+        else if (moyenne <= compG.seuil_min)
+        {
+            $('#grade_' + codeG + '_').attr("class", "fa fa-times-circle-o").css("color", "#FF0000");
+        }
+        else
+        {
+            $('#grade_' + codeG + '_').attr("class", "fa fa-clock-o").css("color", "");
         }
         
         $('#icone_' + codeG + '_').removeClass("fa-spinner fa-pulse").addClass("clickable fa-bar-chart").attr("onclick", "afficherGraph('" + codeG + "')");
