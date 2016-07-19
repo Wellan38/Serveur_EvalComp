@@ -62,3 +62,47 @@ p.speech {
 .form-horizontal .control-label{
     text-align:left;
 }
+
+body {
+    background-color: rgb(255,255,255);
+}
+
+.form-group {
+    margin: 0px 0px 15px 0px;
+}
+
+.form-control.is-focused {
+    color: rgb(63,81,181);
+}
+
+.form-horizontal {
+    padding: 15px;
+}
+
+.navbar.navbar-inverse {
+    background-color: rgb(52,57,66);
+}
+
+.navbar.navbar-fixed-top {
+    position: relative;
+}
+
+.panel.panel-default > .panel-heading {
+    background-color: rgb(33,150,243);
+}
+
+.modal-content .modal-header {
+    padding-top: 19px;
+}
+
+.active td {
+    background-color: rgba(33,150,243,0.4) !important;
+}
+
+.list-group .list-group-separator:before {
+  content: "";
+  width: -webkit-calc(100%);
+  width: calc(100%);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  float: right;
+}

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -114,6 +115,35 @@ public class ActionListe extends Action
                     
                     break;
                     
+                case "rule_pattern" :
+                    System.out.println("Listing de rule patterns !");
+                    List<RulePattern> patterns = servM.listerRulePatterns();
+                    
+                    for (RulePattern p : patterns)
+                    {
+                        JsonObject pa = new JsonObject();
+                        pa.addProperty("code", p.getId());
+                        pa.addProperty("libelle", p.getLibelle());
+                        
+                        JsonArray texte = new JsonArray();
+
+                        for (Pair<String, Integer> cas : p.getCas())
+                        {
+                            JsonObject o = new JsonObject();
+
+                            o.addProperty("condition", cas.getKey());
+                            o.addProperty("score", cas.getValue());
+
+                            texte.add(o);
+                        }
+
+                        pa.add("cas", texte);
+                        
+                        liste.add(pa);
+                    }
+                    
+                    break;
+                    
                 case "regle" :
                     System.out.println("Listing de règles !");
                     List<Regle> regles = servM.listerRegles();
@@ -126,9 +156,14 @@ public class ActionListe extends Action
                         
                         JsonArray texte = new JsonArray();
 
-                        for (String s : r.getTexte())
+                        for (Pair<String, Integer> cas : r.getCas())
                         {
-                            texte.add(s);
+                            JsonObject o = new JsonObject();
+
+                            o.addProperty("condition", cas.getKey());
+                            o.addProperty("score", cas.getValue());
+
+                            texte.add(o);
                         }
 
                         re.add("texte", texte);

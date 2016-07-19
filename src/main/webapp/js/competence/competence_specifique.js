@@ -12,6 +12,7 @@ var anciennePond = 0;
 var compS;
 
 (function() {
+    $.material.init();
     document.getElementById("valider").setAttribute("id", "valider_" + codeG + "_");
     document.getElementById("autres_comp").setAttribute("id", "comp_spec__" + codeG + "_");
     init();
@@ -33,7 +34,7 @@ function init()
         document.getElementById("valider_" + codeG + "_").innerHTML = '<span class="fa fa-check"></span> Créer la compétence';
         document.getElementById("annuler").innerHTML = '<span class="fa fa-times"></span> Revenir aux compétences générales';
         detailsCompG();
-        listerRegles();
+        listerRulePatterns();
         
         competences[0].compSpec.push(JSON.parse('{"code":null,"libelle":"","ponderation":0,"categorie":""}'));
         
@@ -74,8 +75,8 @@ function detailsCompG()
 
 var param = window.location.search.substring(1).split("&");
 var code_comp = param[0].split("=")[1];
-var code_regle;
-var liste_regles;
+var code_rule_pattern = null;
+var liste_rule_patterns = [];
 
 function placerTag(tag)
 {
@@ -172,6 +173,13 @@ function listerTags()
 
     $("#tags_cloud").empty();
     $("#tags_cloud").jQCloud(tags, {width: 200, height: 200, delayedMode: true, shape: "rectangular"});
+    
+    var verbes = $('*[id^="verbe_"]');
+
+    for (var i = 0; i < verbes.length; i++)
+    {
+        listerVerbes(verbes[i].id);
+    }
 }
 
 function afficherTags()
@@ -180,22 +188,22 @@ function afficherTags()
     $('#myModal').modal('show');
 }
 
-function listerRegles()
+function listerRulePatterns()
 {
     $.ajax({
         url: './ActionServlet',
         type: 'GET',
         data: {
             action: 'liste',
-            type: 'regle'
+            type: 'rule_pattern'
         },
         async:false,
         dataType: 'json'
     })
     .done(function(data) {
-        var regles = data.liste;
+        var patterns = data.liste;
         
-        afficherListeRegles(regles);
+        afficherListeRulePatterns(patterns);
     })
     .fail(function() {
         console.log('Erreur dans le chargement de la liste.');
@@ -205,23 +213,23 @@ function listerRegles()
     });
 }
 
-function afficherListeRegles(regles)
+function afficherListeRulePatterns(patterns)
 {
-    var contenuHtml = "";
+    var contenuListe = "";
 
-    for (var i = 0; i < regles.length; i++)
+    for (var i = 0; i < patterns.length; i++)
     {
-        contenuHtml += '<div class="radio">';
-        contenuHtml += '<label><input type="radio" name="regle" id="regle_' + regles[i].code + '_" value="_' + regles[i].code + '_" onclick="changerRegle(\'' + regles[i].code + '\')" >' + regles[i].libelle + '</label>';
-        contenuHtml += '</div>';
+        contenuListe += '<div class="radio radio-primary">';
+        contenuListe += '<label><input type="radio" name="regle" id="regle_' + patterns[i].code + '_" value="_' + patterns[i].code + '_" onclick="changerRulePattern(\'' + patterns[i].code + '\')" >' + patterns[i].libelle + '</label>';
+        contenuListe += '</div>';
     }
     
-    $('#liste_regles').html(contenuHtml);
+    $('#liste_rule_patterns').html(contenuListe);
 }
 
 function detailsCompS()
 {
-    listerRegles();
+    listerRulePatterns();
     
     $.ajax({
         url: './ActionServlet',
@@ -237,15 +245,15 @@ function detailsCompS()
     .done(function(data) {
         var comp = data.obj;
         
-        document.getElementById("legende").innerHTML = 'Compétence spécifique : ' + comp.libelle;
-        document.getElementById("code_comp").value = comp.code;
-        document.getElementById("categorie_comp").value = comp.categorie;
-        document.getElementById("libelle_comp").value = comp.libelle;
-        document.getElementById("ponderation_comp").value = comp.ponderation;
+        $('#legende').html('Compétence spécifique : ' + comp.libelle);
+        $('#code_comp').attr("value", comp.code).trigger("change");
+        $('#categorie_comp').attr("value", comp.categorie).trigger("change");
+        $('#libelle_comp').attr("value", comp.libelle).trigger("change");
+        $('#ponderation_comp').attr("value", comp.ponderation);
         anciennePond = comp.ponderation;
         code_regle = comp.regle;
-        checkRegle();        
-        document.getElementById('mise_en_situation').value = comp.miseensituation;
+        checkRulePattern();        
+        $('#mise_en_situation').attr("value", comp.miseensituation).trigger("change");
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -255,22 +263,80 @@ function detailsCompS()
     });
 }
 
-function checkRegle()
+function checkRulePattern()
 {
-    if (document.getElementById("regle_" + code_regle + "_") !== null)
+    if (code_rule_pattern != null)
     {
-        document.getElementById("regle_" + code_regle + "_").setAttribute("checked", "checked");
+        $.ajax({
+            url: './ActionServlet',
+            type: 'GET',
+            data: {
+                action: 'infos',
+                type: 'rule_pattern',
+                code: code_rule_pattern
+            },
+            async:false,
+            dataType: 'json'
+        })
+        .done(function(data) {
+            var p = data.obj;
 
-        var worker = new Worker("js/competence/RuleChecker.js");
-    
-        worker.postMessage([code_regle, 'stop']);
-        
-        worker.onmessage = function(e)
-        {
-            var regle = JSON.parse(e.data).obj;
-            var newline = String.fromCharCode(13, 10);
-            document.getElementById('texte_regle').value = regle.texte.replace(/\\n/g, newline);
-        };
+            var texte = p.cas;
+            var contenuTexte = '<div class="list-group-separator"></div>';
+
+            for (var j = 0; j < texte.length; j++)
+            {
+                var tab = texte[j].condition.split(" ");
+
+                for (var k = 0; k < tab.length; k++)
+                {
+                    if (tab[k] === "si" || tab[k] === "sinon" || tab[k] === "alors" || tab[k] === ":" || tab[k] === "score" || tab[k] === "=")
+                    {
+                        tab[k] = '<b>' + tab[k] + '</b>';
+                    }
+                    else if (tab[k].includes("&number"))
+                    {
+                        tab[k] = '<div class="form-group" style="margin: 0px;"><input type="text" class="form-control parametre" id="nombre_' + j + '_' + k + '" style="width: 60px;"></input></div>';
+                    }
+                    else if (tab[k].includes("&type"))
+                    {
+                        tab[k] = '<div class="form-group" style="margin: 0px; padding-left: 0px;"><select class="form-control parametre" id="type_' + j + '_' + k + '" style="width: 100px;"></select></div>';
+                    }
+                    else if (tab[k].includes("&verbe"))
+                    {
+                        tab[k] = '<div class="form-group" style="margin: 0px;"><select class="form-control parametre" id="verbe_' + j + '_' + k + '" style="width: 100px;"></select></div>';
+                    }
+                }
+
+                var texte_parse = '<div class="form-inline">' + tab.join(" ") + texte[j].score + '</div>';
+
+                contenuTexte += '<div class="list-group-item">' + texte_parse + '</div><div class="list-group-separator"></div>';
+            }
+
+            $('#cas_regle').html(contenuTexte);
+            
+            var types = $('*[id^="type_"]');
+            
+            for (var i = 0; i < types.length; i++)
+            {
+                listerTypes(types[i].id);
+            }
+            
+            var verbes = $('*[id^="verbe_"]');
+            
+            for (var i = 0; i < verbes.length; i++)
+            {
+                listerVerbes(verbes[i].id);
+            }
+            
+            $.material.input();
+        })
+        .fail(function() {
+            console.log('Erreur dans le chargement des informations.');
+        })
+        .always(function() {
+            //
+        });
     }
 }
 
@@ -372,29 +438,10 @@ function valider()
     }
 }
 
-function rechercherRegle()
-{  
-    var xmlhttp=new XMLHttpRequest();
-    
-    xmlhttp.onreadystatechange=function() {
-        if (xmlhttp.readyState===4 && xmlhttp.status===200)
-        {
-            var regles = JSON.parse(xmlhttp.responseText).liste;
-
-            afficherListeRegles(regles);
-
-            checkRegle();
-        }
-    };
-    
-    xmlhttp.open("GET","./ActionServlet?action=recherche&objet=regle&type=libelle&libelle="+document.getElementById('recherche_regle').value,true);
-    xmlhttp.send();
-}
-
-function changerRegle(id)
+function changerRulePattern(id)
 {
-    code_regle = id;
-    checkRegle();
+    code_rule_pattern = id;
+    checkRulePattern();
 }
 
 function changerPonderation(val)
@@ -438,4 +485,103 @@ function annuler()
     {
         location.replace(document.referrer);
     }
+}
+
+function listerTypes(id)
+{
+    var contenuHtml = "";
+    
+    contenuHtml += '<option>éléments</option>';
+    contenuHtml += '<option>cas</option>';
+    
+    document.getElementById(id).innerHTML = contenuHtml;
+}
+
+function listerVerbes(id)
+{
+    var contenuHtml = "";
+    
+    switch(document.getElementById("categorie_comp").value)
+    {
+        case "Connaissance" :
+            contenuHtml += '<option>identifiés</option>';
+            contenuHtml += '<option>définis</option>';
+            contenuHtml += '<option>nommés</option>';
+            contenuHtml += '<option>rappelés</option>';
+            contenuHtml += '<option>reproduits</option>';
+            contenuHtml += '<option>mémorisés</option>';
+            contenuHtml += '<option>ordonnés</option>';
+            contenuHtml += '<option>arrangés</option>';
+            
+            break;
+            
+        case "Compréhension" :
+            contenuHtml += '<option>identifiés</option>';
+            contenuHtml += '<option>indiqués</option>';
+            contenuHtml += '<option>classifiés</option>';
+            contenuHtml += '<option>décrits</option>';
+            contenuHtml += '<option>discutés</option>';
+            contenuHtml += '<option>expliqués</option>';
+            contenuHtml += '<option>exprimés</option>';
+            contenuHtml += '<option>reconnus</option>';
+            contenuHtml += '<option>choisis</option>';
+            
+            break;
+            
+        case "Application" :
+            contenuHtml += '<option>employés</option>';
+            contenuHtml += '<option>appliqués</option>';
+            contenuHtml += '<option>résolus</option>';
+            contenuHtml += '<option>utilisés</option>';
+            contenuHtml += '<option>démontrés</option>';
+            contenuHtml += '<option>illustrés</option>';
+            contenuHtml += '<option>interprétés</option>';
+            contenuHtml += '<option>planifiés</option>';
+            contenuHtml += '<option>utilisés</option>';
+            contenuHtml += '<option>choisis</option>';
+            
+            break;
+            
+        case "Analyse" :
+            contenuHtml += '<option>analysés</option>';
+            contenuHtml += '<option>estimés</option>';
+            contenuHtml += '<option>calculés</option>';
+            contenuHtml += '<option>distingués</option>';
+            contenuHtml += '<option>examinés</option>';
+            contenuHtml += '<option>testés</option>';
+            contenuHtml += '<option>expérimentés</option>';
+            contenuHtml += '<option>comparés</option>';
+            contenuHtml += '<option>critiqués</option>';
+            
+            break;
+            
+        case "Synthèse" :
+            contenuHtml += '<option>créés</option>';
+            contenuHtml += '<option>conçus</option>';
+            contenuHtml += '<option>formulés</option>';
+            contenuHtml += '<option>organisés</option>';
+            contenuHtml += '<option>gérés</option>';
+            contenuHtml += '<option>proposés</option>';
+            contenuHtml += '<option>installés</option>';
+            contenuHtml += '<option>écrits</option>';
+            contenuHtml += '<option>arrangés</option>';
+            contenuHtml += '<option>construits</option>';
+            
+            break;
+            
+        case "Évaluation" :
+            contenuHtml += '<option>évalués</option>';
+            contenuHtml += '<option>choisis</option>';
+            contenuHtml += '<option>comparés</option>';
+            contenuHtml += '<option>justifiés</option>';
+            contenuHtml += '<option>estimés</option>';
+            contenuHtml += '<option>jugés</option>';
+            contenuHtml += '<option>chiffrés</option>';
+            contenuHtml += '<option>sélectionnés</option>';
+            contenuHtml += '<option>arrangés</option>';
+            
+            break;
+    }
+    
+    document.getElementById(id).innerHTML = contenuHtml;
 }

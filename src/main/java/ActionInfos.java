@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import com.google.gson.JsonObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -72,9 +72,21 @@ public class ActionInfos extends Action {
                 }
                     break;
                     
+                case "rule_pattern" :
+                {
+                    System.out.println("Infos de rule pattern !");
+                    try {
+                        obj = printRulePattern(request);
+                    }
+                    catch (Throwable ex) {
+                        Logger.getLogger(ActionInfos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                    break;
+                    
                 case "regle" :
                 {
-                    System.out.println("Infos de règle");
+                    System.out.println("Infos de règle !");
                     try {
                         obj = printRegle(request);
                     }
@@ -208,11 +220,45 @@ public class ActionInfos extends Action {
             competence.addProperty("libelle", c.getLibelle());
             competence.addProperty("categorie", c.getType());
             competence.addProperty("ponderation", c.getPonderation());
-            competence.addProperty("regle", c.getRegle().getId());
+            
+            if (c.getRegle() != null)
+            {
+                competence.addProperty("regle", c.getRegle().getId());
+            }
+            
             competence.addProperty("miseensituation", c.getMiseEnSituation());
         }
         
         return competence;
+    }
+    
+    public JsonObject printRulePattern(HttpServletRequest request) throws Throwable
+    {
+        RulePattern p = servM.trouverRulePatternParId(request.getParameter("code"));
+        
+        JsonObject regle = new JsonObject();
+        
+        if (p != null)
+        {
+            regle.addProperty("code", p.getId());
+            regle.addProperty("libelle", p.getLibelle());
+            
+            JsonArray texte = new JsonArray();
+            
+            for (Pair<String, Integer> cas : p.getCas())
+            {
+                JsonObject o = new JsonObject();
+                
+                o.addProperty("condition", cas.getKey());
+                o.addProperty("score", cas.getValue());
+                
+                texte.add(o);
+            }
+            
+            regle.add("cas", texte);
+        }
+        
+        return regle;
     }
     
     public JsonObject printRegle(HttpServletRequest request) throws Throwable
@@ -228,9 +274,14 @@ public class ActionInfos extends Action {
             
             JsonArray texte = new JsonArray();
             
-            for (String s : r.getTexte())
+            for (Pair<String, Integer> cas : r.getCas())
             {
-                texte.add(s);
+                JsonObject o = new JsonObject();
+                
+                o.addProperty("condition", cas.getKey());
+                o.addProperty("score", cas.getValue());
+                
+                texte.add(o);
             }
             
             regle.add("texte", texte);

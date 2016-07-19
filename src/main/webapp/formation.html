@@ -9,8 +9,18 @@ and open the template in the editor.
         <title>EvalComp - Formation</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="assets/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
+        
+        <link href="assets/bootstrap/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
         <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
         <link href="assets/snackbar/css/material.css" rel="stylesheet">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -41,58 +51,52 @@ and open the template in the editor.
             <fieldset>
                 <legend id="legende">Formation :</legend>
                 <form class='form-horizontal'>
-                    <div class='form-group'>
-                        <label for='code_formation' class='col-sm-3 col-md-2 control-label'>Code* :</label>
-                        <div class='col-sm-9 col-md-10'>
-                            <input type='text' class='form-control' id='code_formation' onkeyup="checkCode()" required>
-                        </div>
+                    <div class='form-group label-floating' id="form_code">
+                        <label for='code_formation' class='control-label'>Code* :</label>
+                        <input type='text' class='form-control' id='code_formation' onkeyup="checkCode()">
+                        <p class="help-block" id="help_code"></p>
                     </div>
-                    <div class='form-group'>
-                        <label for='libelle_formation' class='col-sm-3 col-md-2 control-label'>Libellé* :</label>
-                        <div class='col-sm-9 col-md-10'>
-                            <input type='text' class='form-control' id='libelle_formation' onkeyup="checkLibelle()" required>
-                        </div>
+                    <div class='form-group label-floating' id="form_libelle">
+                        <label for='libelle_formation' class='control-label'>Libellé* :</label>
+                        <input type='text' class='form-control' id='libelle_formation' onkeyup="checkLibelle()">
+                        <p class="help-block" id="help_libelle"></p>
                     </div>
-                    <div class='form-group'>
-                        <label for='domaine_formation' class='col-sm-3 col-md-2 control-label'>Domaine* :</label>
-                        <div class='col-sm-9 col-md-10'>
-                            <input type='text' class='form-control' id='domaine_formation' onkeyup="checkDomaine()" required>
-                        </div>
+                    <div class='form-group label-floating' id="form_domaine">
+                        <label for='domaine_formation' class='control-label'>Domaine* :</label>
+                        <input type='text' class='form-control' id='domaine_formation' onkeyup="checkDomaine()">
+                        <p class="help-block" id="help_domaine"></p>
                     </div>
-                    <div class='form-group'>
-                        <label for='url_formation' class='col-sm-3 col-md-2 control-label'>URL :</label>
-                        <div class='col-sm-9 col-md-10'>
-                            <input type='url' class='form-control' id='url_formation'>
-                        </div>
+                    <div class='form-group label-floating' id="form_url">
+                        <label for='url_formation' class='control-label'>URL :</label>
+                        <input type='url' class='form-control' id='url_formation'>
+                        <p class="help-block" id="help_url"></p>
                     </div>
-                    <div class='form-group'>
-                        <label for='duree_formation' class='col-sm-3 col-md-2 control-label'>Durée* :</label>
-                        <div class="col-sm-4">
-                            <div class='col-xs-4' style="padding-left: 0px;">
-                                <input type='text' class='form-control' id='duree_formation' onkeyup="checkDuree()" required>
-                            </div>
-                            <label class='control-label'>jours</label>
-                        </div>
+                    <div class='form-group label-floating' id="form_duree">
+                        <label for='duree_formation' class='control-label'>Durée (jours)* :</label>
+                        <input type='text' class='form-control' id='duree_formation' onkeyup="checkDuree()">
+                        <p class="help-block" id="help_duree"></p>
                         
                     </div>
-                    <div class="form-group">
-                        <label for='date_formation' class='col-sm-3 col-md-2 control-label'>Date de début* :</label>
-                        <div class="col-sm-2">
-                            <input type="text" class="datepicker" id='date_formation' onkeyup="checkDate()" required>
-                        </div>
-                        <div class="col-sm-7 col-md-8" id="boutons_modif"></div>
+                    <div class="form-group label-floating" id="form_date">
+                        <label for='date_formation' class='control-label'>Date de début* :</label>
+                        <input type="text" data-dtp="dtp_V2yEU" class="form-control" id='date_formation' onkeyup="checkDate()">
+                        <p class="help-block" id="help_date"></p>
                     </div>
+                    <div class="col-sm-7 col-md-8" id="boutons_modif"></div>
                     <div class="text-center">
-                        <button type="button" class="btn btn-danger" id="annuler" onclick="afficherInfos()"><span class="fa fa-times"></span></button>
-                        <button type="button" class="btn btn-success" id="valider" onclick="validerModifs()" ng-click="submitted=true;"><span class="fa fa-check"></span></button>
+                        <button type="button" class="btn btn-raised btn-danger" id="annuler" onclick="afficherInfos()"><span class="fa fa-times"></span></button>
+                        <button type="button" class="btn btn-raised btn-success" id="valider" onclick="validerModifs()"><span class="fa fa-check"></span></button>
                     </div>
                 </form>
             </fieldset>
         </div>
         
         <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="http://momentjs.com/downloads/moment-with-locales.js"></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
-        <script src="assets/bootstrap/js/bootstrap-datepicker.js"></script>
+        <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/bootstrap/js/material.js"></script>
+        <script src="assets/bootstrap/js/bootstrap-material-datetimepicker.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="js/snackbar.js"></script>
         <script src="js/formation/formation.js"></script>

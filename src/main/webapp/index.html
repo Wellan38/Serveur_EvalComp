@@ -4,13 +4,22 @@
         <title>Page d'accueil - EvalComp</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="css/common.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
     </head>
     <body>        
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
@@ -38,7 +47,7 @@
                             <div class="col-sm-2 col-sm-push-10" id="col_recherche_formation" style="padding-right:0px;">
                                 <form role="form">
                                     <div class="row" style="padding: 0px">
-                                        <div class="form-group has-feedback" style="margin-bottom: 10px;">
+                                        <div class="form-group has-feedback" style="margin: 0px;">
                                             <input type="text" class="form-control" id="recherche_formation" placeholder="recherche" onkeyup="rechercherFormation()">
                                             <i class="fa fa-search form-control-feedback"></i>
                                         </div>
@@ -53,10 +62,8 @@
                             </div>
                             <div class="col-sm-10 col-sm-pull-2" style="padding:0px;">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading clearfix">
-                                        <h4 class="panel-title pull-left">
-                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#formations">Liste des formations</a>
-                                        </h4>
+                                    <div class="clickable accordion-toggle panel-heading clearfix"  data-toggle="collapse" data-target="#formations">
+                                        <h4 class="panel-title pull-left">Liste des formations</h4>
                                         <h4 class="pull-right" style="margin: 0px;">
                                             <i class="fa" id="icone_formations"></i>
                                         </h4>
@@ -78,56 +85,11 @@
                             </div>
                             
                         </div>
-                        <div class="row" id="ligne_apprenants">
-                            <div class="col-sm-2 col-sm-push-10" style="padding-right:0px;" id="col_recherche_apprenant">
-                                <form role="form">
-                                    <div class="row" style="padding: 0px">
-                                        <div class="form-group has-feedback">
-                                            <input type="text" class="form-control" id="recherche_apprenant" placeholder="recherche" onkeyup="rechercherApprenant()">
-                                            <i class="fa fa-search form-control-feedback"></i>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding: 0px;">
-                                        <select class="form-control" style="margin-bottom: 10px;" id="type_recherche_apprenant">
-                                            <option>Nom</option>
-                                            <option>Fonction</option>
-                                            <option>Entreprise</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-sm-10 col-sm-pull-2" style="padding:0px;">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading clearfix">
-                                        <h4 class="panel-title pull-left">
-                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#apprenants">Liste des apprenants</a>
-                                        </h4>
-                                        <h4 class="pull-right" style="margin: 0px;">
-                                            <i class="fa" id="icone_apprenants"></i>
-                                        </h4>
-                                    </div>
-                                    <div id="apprenants" class="clickable panel-collapse collapse">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:35%">Nom</th>
-                                                    <th style="width:35%">Fonction</th>
-                                                    <th style="width:30%">Entreprise</th>
-                                                    <th class="minimal_cell"></th>
-                                                    <th class="minimal_cell"></th>
-                                                    <th class="minimal_cell"></th>
-                                            </thead>
-                                            <tbody id="apprenants_body"></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row" id="ligne_competences">
                             <div class="col-sm-2 col-sm-push-10" style="padding-right:0px;" id="col_recherche_competence">
                                 <form role="form">
                                     <div class="row" style="padding: 0px">
-                                        <div class="form-group has-feedback">
+                                        <div class="form-group has-feedback" style="margin: 0px;">
                                             <input type="text" class="form-control" id="recherche_competence" placeholder="recherche" onkeyup="rechercherCompetence()">
                                             <i class="fa fa-search form-control-feedback"></i>
                                         </div>
@@ -142,10 +104,8 @@
                             </div>
                             <div class="col-sm-10 col-sm-pull-2" style="padding: 0px;">
                                 <div class="panel panel-default">
-                                    <div class="panel-heading clearfix">
-                                        <h4 class="panel-title pull-left">
-                                            <a class="clickable accordion-toggle" data-toggle="collapse" href="#competences">Liste des compétences générales</a>
-                                        </h4>
+                                    <div class="clickable accordion-toggle panel-heading clearfix"  data-toggle="collapse" data-target="#competences">
+                                        <h4 class="panel-title pull-left">Liste des compétences générales</h4>
                                         <h4 class="pull-right" style="margin: 0px;">
                                             <i class="fa" id="icone_competences"></i>
                                         </h4>
@@ -162,6 +122,49 @@
                                                 </tr>
                                             </thead>
                                             <tbody id="competences_body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="ligne_apprenants">
+                            <div class="col-sm-2 col-sm-push-10" style="padding-right:0px;" id="col_recherche_apprenant">
+                                <form role="form">
+                                    <div class="row" style="padding: 0px">
+                                        <div class="form-group has-feedback" style="margin: 0px;">
+                                            <input type="text" class="form-control" id="recherche_apprenant" placeholder="recherche" onkeyup="rechercherApprenant()">
+                                            <i class="fa fa-search form-control-feedback"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 0px;">
+                                        <select class="form-control" style="margin-bottom: 10px;" id="type_recherche_apprenant">
+                                            <option>Nom</option>
+                                            <option>Fonction</option>
+                                            <option>Entreprise</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-sm-10 col-sm-pull-2" style="padding:0px;">
+                                <div class="panel panel-default">
+                                    <div class="clickable accordion-toggle panel-heading clearfix"  data-toggle="collapse" data-target="#apprenants">
+                                        <h4 class="panel-title pull-left">Liste des apprenants</h4>
+                                        <h4 class="pull-right" style="margin: 0px;">
+                                            <i class="fa" id="icone_apprenants"></i>
+                                        </h4>
+                                    </div>
+                                    <div id="apprenants" class="clickable panel-collapse collapse">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:35%">Nom</th>
+                                                    <th style="width:35%">Fonction</th>
+                                                    <th style="width:30%">Entreprise</th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                                    <th class="minimal_cell"></th>
+                                            </thead>
+                                            <tbody id="apprenants_body"></tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -184,8 +187,10 @@
             </fieldset>
         </div>
         
-        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/jquery.js"></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/bootstrap/js/material.js"></script>
         <script src="js/aide.js"></script>
         <script src="js/index/index.js"></script>
     </body>

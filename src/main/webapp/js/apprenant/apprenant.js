@@ -15,6 +15,7 @@ var myRadarChart;
 var chartIsGeneral = true;
 
 (function() {
+    $.material.init();
     if (mode === "creation")
     {
         formation = param[1].split("=")[1];
@@ -30,20 +31,7 @@ var chartIsGeneral = true;
         code = param[1].split("=")[1];
         document.getElementById("code_apprenant").disabled = "true";
         
-        $('#label_code').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
-        $('#col_code').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
-        
-        $('#label_nom').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
-        $('#col_nom').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
-        
-        $('#label_fonction').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
-        $('#col_fonction').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
-        
-        $('#label_entreprise').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
-        $('#col_entreprise').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
-        
-        $('#label_formation').removeClass("col-sm-2").addClass("col-sm-4 col-md-3");
-        $('#col_formation').removeClass("col-sm-10").addClass("col-sm-8 col-md-9");
+        $('#details').addClass("col-sm-6");
         
         document.getElementById("annuler").innerHTML += ' Annuler les modifications';
         document.getElementById("valider").innerHTML += ' Valider les modifications';
@@ -78,10 +66,10 @@ function detailsApprenant()
         apprenant = data.obj;
         
         document.getElementById("legende").innerHTML = "Apprenant : " + apprenant.nom;
-        document.getElementById("code_apprenant").value = apprenant.code;
-        document.getElementById("nom_apprenant").value = apprenant.nom;
-        document.getElementById("fonction_apprenant").value = apprenant.fonction;
-        document.getElementById("entreprise_apprenant").value = apprenant.entreprise;
+        $('#code_apprenant').attr("value", apprenant.code).trigger("change");
+        $('#nom_apprenant').attr("value", apprenant.nom).trigger("change");
+        $('#fonction_apprenant').attr("value", apprenant.fonction).trigger("change");
+        $('#entreprise_apprenant').attr("value", apprenant.entreprise).trigger("change");
         
         listerFormations();
         
@@ -134,7 +122,7 @@ function afficherFormations()
         contenuHtml += '<option id="formation_\'' + liste_formations[i].code + '\'">' + liste_formations[i].libelle + '</option>';
     }
     
-    document.getElementById("formation_apprenant").innerHTML = contenuHtml;
+    $('#formation_apprenant').html(contenuHtml).trigger("change");
 }
 
 function detailsFormation(formation)

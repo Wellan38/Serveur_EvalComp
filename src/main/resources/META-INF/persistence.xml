@@ -11,6 +11,7 @@
     <class>alexandre.evalcomp.metier.modele.Personne</class>
     <class>alexandre.evalcomp.metier.modele.Regle</class>
     <class>alexandre.evalcomp.metier.modele.Score</class>
+    <class>alexandre.evalcomp.metier.modele.RulePattern</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/EvalComp"/>

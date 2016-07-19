@@ -9,7 +9,17 @@ and open the template in the editor.
         <title>EvalComp - Compétence Générale</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
+        
         <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
         <link href="assets/snackbar/css/material.css" rel="stylesheet">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -42,35 +52,25 @@ and open the template in the editor.
                 <div class="row">
                     <div id="infos">
                         <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="code_competence" class="col-sm-4 col-md-3 control-label">Code* :</label>
-                                <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="code_competence" onkeyup="checkCode()" required>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="code_competence" class="control-label">Code* :</label>
+                                <input type="text" class="form-control" id="code_competence" onkeyup="checkCode()" required>
                             </div>
-                            <div class="form-group">
-                                <label for="categorie_competence" class="col-sm-4 col-md-3 control-label">Catégorie* :</label>
-                                <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="categorie_competence" onkeyup="checkCategorie()" required>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="categorie_competence" class="control-label">Catégorie* :</label>
+                                <input type="text" class="form-control" id="categorie_competence" onkeyup="checkCategorie()" required>
                             </div>
-                            <div class="form-group">
-                                <label for="libelle_competence" class="col-sm-4 col-md-3 control-label">Libellé* :</label>
-                                <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="libelle_competence" onkeyup="checkLibelle()" required>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="libelle_competence" class="control-label">Libellé* :</label>
+                                <input type="text" class="form-control" id="libelle_competence" onkeyup="checkLibelle()" required>
                             </div>
-                            <div class="form-group">
-                                <label for="seuil_min_competence" class="col-sm-4 col-md-3 control-label">Seuil minimal* :</label>
-                                <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="seuil_min_competence" onkeyup="checkSeuilMin()" required>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="seuil_min_competence" class="control-label">Seuil minimal* :</label>
+                                <input type="text" class="form-control" id="seuil_min_competence" onkeyup="checkSeuilMin()" required>
                             </div>
-                            <div class="form-group">
-                                <label for="seuil_max_competence" class="col-sm-4 col-md-3 control-label">Seuil maximal* :</label>
-                                <div class="col-sm-8 col-md-9">
-                                    <input type="text" class="form-control" id="seuil_max_competence" onkeyup="checkSuilMax()" required>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="seuil_max_competence" class="control-label">Seuil maximal* :</label>
+                                <input type="text" class="form-control" id="seuil_max_competence" onkeyup="checkSuilMax()" required>
                             </div>
                         </form>
                     </div>
@@ -87,6 +87,8 @@ and open the template in the editor.
         
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="js/snackbar.js"></script>
         <script src="js/competence/competence_generale.js"></script>

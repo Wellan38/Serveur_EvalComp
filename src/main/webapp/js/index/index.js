@@ -16,7 +16,8 @@ jQuery(document).ready(function($) {
 });
 
 (function()
-{    
+{
+    $.material.init();
     listerFormations();
     
     switch(type)
@@ -98,7 +99,6 @@ function afficherCompetences(competences)
 function listerFormations()
 {
     $('#icone_formations').removeClass("clickable fa-plus-circle").addClass("fa-spinner fa-pulse").attr("onclick", "");
-    
     $.ajax({
         url: './ActionServlet',
         type: 'GET',

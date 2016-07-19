@@ -55,12 +55,13 @@ function detailsCompetence()
         var c = data.obj;
 
         compS = c.compSpec;
-
-        document.getElementById("code_competence").value = c.code;
-        document.getElementById("categorie_competence").value = c.categorie;
-        document.getElementById("libelle_competence").value = c.libelle;
-        document.getElementById("seuil_min_competence").value = c.seuil_min;
-        document.getElementById("seuil_max_competence").value = c.seuil_max;
+        
+        $('#legende').html("Compétence générale : " + c.libelle);
+        $('#code_competence').attr("value", c.code).trigger("change");
+        $('#categorie_competence').attr("value", c.categorie).trigger("change");
+        $('#libelle_competence').attr("value", c.libelle).trigger("change");
+        $('#seuil_min_competence').attr("value", c.seuil_min).trigger("change");
+        $('#seuil_max_competence').attr("value", c.seuil_max).trigger("change");
         
         afficherCompS();
     })
@@ -292,6 +293,8 @@ function afficherCompS()
     contenuHtml += '</div>';
     
     $('#comp_spec').html(contenuHtml);
+    
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function voirCompS(codeS)

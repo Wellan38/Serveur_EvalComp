@@ -17,6 +17,7 @@ var regle;
 var myRadarChart = null;
 
 (function(){
+    $.material.init();
     listerCompetences();
 })();
 

@@ -9,10 +9,18 @@ and open the template in the editor.
         <title>EvalComp - Apprenant</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
-        <link href="assets/snackbar/css/material.css" rel="stylesheet">
+        <!-- Material Design fonts -->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+        <!-- Bootstrap Material Design -->
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
         <link href="css/common.css" rel="stylesheet">
         <link href="css/apprenant.css" rel="stylesheet">
     </head>
@@ -42,35 +50,25 @@ and open the template in the editor.
                 <div class="row">
                     <div id="details">
                         <form class='form-horizontal'>
-                            <div class='form-group'>
-                                <label id="label_code" for='code_apprenant' class='col-sm-2 control-label'>Code :</label>
-                                <div id="col_code" class='col-sm-10'>
-                                    <input type='text' class='form-control' id='code_apprenant'>
-                                </div>
+                            <div class='form-group label-floating'>
+                                <label id="label_code" for='code_apprenant' class='control-label'>Code :</label>
+                                <input type='text' class='form-control' id='code_apprenant'>
                             </div>
-                            <div class='form-group'>
-                                <label id="label_nom" for='nom_apprenant' class='col-sm-2 control-label'>Nom :</label>
-                                <div id="col_nom" class='col-sm-10'>
-                                    <input type='text' class='form-control' id='nom_apprenant'>
-                                </div>
+                            <div class='form-group label-floating'>
+                                <label id="label_nom" for='nom_apprenant' class='control-label'>Nom :</label>
+                                <input type='text' class='form-control' id='nom_apprenant'>
                             </div>
-                            <div class='form-group'>
-                                <label id="label_fonction" for='fonction_apprenant' class='col-sm-2 control-label'>Fonction :</label>
-                                <div id="col_fonction" class='col-sm-10'>
-                                    <input type='text' class='form-control' id='fonction_apprenant'>
-                                </div>
+                            <div class='form-group label-floating'>
+                                <label id="label_fonction" for='fonction_apprenant' class='control-label'>Fonction :</label>
+                                <input type='text' class='form-control' id='fonction_apprenant'>
                             </div>
-                            <div class='form-group'>
-                                <label id="label_entreprise" for='entreprise_apprenant' class='col-sm-2 control-label'>Entreprise :</label>
-                                <div id="col_entreprise" class='col-sm-10'>
-                                    <input type='text' class='form-control' id='entreprise_apprenant'>
-                                </div>
+                            <div class='form-group label-floating'>
+                                <label id="label_entreprise" for='entreprise_apprenant' class='control-label'>Entreprise :</label>
+                                <input type='text' class='form-control' id='entreprise_apprenant'>
                             </div>
-                            <div class='form-group'>
-                                <label id="label_formation" for='formation_apprenant' class='col-sm-2 control-label'>Formation :</label>
-                                <div id="col_formation" class='col-sm-10'>
-                                    <select class='form-control' id='formation_apprenant'></select>
-                                </div>
+                            <div class='form-group label-floating'>
+                                <label id="label_formation" for='formation_apprenant' class='control-label'>Formation :</label>
+                                <select class='form-control' id='formation_apprenant'></select>
                             </div>
                         </form>
                     </div>
@@ -79,8 +77,8 @@ and open the template in the editor.
                 
                 <div class="row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-danger" id="annuler" onclick="detailsApprenant()"><span class="fa fa-times"></span></button>
-                        <button type="button" class="btn btn-success" id="valider" onclick="validerModifs()"><span class="fa fa-check"></span></button>
+                        <button type="button" class="btn btn-raised btn-danger" id="annuler" onclick="detailsApprenant()"><span class="fa fa-times"></span></button>
+                        <button type="button" class="btn btn-raised btn-success" id="valider" onclick="validerModifs()"><span class="fa fa-check"></span></button>
                     </div>
                 </div>
                 <div class="modal fade" id="myModal" style="left: 50%" role="dialog">
@@ -99,8 +97,10 @@ and open the template in the editor.
                 <div class="snackbar" id="retour"></div>
             </fieldset>
         </div>
-        <script src='assets/bootstrap/js/jquery.js'></script>
+        <script src="assets/bootstrap/js/jquery.js"></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
         <script src="js/graphiques.js"></script>

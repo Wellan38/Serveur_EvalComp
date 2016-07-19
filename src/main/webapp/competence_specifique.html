@@ -9,11 +9,12 @@ and open the template in the editor.
         <title>EvalComp - Compétence spécifique</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
-        <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
-        <link href="assets/snackbar/css/material.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
+        <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
-        <link href="assets/jqcloud/jqcloud.css" rel="stylesheet">
         <link href="css/common.css" rel="stylesheet">
         <link href="css/competence_specifique.css" rel="stylesheet">
     </head>
@@ -44,65 +45,56 @@ and open the template in the editor.
                     <div class="form-horizontal">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="form-group">
-                                <label for="code_comp" class="col-sm-3 col-md-3 control-label">Code :</label>
-                                <div class="col-sm-9 col-md-9">
-                                    <input type="text" class="form-control" id="code_comp" disabled>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="code_comp" class="control-label">Code :</label>
+                                <input type="text" class="form-control" id="code_comp" disabled>
                             </div>
-                            <div class="form-group">
-                                <label for="categorie_comp" class="col-sm-3 col-md-3 control-label">Catégorie :</label>
-                                <div class="col-sm-9 col-md-9">
-                                    <div class="col-xs-6" style="padding-left:0px">
-                                        <select class="form-control" id="categorie_comp">
-                                            <option>Connaissance</option>
-                                            <option>Compréhension</option>
-                                            <option>Application</option>
-                                            <option>Analyse</option>
-                                            <option>Synthèse</option>
-                                            <option>Évaluation</option>
-                                        </select>
-                                    </div>
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="categorie_comp" class="control-label">Catégorie :</label>
+                                <select class="form-control" id="categorie_comp" onchange="listerTags()">
+                                    <option>Connaissance</option>
+                                    <option>Compréhension</option>
+                                    <option>Application</option>
+                                    <option>Analyse</option>
+                                    <option>Synthèse</option>
+                                    <option>Évaluation</option>
+                                </select>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-3 col-md-3">
-                                    <label for="libelle_comp" class="control-label">Libellé :</label>
-                                    <i class="clickable fa fa-tags pull-right" onclick="afficherTags()"></i>
-                                </div>
-                                <div class="col-sm-9 col-md-9">
+                            <div class="form-group label-floating">
+                                <label for="libelle_comp" class="control-label">Libellé :</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="clickable fa fa-tags pull-right" onclick="afficherTags()"></i></span>
                                     <input type="text" class="form-control" id="libelle_comp">
-                                    
-                                    <div class="modal fade" id="myModal" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div id="tags_cloud"></div>
-                                                </div>
+                                </div>
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div id="tags_cloud"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="ponderation_comp" class="col-xs-3 col-md-3 control-label">Pondération :</label>
-                                <div class="col-xs-3 col-sm-2 col-md-3">
-                                    <input type="number" class="form-control" id="ponderation_comp" onchange="changerPonderation(this.value)" value="0.2" min="0.1" max="1" step="0.1">
-                                </div>
+                            <div class="form-group label-floating">
+                                <label for="ponderation_comp" class="control-label">Pondération :</label>
+                                <input type="number" class="form-control" id="ponderation_comp" onchange="changerPonderation(this.value)" value="0.2" min="0.1" max="1" step="0.1">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                <label>Règles :</label>
-                                <form id="liste_regles"></form>
+                                <label>Patterns de règle :</label>
+                                <form id="liste_rule_patterns"></form>
                             </div>
                             <div class="col-sm-9" style="padding: 0px;">
-                                <textarea class="form-control" rows="5" id="texte_regle" disabled></textarea>
+                                <div class="list-group" id="cas_regle"></div>
                             </div>
                         </div>
                         <div class="row" id="row_mes">
-                            <label for="mise_en_situation">Mise en situation :</label>
-                            <textarea class="form-control" rows="5" id="mise_en_situation"></textarea>
+                            <div class="form-group label-floating">
+                                <label for="mise_en_situation">Mise en situation :</label>
+                                <textarea class="form-control" rows="5" id="mise_en_situation"></textarea>
+                            </div>
                         </div>
                     </div>
                     
@@ -112,8 +104,8 @@ and open the template in the editor.
                 
                 <div class="row" id="boutons_modif">
                     <div class="text-center">
-                        <button type="button" class="btn btn-danger" id="annuler" onclick="annuler()"><span class="fa fa-times"></span></button>
-                        <button type="button" class="btn btn-success" id="valider" onclick="valider()"><span class="fa fa-check"></span></button>
+                        <button type="button" class="btn btn-raised btn-danger" id="annuler" onclick="annuler()"><span class="fa fa-times"></span></button>
+                        <button type="button" class="btn btn-raised btn-success" id="valider" onclick="valider()"><span class="fa fa-check"></span></button>
                     </div>
                 </div>
                 <div class="modal fade" id="aide" role="dialog">
@@ -132,6 +124,8 @@ and open the template in the editor.
         
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
+        <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="assets/jqcloud/jqcloud-1.0.4.js"></script>
         <script src="js/aide.js"></script>

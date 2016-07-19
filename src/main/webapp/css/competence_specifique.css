@@ -19,3 +19,10 @@ and open the template in the editor.
 #row_mes {
     margin-top: 15px;
 }
+
+.parametre {
+    height: 27px;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+}

@@ -10,10 +10,15 @@ var code;
 var essai_submit = false;
 
 $(function(){
-   $('.datepicker').datepicker({
-      format: 'dd/mm/yyyy',
-      onSelect: checkDate()
-    });
+    $.material.init();
+    $('#date_formation').bootstrapMaterialDatePicker
+    ({
+        format: 'DD/MM/YYYY',
+        time: false,
+        clearButton: true,
+        weekStart: 1
+        
+    }).on("change", checkDate());
     
     if (mode === "modification")
     {
@@ -47,12 +52,13 @@ function afficherInfos()
     .done(function(data) {
         var formation = data.obj;
 
-        document.getElementById('code_formation').value = formation.code;
-        document.getElementById('libelle_formation').value = formation.libelle;
-        document.getElementById('domaine_formation').value = formation.domaine;
-        document.getElementById('url_formation').value = formation.url;
-        document.getElementById('duree_formation').value = formation.duree;
-        document.getElementById('date_formation').value = formation.date;
+        $('#legende').html("Formation : " + formation.libelle);
+        $('#code_formation').attr("value", formation.code).trigger("change");
+        $('#libelle_formation').attr("value", formation.libelle).trigger("change");
+        $('#domaine_formation').attr("value", formation.domaine).trigger("change");
+        $('#url_formation').attr("value", formation.url).trigger("change");
+        $('#duree_formation').attr("value", formation.duree).trigger("change");
+        $('#date_formation').attr("value", formation.date).trigger("change");
         
         document.getElementById("legende").innerHTML = 'Formation : ' + formation.libelle;
         
@@ -336,35 +342,45 @@ function checkDuree()
         if (duree_f.value === "")
         {
             valide = false;
-            $('#duree_formation').attr('data-original-title', 'La durée doit être précisée').tooltip('fixTitle').tooltip('show');
+            $('#help_duree').html('La durée doit être précisée');
         }
         else
         {
             if (isNaN(duree_f.value))
             {
                 valide = false;
-                $('#duree_formation').attr('data-original-title', 'La durée doit être un nombre valide').tooltip('fixTitle').tooltip('show');
+                $('#help_duree').html('La durée doit être un nombre valide');
+                //$('#duree_formation').attr('data-original-title', 'La durée doit être un nombre valide').tooltip('fixTitle').tooltip('show');
             }
             else if (duree_f.value < 1)
             {
+                console.log("ok");
                 valide = false;
-                $('#duree_formation').attr('data-original-title', 'La durée doit être un nombre >= 1').tooltip('fixTitle').tooltip('show');
+                $('#help_duree').html('La durée doit être un nombre >= 1');
+                //$('#duree_formation').attr('data-original-title', 'La durée doit être un nombre >= 1').tooltip('fixTitle').tooltip('show');
             }
             else if ((parseFloat(duree_f.value) | 0) !== parseFloat(duree_f.value))
             {
                 valide = false;
-                $('#duree_formation').attr('data-original-title', 'La durée doit être un nombre entier').tooltip('fixTitle').tooltip('show');
+                $('#help_duree').html('La durée doit être un nombre entier');
+                //$('#duree_formation').attr('data-original-title', 'La durée doit être un nombre entier').tooltip('fixTitle').tooltip('show');
             }
         }
 
         if (!valide)
         {
-            duree_f.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+            $('#form_duree').addClass("has-error");
+            //duree_f.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
         }
         else
         {
-            $('#duree_formation').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
-            duree_f.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+            $('#help_duree').html("");
+            //$('#duree_formation').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
+            if ($('#form_duree').hasClass("has-error"))
+            {
+                $('#form_duree').removeClass("has-error");
+            }
+            //duree_f.style = "border-color: #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
         }
     }
     
@@ -396,12 +412,14 @@ function checkDate()
 
         if (!valide)
         {
-            date_f.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+            //date_f.style = "border: 1px solid red; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);";
+            $('#form_date').addClass("has-error");
         }
         else
         {
             $('#date_formation').attr('data-original-title', '').tooltip('fixTitle').tooltip('hide');
-            date_f.style = "border: 1px solid #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+            //date_f.style = "border: 1px solid #66afe9; box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, .6);";
+            $('#form_date').removeClass("has-error");
         }
     }
     
