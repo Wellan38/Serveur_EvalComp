@@ -223,7 +223,28 @@ public class ActionInfos extends Action {
             
             if (c.getRegle() != null)
             {
-                competence.addProperty("regle", c.getRegle().getId());
+                List<Pair<String, Integer>> cas_regle = c.getRegle().getCas();
+                
+                JsonObject r = new JsonObject();
+                
+                JsonArray cas = new JsonArray();
+                
+                for (Pair<String, Integer> p : cas_regle)
+                {
+                    JsonObject pa = new JsonObject();
+                    
+                    pa.addProperty("condition", p.getKey());
+                    pa.addProperty("score", p.getValue());
+                    
+                    cas.add(pa);
+                }
+                
+                r.addProperty("code", c.getRegle().getId());
+                r.addProperty("libelle", c.getRegle().getLibelle());
+                r.addProperty("pattern", c.getRegle().getPattern().getId());
+                r.add("cas", cas);
+                
+                competence.add("regle", r);
             }
             
             competence.addProperty("miseensituation", c.getMiseEnSituation());
@@ -242,6 +263,7 @@ public class ActionInfos extends Action {
         {
             regle.addProperty("code", p.getId());
             regle.addProperty("libelle", p.getLibelle());
+            regle.addProperty("ajoutCas", p.getAjoutCas());
             
             JsonArray texte = new JsonArray();
             

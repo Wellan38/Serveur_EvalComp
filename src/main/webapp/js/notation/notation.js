@@ -12,8 +12,6 @@ var liste_formations;
 var liste_apprenants;
 var liste_competences;
 var scores = [];
-var regle;
-
 var myRadarChart = null;
 
 (function(){
@@ -236,63 +234,50 @@ function detailsCompS(codeG, codeS)
     })
     .done(function(data) {
         var c = data.obj;
-        var code_regle = c.regle;
-        
-        document.getElementById("libelle_" + codeS + "_").innerHTML = c.libelle;
-        
-        var mes = c.miseensituation;
-        
-        document.getElementById("mes_" + codeS + "_").innerHTML = mes;
-        
-        infosRegle(code_regle);
-        
-        var r = regle.texte;
-        
-        var contenu_regle = '<ul class="list-group" style="margin-bottom: 0px" id="score_' + codeS + '">';
-        
-        for (var i = 0; i < r.length; i++)
+        if (c.regle != null)
         {
-            var tab_regle = r[i].split(" ");
-            var note = tab_regle[tab_regle.length - 1];
-            tab_regle[0] = '<b>' + tab_regle[0] + '</b>';
-            
-            for (var j = tab_regle.length - 5; j < tab_regle.length; j++)
-            {
-                tab_regle[j] = '<b>' + tab_regle[j] + '</b>';
-            }
-            
-            var texte = tab_regle.join(" ");
-            
-            contenu_regle += '<li class="clickable list-group-item" id="note_' + codeS + '_' + note + '" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')">' + texte + '</li>';
-        }
-        
-        contenu_regle += '</ul>';
-        
-        document.getElementById("regle_" + codeS + "_").innerHTML = contenu_regle;
-    })
-    .fail(function() {
-        console.log('Erreur dans le chargement des informations.');
-    })
-    .always(function() {
-        //
-    });
-}
+            var cas_regle = c.regle.cas;
 
-function infosRegle(code)
-{
-    $.ajax({
-        url: './ActionServlet',
-        type: 'GET',
-        data: {
-            action: 'infos',
-            type: 'regle',
-            code: code.replace(/_/g, "")
-        },
-        async:false,
-        dataType: 'json'
-    })
-    .done(function(data) {
-        regle = data.obj;
+            document.getElementById("libelle_" + codeS + "_").innerHTML = c.libelle;
+
+            var mes = c.miseensituation;
+
+            document.getElementById("mes_" + codeS + "_").innerHTML = mes;
+
+            var contenu_regle = '<table class="table table-hover" style="margin-bottom: 0px" id="score_' + codeS + '"><tbody>';
+
+            for (var i = 0; i < cas_regle.length; i++)
+            {
+                var tab_regle = cas_regle[i].condition.split(" ");
+                var note = cas_regle[i].score;
+
+                for (var j = 0; j < tab_regle.length; j++)
+                {
+                    if (tab_regle[j] === "si" || tab_regle[j] === "alors" || tab_regle[j] === ":" ||tab_regle[j] === "score" ||tab_regle[j] === "10" || tab_regle[j] === "sinon")
+                    {
+                        tab_regle[j] = '<b>' + tab_regle[j] + '</b>';
+                    }
+                    if (tab_regle[j].startsWith("&"))
+                    {
+                        tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "");
+                    }
+                    if (tab_regle[j].endsWith('"'))
+                    {
+                        tab_regle[j] = tab_regle[j].replace(/"/g, "");
+                    }
+                }
+
+                var texte = tab_regle.join(" ") + '<b>' + note + '</b>';
+
+                contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
+            }
+
+            contenu_regle += '</tbody></table>';
+
+            document.getElementById("regle_" + codeS + "_").innerHTML = contenu_regle;
+            
+            $.material.init();
+        }
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');

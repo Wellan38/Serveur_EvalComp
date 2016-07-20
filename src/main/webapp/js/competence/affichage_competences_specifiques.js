@@ -153,12 +153,15 @@ function voirCompS(codeG, codeS)
 
 function disableClick(id)
 {
-    document.getElementById("cercle_" + id + "_").setAttribute("onclick", "");
+    $("#cercle_" + id + "_").attr("onclick", "");
+    $("#cercle_" + id + "_").tooltip("hide");
+    $("#cercle_" + id + "_").tooltip("disable");
 }
 
 function enableClick(id)
 {
-    document.getElementById("cercle_" + id + "_").setAttribute("onclick", "voirCompS(" + id + ")");
+    $("#cercle_" + id + "_").attr("onclick", "voirCompS(" + id + ")");
+    $("#cercle_" + id + "_").tooltip("enable");
 }
 
 function ajouterCompS(code)

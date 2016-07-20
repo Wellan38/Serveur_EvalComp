@@ -106,3 +106,18 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   float: right;
 }
+
+@media (max-width: 767px) {
+  .form-inline .form-control {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+}
+@media (max-width: 767px) {
+  .form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+}

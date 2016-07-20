@@ -4,6 +4,7 @@ import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
 import alexandre.evalcomp.metier.modele.Formation;
 import alexandre.evalcomp.metier.modele.Regle;
+import alexandre.evalcomp.metier.modele.RulePattern;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -122,7 +124,19 @@ public class ActionCreation extends Action
         String libelle = request.getParameter("libelle");
         String categorie = request.getParameter("categorie");
         Double ponderation = Double.valueOf(request.getParameter("ponderation"));
-        Regle regle = servM.trouverRegleParId(request.getParameter("regle"));
+        RulePattern pattern = servM.trouverRulePatternParId(request.getParameter("rule_pattern"));
+        JsonParser jsonParser = new JsonParser();
+        JsonArray cas_regle = (JsonArray)jsonParser.parse(request.getParameter("regle"));
+        
+        List<Pair<String, Integer>> cas = new ArrayList();
+        for (JsonElement e : cas_regle)
+        {
+            Pair<String, Integer> p = new Pair(e.getAsJsonObject().get("condition").getAsString(), e.getAsJsonObject().get("score").getAsInt());
+            cas.add(p);
+        }
+        
+        Regle regle = servM.creerRegle("R-" + code, "Regle_" + code + "_", pattern, cas);
+        
         String miseEnSituation = request.getParameter("miseensituation");
         
         if (regle != null)
@@ -136,8 +150,6 @@ public class ActionCreation extends Action
                 if (cg != null)
                 {
                     List<CompetenceS> compSpec = cg.getCompSpec();
-            
-                    JsonParser jsonParser = new JsonParser();
                     JsonArray ja = (JsonArray)jsonParser.parse(request.getParameter("compSpec"));
                     
                     for (JsonElement e : ja)

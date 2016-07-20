@@ -8,15 +8,18 @@ import com.google.gson.JsonParser;
 import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
 import alexandre.evalcomp.metier.modele.Formation;
+import alexandre.evalcomp.metier.modele.Regle;
 import com.google.gson.JsonElement;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -148,8 +151,8 @@ public class ActionModification extends Action
                     
                     for (JsonElement e : ja)
                     {
-                        System.out.println(e.getAsJsonObject().get("code").toString().replace("\"", ""));
-                        if (e.getAsJsonObject().get("code").toString().replace("\"", "").equals(c.getId()))
+                        System.out.println(e.getAsJsonObject().get("code").getAsString());
+                        if (e.getAsJsonObject().get("code").getAsString().equals(c.getId()))
                         {
                             System.out.println("trouvé");
                             trouve = Boolean.TRUE;
@@ -195,7 +198,7 @@ public class ActionModification extends Action
                         {
                             CompetenceG c = it.next();
 
-                            if (c.getId().equals(e.getAsJsonObject().get("code").toString().replace("\"", "")))
+                            if (c.getId().equals(e.getAsJsonObject().get("code").getAsString()))
                             {
                                 System.out.println(c);
                                 trouve = true;
@@ -313,16 +316,38 @@ public class ActionModification extends Action
             {
                 for (CompetenceS cs : compSpec)
                 {
-                    if (cs.getId().equals(e.getAsJsonObject().get("code").toString().replace("\"", "")))
-                    {
-                        System.out.println(e);
+                    if (cs.getId().equals(e.getAsJsonObject().get("code").getAsString()))
+                    {   
                         cs.setPonderation(e.getAsJsonObject().get("ponderation").getAsDouble());
                         servM.majObjet(cs);
                         break;
                     }
                 }
             }
-            c.setRegle(servM.trouverRegleParId(request.getParameter("regle").replace("_", "")));
+            
+            JsonArray cas_ja = (JsonArray)jsonParser.parse(request.getParameter("regle"));
+
+            List<Pair<String, Integer>> cas = new ArrayList();
+            for (JsonElement e : cas_ja)
+            {
+                System.out.println(e.getAsJsonObject().get("condition").getAsString());
+                Pair<String, Integer> p = new Pair(e.getAsJsonObject().get("condition").getAsString(), e.getAsJsonObject().get("score").getAsInt());
+                cas.add(p);
+            }
+            
+            Regle r = c.getRegle();
+            
+            if (r != null)
+            {  
+                List<Pair<String, Integer>> cas_regle = r.getCas();
+                cas_regle = cas;
+                servM.majObjet(r);
+            }
+            else
+            {
+                Regle re = servM.creerRegle("R-" + c.getId(), "Regle_" + c.getId() + "_", servM.trouverRulePatternParId(request.getParameter("rule_pattern")), cas);
+                c.setRegle(re);
+            }
             
             return servM.majObjet(c) && servM.majObjet(c.getCompG());
         }

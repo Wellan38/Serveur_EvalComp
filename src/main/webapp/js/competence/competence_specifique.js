@@ -76,6 +76,7 @@ function detailsCompG()
 var param = window.location.search.substring(1).split("&");
 var code_comp = param[0].split("=")[1];
 var code_rule_pattern = null;
+var cas_rule_pattern = null;
 var liste_rule_patterns = [];
 
 function placerTag(tag)
@@ -94,7 +95,7 @@ function placerTag(tag)
         }
     }
     
-    document.getElementById("libelle_comp").value = value;
+    $('#libelle_comp').val(value).trigger("change");
     
     $('#myModal').modal('hide');
 }
@@ -215,16 +216,20 @@ function listerRulePatterns()
 
 function afficherListeRulePatterns(patterns)
 {
-    var contenuListe = "";
+    var contenuListe = '<div class="list-group">';
 
     for (var i = 0; i < patterns.length; i++)
     {
-        contenuListe += '<div class="radio radio-primary">';
-        contenuListe += '<label><input type="radio" name="regle" id="regle_' + patterns[i].code + '_" value="_' + patterns[i].code + '_" onclick="changerRulePattern(\'' + patterns[i].code + '\')" >' + patterns[i].libelle + '</label>';
-        contenuListe += '</div>';
+        contenuListe += '<div class="list-group-item" style="padding: 0px;"><div class="radio radio-primary">';
+        contenuListe += '<label style="text-align: left; padding-left: 35px;"><input type="radio" name="regle" id="regle_' + patterns[i].code + '_" value="_' + patterns[i].code + '_" onclick="changerRulePattern(\'' + patterns[i].code + '\')" >' + patterns[i].libelle + '</label>';
+        contenuListe += '</div></div>';
     }
     
+    contenuListe += '</div>';
+    
     $('#liste_rule_patterns').html(contenuListe);
+    
+    $.material.init();
 }
 
 function detailsCompS()
@@ -246,13 +251,65 @@ function detailsCompS()
         var comp = data.obj;
         
         $('#legende').html('Compétence spécifique : ' + comp.libelle);
-        $('#code_comp').attr("value", comp.code).trigger("change");
-        $('#categorie_comp').attr("value", comp.categorie).trigger("change");
-        $('#libelle_comp').attr("value", comp.libelle).trigger("change");
-        $('#ponderation_comp').attr("value", comp.ponderation);
+        $('#code_comp').val(comp.code).trigger("change");
+        $('#categorie_comp').val(comp.categorie).trigger("change");
+        $('#libelle_comp').val(comp.libelle).trigger("change");
+        $('#ponderation_comp').val(comp.ponderation);
         anciennePond = comp.ponderation;
-        code_regle = comp.regle;
-        checkRulePattern();        
+        
+        if (comp.regle != null)
+        {
+            code_rule_pattern = comp.regle.pattern;
+            checkRulePattern();
+
+            var cas = comp.regle.cas;
+
+            for (var i = 0; i < cas.length; i++)
+            {
+                var tab = cas[i].condition.split(" ");
+                
+                for (var j = 0; j < tab.length; j++)
+                {
+                    if (tab[j].includes('="'))
+                    {
+                        if (!tab[j].endsWith('"'))
+                        {
+                            while (!tab[j+1].includes('"'))
+                            {
+                                tab[j] += " " + tab[j+1];
+                                tab.splice(j+1, 1);
+                            }
+                            tab[j] += " " + tab[j+1];
+                        }
+                    }
+                }
+
+                for (var j = 0; j < tab.length; j++)
+                {
+                    if (tab[j].includes("&nombre"))
+                    {
+                        var valeur = tab[j].split("=")[1].replace(/"/g, "");
+                        $('#nombre_' + i + '_' + j).val(valeur);
+                    }
+                    else if (tab[j].includes("&type"))
+                    {
+                        var valeur = tab[j].split("=")[1].replace(/"/g, "");
+                        $('#type_' + i + '_' + j).val(valeur);
+                    }
+                    else if (tab[j].includes("&verbe"))
+                    {
+                        var valeur = tab[j].split("=")[1].replace(/"/g, "");
+                        $('#verbe_' + i + '_' + j).val(valeur);
+                    }
+                    else if (tab[j].includes("&libre"))
+                    {
+                        var valeur = tab[j].split("=")[1].replace(/"/g, "");
+                        $('#libre_' + i + '_' + j).val(valeur);
+                    }
+                }
+            }
+        }
+        
         $('#mise_en_situation').attr("value", comp.miseensituation).trigger("change");
     })
     .fail(function() {
@@ -267,6 +324,7 @@ function checkRulePattern()
 {
     if (code_rule_pattern != null)
     {
+        $("#regle_" + code_rule_pattern + "_").attr("checked", "");
         $.ajax({
             url: './ActionServlet',
             type: 'GET',
@@ -282,7 +340,16 @@ function checkRulePattern()
             var p = data.obj;
 
             var texte = p.cas;
-            var contenuTexte = '<div class="list-group-separator"></div>';
+            cas_rule_pattern = p.cas;
+            
+            var contenuTexte = '<thead><tr><th>Condition</th><th>Score</th></tr></thead>';
+            
+            if (p.ajoutCas)
+            {
+                contenuTexte += '';
+            }
+            
+            contenuTexte += '<tbody>';
 
             for (var j = 0; j < texte.length; j++)
             {
@@ -290,11 +357,11 @@ function checkRulePattern()
 
                 for (var k = 0; k < tab.length; k++)
                 {
-                    if (tab[k] === "si" || tab[k] === "sinon" || tab[k] === "alors" || tab[k] === ":" || tab[k] === "score" || tab[k] === "=")
+                    if (tab[k] === "si" || tab[k] === "sinon")
                     {
                         tab[k] = '<b>' + tab[k] + '</b>';
                     }
-                    else if (tab[k].includes("&number"))
+                    if (tab[k].includes("&nombre"))
                     {
                         tab[k] = '<div class="form-group" style="margin: 0px;"><input type="text" class="form-control parametre" id="nombre_' + j + '_' + k + '" style="width: 60px;"></input></div>';
                     }
@@ -306,14 +373,20 @@ function checkRulePattern()
                     {
                         tab[k] = '<div class="form-group" style="margin: 0px;"><select class="form-control parametre" id="verbe_' + j + '_' + k + '" style="width: 100px;"></select></div>';
                     }
+                    else if (tab[k].includes("&libre"))
+                    {
+                        tab[k] = '<div class="form-group" style="margin: 0px;"><input type="text" class="form-control parametre" id="libre_' + j + '_' + k + '" style="width: 100%;"></div>';
+                    }
                 }
 
-                var texte_parse = '<div class="form-inline">' + tab.join(" ") + texte[j].score + '</div>';
+                var texte_parse = '<div class="form-inline">' + tab.join(" ") + '</div>';
 
-                contenuTexte += '<div class="list-group-item">' + texte_parse + '</div><div class="list-group-separator"></div>';
+                contenuTexte += '<tr><td>' + texte_parse + '</td><td style="text-align: center;"><b>' + texte[j].score + '</b></td></tr>';
             }
-
-            $('#cas_regle').html(contenuTexte);
+            
+            contenuTexte += '</tbody>';
+            
+            document.getElementById("cas_regle").innerHTML = contenuTexte;
             
             var types = $('*[id^="type_"]');
             
@@ -341,16 +414,43 @@ function checkRulePattern()
 }
 
 function valider()
-{
-    var code_regle = $("input[type='radio'][name='regle']:checked").val();
-    
-    if (code_regle == null)
+{    
+    if (code_rule_pattern == null)
     {
         afficherRetour("modifs_refusees");
     }
     else
     {
-        code_regle = code_regle.replace(/_/g, "");
+        var cas_regle = [];
+        
+        for (var i = 0; i < cas_rule_pattern.length; i++)
+        {
+            var tab = cas_rule_pattern[i].condition.split(" ");
+            
+            for (var j = 0; j < tab.length; j++)
+            {
+                if (tab[j].includes("&nombre"))
+                {
+                    tab[j] = '&nombre="' + $('#nombre_' + i + '_' + j).val() + '"';
+                }
+                else if (tab[j].includes("&type"))
+                {
+                    tab[j] = '&type="' + $('#type_' + i + '_' + j).val() + '"';
+                }
+                else if (tab[j].includes("&verbe"))
+                {
+                    tab[j] = '&verbe="' + $('#verbe_' + i + '_' + j).val() + '"';
+                }
+                else if (tab[j].includes("&libre"))
+                {
+                    tab[j] = '&libre="' + $('#libre_' + i + '_' + j).val() + '"';
+                }
+            }
+            
+            cas_regle.push({condition: tab.join(" "), score: cas_rule_pattern[i].score});
+        }
+        
+        code_rule_pattern = code_rule_pattern.replace(/_/g, "");
         if (mode === "modification")
         {
             afficherRetour("modifs_en_cours");
@@ -365,7 +465,8 @@ function valider()
                     categorie: document.getElementById("categorie_comp").value,
                     libelle: document.getElementById("libelle_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
-                    regle: code_regle,
+                    rule_pattern: code_rule_pattern,
+                    regle: JSON.stringify(cas_regle),
                     miseensituation: document.getElementById("mise_en_situation").value
                 },
                 async:false,
@@ -409,7 +510,8 @@ function valider()
                     libelle: document.getElementById("libelle_comp").value,
                     ponderation: document.getElementById("ponderation_comp").value,
                     compSpec: JSON.stringify(competences[0].compSpec),
-                    regle: code_regle,
+                    rule_pattern: code_rule_pattern,
+                    regle: JSON.stringify(cas_regle),
                     miseensituation: document.getElementById("mise_en_situation").value
                 },
                 async:false,
@@ -421,6 +523,9 @@ function valider()
                 if (retour.valide)
                 {
                     afficherRetour("creation_competence_s_acceptee");
+                    setTimeout(function() {
+                        window.location.href = document.referrer;
+                    }, 1000);
                 }
                 else
                 {

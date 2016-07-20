@@ -213,13 +213,13 @@ function afficherCompS()
             
             var libelle = compS[0].libelle.substring(0).split(" ")[0];
 
-            contenuHtml += '<div id="cercle\'' + compS[0].code + '\'" class="clickable full-circle" style="height:' + d_max + 'px; width:' + d_max + 'px; top:' + (h/2 - d_max/2) + 'px; left:' + (w/2 - d_max/2) + 'px" data-toggle="tooltip" title="' + compS[0].libelle + '\nCatégorie : ' + compS[0].categorie + '\nPondération : ' + compS[0].ponderation + '" onclick="voirCompS(\'' + compS[0].code + '\')">';
+            contenuHtml += '<div id="cercle_' + compS[0].code + '_" class="clickable full-circle" style="height:' + d_max + 'px; width:' + d_max + 'px; top:' + (h/2 - d_max/2) + 'px; left:' + (w/2 - d_max/2) + 'px" data-toggle="tooltip" title="' + compS[0].libelle + '\nCatégorie : ' + compS[0].categorie + '\nPondération : ' + compS[0].ponderation + '" onclick="voirCompS(\'' + compS[0].code + '\')">';
             contenuHtml += '<p style="font-size:35px; padding-top:40%; margin-bottom: 29%">' + libelle + '</p>';
             contenuHtml += '<p style="font-size:10px;">' + compS[0].ponderation + '</p>';
             
             var w_trash = d_max/2 - 11;
 
-            contenuHtml += '<span id="icone_trash\'' + compS[0].code + '\'" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[0].code + '\')" onmouseout="enableClick(\'' + compS[0].code + '\')" onclick="retirerCompS(\'' + compS[0].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
+            contenuHtml += '<span id="icone_trash_' + compS[0].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[0].code + '\')" onmouseout="enableClick(\'' + compS[0].code + '\')" onclick="retirerCompS(\'' + compS[0].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
             
             var w_ajout = w/2;
             var h_ajout = h/2;
@@ -266,14 +266,14 @@ function afficherCompS()
                 var w_plus = d/2 + d/2 * Math.sqrt(2)/2;
                 var w_minus = d/2 - d/2 * Math.sqrt(2)/2 - 20;
 
-                contenuHtml += '<div id="cercle\'' + compS[i].code + '\'" class="clickable full-circle" style="height:' + d + 'px; width:' + d + 'px; top:' + (h_circle) + 'px; left:' + (w_circle) + 'px" data-toggle="tooltip" title="' + compS[i].libelle + '\nCatégorie : ' + compS[i].categorie + '\nPondération : ' + compS[i].ponderation + '" onclick="voirCompS(\'' + compS[i].code + '\')">';
+                contenuHtml += '<div id="cercle_' + compS[i].code + '_" class="clickable full-circle" style="height:' + d + 'px; width:' + d + 'px; top:' + (h_circle) + 'px; left:' + (w_circle) + 'px" data-toggle="tooltip" title="' + compS[i].libelle + '\nCatégorie : ' + compS[i].categorie + '\nPondération : ' + compS[i].ponderation + '" onclick="voirCompS(\'' + compS[i].code + '\')">';
                 contenuHtml += '<p style="font-size:' + 25 * compS[i].ponderation / pond_max + 'px; padding-top:38%">' + libelle + '</p>';
                 contenuHtml += '<p style="font-size:10px; position:absolute; top:' + h_pond + 'px; left:' + w_pond + 'px">' + compS[i].ponderation + '</p>';
                 
-                contenuHtml += '<span id="icone_trash\'' + compS[i].code + '\'" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
+                contenuHtml += '<span id="icone_trash_' + compS[i].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
                 
-                contenuHtml += '<span id="icone_plus\'' + compS[i].code + '\'" class="clickable fa fa-plus-circle" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
-                contenuHtml += '<span id="icone_minus\'' + compS[i].code + '\'" class="clickable fa fa-minus-circle" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
+                contenuHtml += '<span id="icone_plus_' + compS[i].code + '_" class="clickable fa fa-plus-circle" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
+                contenuHtml += '<span id="icone_minus_' + compS[i].code + '_" class="clickable fa fa-minus-circle" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
                 
                 contenuHtml += '</div>';
             }
@@ -304,12 +304,15 @@ function voirCompS(codeS)
 
 function disableClick(id)
 {
-    document.getElementById("cercle'" + id + "'").setAttribute('onclick', '');
+    $("#cercle_" + id + "_").attr('onclick', '');
+    $("#cercle_" + id + "_").tooltip("hide");
+    $("#cercle_" + id + "_").tooltip("disable");
 }
 
 function enableClick(id)
 {
-    document.getElementById("cercle'" + id + "'").setAttribute('onclick', 'voirCompS(\'' + id + '\')');
+    $("#cercle_" + id + "_").attr('onclick', 'voirCompS(\'' + id + '\')');
+    $("#cercle_" + id + "_").tooltip("enable");
 }
 
 function retirerCompS(codeS)

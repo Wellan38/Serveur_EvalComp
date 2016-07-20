@@ -9,9 +9,13 @@ and open the template in the editor.
 */
 
 .list-group-item {
-    padding:5px;
+    padding:0px;
 }
 
 [id^="comp_"] {
     cursor: auto;
+}
+
+td {
+    background: none;
 }
