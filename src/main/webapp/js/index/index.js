@@ -68,7 +68,7 @@ function afficherApprenants(apprenants)
         
         contenuHtml += '<tr id="apprenant_' + a.code + '_"><td>' + a.nom + '</td><td>' + a.fonction + '</td><td>' + a.entreprise + '</td>';
         
-        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + a.code + '_" onclick="window.location.href=\'notation.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Attribuer une note à cet apprenant"></i></div></td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + a.code + '_" onclick="window.location.href=\'notation_apprenant.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Attribuer une note à cet apprenant"></i></div></td>';
         contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + a.code + '_" onclick="window.location.href=\'apprenant.html?mode=modification&code=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cet apprenant"></i></div></td>';
         contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + a.code + '_" onclick="demandeSuppressionApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cet apprenant"></i></div></td></tr>';
     }
@@ -87,6 +87,7 @@ function afficherCompetences(competences)
         var c = competences[i];
 
         contenuHtml += '<tr id="competence_' + c.code + '_"><td>' + c.libelle + '</td><td>' + c.categorie + '</td><td>' + c.nb_comp + '</td>';
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + c.code + '_" onclick="window.location.href=\'notation_competence.html?formation=' + formation + '&competence=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Noter les apprenants pour cette compétence"></i></div></td>';
         contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + c.code + '_" onclick="window.location.href=\'competence_generale.html?mode=modification&code=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette compétence"></i></div></td>';
         contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette compétence"></i></div></td></tr>';
     }

@@ -330,7 +330,6 @@ public class ActionModification extends Action
             List<Pair<String, Integer>> cas = new ArrayList();
             for (JsonElement e : cas_ja)
             {
-                System.out.println(e.getAsJsonObject().get("condition").getAsString());
                 Pair<String, Integer> p = new Pair(e.getAsJsonObject().get("condition").getAsString(), e.getAsJsonObject().get("score").getAsInt());
                 cas.add(p);
             }
@@ -339,9 +338,11 @@ public class ActionModification extends Action
             
             if (r != null)
             {  
-                List<Pair<String, Integer>> cas_regle = r.getCas();
-                cas_regle = cas;
+                r.setCas(cas);
+                
                 servM.majObjet(r);
+                
+                System.out.println(c.getRegle().getCas());
             }
             else
             {

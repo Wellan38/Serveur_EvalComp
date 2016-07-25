@@ -85,10 +85,11 @@ function detailsComp(code)
     .done(function(data) {
         var compSpec = data.obj.compSpec;
         
-        var contenuHtml = '<div class="table-responsive"><table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
-        contenuHtml += '<th style="width: 30%">Compétence spécifique</th>';
-        contenuHtml += '<th style="width: 35%">Mise en situation</th>';
-        contenuHtml += '<th style="width: 35%">Score</th>';
+        var contenuHtml = '<div"><table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
+        contenuHtml += '<th style="width: 25%">Compétence spécifique</th>';
+        contenuHtml += '<th class="minimal-cell"></th>';
+        contenuHtml += '<th style="width: 30%">Mise en situation</th>';
+        contenuHtml += '<th style="width: 45%">Score</th>';
         contenuHtml += '<th class="minimal-cell"></th>';
         contenuHtml += '</tr></thead>';
         contenuHtml += '<tbody>';
@@ -97,6 +98,7 @@ function detailsComp(code)
         {
             var c = compSpec[i];
             contenuHtml += '<tr><td id="libelle_' + c.code + '_"></td>';
+            contenuHtml += '<td><span class="badge" data-toggle="tooltip" id="ponderation_' + c.code + '_"></span></td>';
             contenuHtml += '<td id="mes_' + c.code + '_"></td>';
             contenuHtml += '<td id="regle_' + c.code + '_"></td>';
             contenuHtml += '<td style="padding-left: 0px;"><div class="text-center"><i class="clickable fa fa-list" id="visu_' + c.code + '_" onclick="window.location.href=\'competence_specifique.html?mode=modification&codeG=' + data.obj.code + '&codeS=' + c.code + '\'"></i></div></td>';
@@ -187,10 +189,10 @@ function afficherScores(competence)
         });
     }
         
-//        for (var i = 0; i < scores.length; i++)
-//        {
-//            $('#note_' + scores[i].competence + '_' + scores[i].note).addClass('active').siblings().removeClass('active');
-//        }
+        for (var i = 0; i < scores.length; i++)
+        {
+            $('#note_' + scores[i].competence + '_' + scores[i].note).attr("checked", "");
+        }
     })
     .fail(function() {
         console.log('Erreur dans le chargement de la liste.');
@@ -239,6 +241,9 @@ function detailsCompS(codeG, codeS)
             var cas_regle = c.regle.cas;
 
             document.getElementById("libelle_" + codeS + "_").innerHTML = c.libelle;
+            $('#ponderation_' + codeS + '_').html(c.ponderation);
+            $('#ponderation_' + codeS + '_').attr("title", "Pondération : " + c.ponderation);
+            $('[data-toggle="tooltip"]').tooltip();
 
             var mes = c.miseensituation;
 
@@ -253,7 +258,7 @@ function detailsCompS(codeG, codeS)
 
                 for (var j = 0; j < tab_regle.length; j++)
                 {
-                    if (tab_regle[j] === "si" || tab_regle[j] === "alors" || tab_regle[j] === ":" ||tab_regle[j] === "score" ||tab_regle[j] === "10" || tab_regle[j] === "sinon")
+                    if (tab_regle[j] === "si" || tab_regle[j] === "sinon")
                     {
                         tab_regle[j] = '<b>' + tab_regle[j] + '</b>';
                     }
@@ -266,10 +271,19 @@ function detailsCompS(codeG, codeS)
                         tab_regle[j] = tab_regle[j].replace(/"/g, "");
                     }
                 }
+                
+                var texte;
+                
+                if (tab_regle[0].includes("sinon"))
+                {
+                    texte = tab_regle.join(" ") + '<b> : score = ' + note + '</b>';
+                }
+                else
+                {
+                    texte = tab_regle.join(" ") + ', <b>alors : score = ' + note + '</b>';
+                }
 
-                var texte = tab_regle.join(" ") + '<b>' + note + '</b>';
-
-                contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
+                contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + codeS + '_' + note + '" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
             }
 
             contenu_regle += '</tbody></table>';

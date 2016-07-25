@@ -50,13 +50,13 @@ and open the template in the editor.
             <fieldset>
                 <legend>Donner une note à un apprenant</legend>
                 <div class="row">
-                            <label class="control-label">Compétences générales</label>
+                    <label>Compétences générales</label>
                 </div>
                 <div class="panel-group" id="competences"></div>
                 <div class="row" id="boutons_modifs" hidden>
                     <div class="text-center">
-                        <button class="btn btn-danger" onclick="annulerModifs()"><span class="fa fa-times"></span> Annuler</button>
-                        <button class="btn btn-success" onclick="validerModifs()"><span class="fa fa-check"></span> Valider</button>
+                        <button class="btn btn-raised btn-danger" onclick="annulerModifs()"><span class="fa fa-times"></span> Annuler</button>
+                        <button class="btn btn-raised btn-success" onclick="validerModifs()"><span class="fa fa-check"></span> Valider</button>
                     </div>
                 </div>
                 <div class="modal fade" id="aide" role="dialog">
@@ -83,7 +83,6 @@ and open the template in the editor.
                         </div>
                     </div>
 		</div>
-        </div>
             </fieldset>
         </div>
         
@@ -95,6 +94,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
         <script src="js/aide.js"></script>
         <script src="js/snackbar.js"></script>
-        <script src="js/notation/notation.js"></script>
+        <script src="js/notation/notation_apprenant.js"></script>
     </body>
 </html>
+<script src="js/ResearchWorker.js" type="text/javascript"></script>

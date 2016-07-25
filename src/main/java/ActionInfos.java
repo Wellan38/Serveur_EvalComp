@@ -242,6 +242,7 @@ public class ActionInfos extends Action {
                 r.addProperty("code", c.getRegle().getId());
                 r.addProperty("libelle", c.getRegle().getLibelle());
                 r.addProperty("pattern", c.getRegle().getPattern().getId());
+                r.addProperty("ajout_possible", c.getRegle().getPattern().getAjoutCas());
                 r.add("cas", cas);
                 
                 competence.add("regle", r);
