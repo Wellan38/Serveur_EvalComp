@@ -218,6 +218,8 @@ public class ActionInfos extends Action {
         {
             competence.addProperty("code", c.getId());
             competence.addProperty("libelle", c.getLibelle());
+            competence.addProperty("feminin", c.getFeminin());
+            competence.addProperty("pluriel", c.getPluriel());
             competence.addProperty("categorie", c.getType());
             competence.addProperty("ponderation", c.getPonderation());
             
@@ -242,13 +244,21 @@ public class ActionInfos extends Action {
                 r.addProperty("code", c.getRegle().getId());
                 r.addProperty("libelle", c.getRegle().getLibelle());
                 r.addProperty("pattern", c.getRegle().getPattern().getId());
+                r.addProperty("pourcentages", c.getRegle().getPourcentages());
                 r.addProperty("ajout_possible", c.getRegle().getPattern().getAjoutCas());
+                r.addProperty("nombre", c.getRegle().getPattern().getNombre());
                 r.add("cas", cas);
                 
                 competence.add("regle", r);
             }
             
-            competence.addProperty("miseensituation", c.getMiseEnSituation());
+            JsonObject mes = new JsonObject();
+            
+            mes.addProperty("contexte", c.getMiseEnSituation().getContexte());
+            mes.addProperty("ressources", c.getMiseEnSituation().getRessources());
+            mes.addProperty("action", c.getMiseEnSituation().getAction());
+            
+            competence.add("miseensituation", mes);
         }
         
         return competence;

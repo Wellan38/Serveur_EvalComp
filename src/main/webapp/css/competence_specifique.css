@@ -12,17 +12,51 @@ and open the template in the editor.
     position: absolute;
 }
 
-#boutons_modif {
-    margin-top: 20px;
-}
-
 #row_mes {
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .parametre {
+    position: relative;
     height: 27px;
+    bottom: -6px;
     display: inline-block;
-    vertical-align: middle;
-    padding: 5px;
+    padding: 0px;
+    font-size: 14px;
+    color: black;
+}
+
+hr {
+    border-color: rgba(0,0,0,0.5);
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 0px;
+}
+
+[id^="libelle_"] {
+    padding-bottom: 0px;
+}
+
+#libelle_pronom {
+    font-size: 16px;
+}
+
+p {
+    position: relative;
+    bottom: -7px;
+}
+
+#libelle_pronom {
+    bottom: -3px;
+}
+
+@media (min-width: 768px) {
+    [id^="col-"] {
+        padding: 10px;
+    }
+}
+
+.checkbox {
+    margin-left: 10px;
+    margin-right: 10px;
 }

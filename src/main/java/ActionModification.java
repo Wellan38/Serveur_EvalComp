@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
 import alexandre.evalcomp.metier.modele.Formation;
+import alexandre.evalcomp.metier.modele.MiseEnSituation;
 import alexandre.evalcomp.metier.modele.Regle;
 import com.google.gson.JsonElement;
 import java.io.PrintWriter;
@@ -304,8 +305,17 @@ public class ActionModification extends Action
         else
         {
             c.setLibelle(request.getParameter("libelle"));
+            c.setFeminin(Boolean.valueOf(request.getParameter("feminin")));
+            c.setPluriel(Boolean.valueOf(request.getParameter("pluriel")));
             c.setType(request.getParameter("categorie"));
-            c.setMiseEnSituation(request.getParameter("miseensituation"));
+            
+            MiseEnSituation m = c.getMiseEnSituation();
+            
+            m.setContexte(request.getParameter("contexte"));
+            m.setRessources(request.getParameter("ressources"));
+            m.setAction(request.getParameter("actions"));
+            
+            servM.majObjet(m);
             
             List<CompetenceS> compSpec = c.getCompG().getCompSpec();
             
@@ -339,6 +349,7 @@ public class ActionModification extends Action
             if (r != null)
             {  
                 r.setCas(cas);
+                r.setPourcentages(Boolean.valueOf(request.getParameter("pourcentages")));
                 
                 servM.majObjet(r);
                 
@@ -346,7 +357,7 @@ public class ActionModification extends Action
             }
             else
             {
-                Regle re = servM.creerRegle("R-" + c.getId(), "Regle_" + c.getId() + "_", servM.trouverRulePatternParId(request.getParameter("rule_pattern")), cas);
+                Regle re = servM.creerRegle("R-" + c.getId(), "Regle_" + c.getId() + "_", servM.trouverRulePatternParId(request.getParameter("rule_pattern")), Boolean.valueOf(request.getParameter("pourcentages")), cas);
                 c.setRegle(re);
             }
             

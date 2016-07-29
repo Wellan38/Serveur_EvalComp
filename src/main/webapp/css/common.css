@@ -8,6 +8,14 @@ and open the template in the editor.
     Author     : Alex-Laptop
 */
 
+.container {
+    width: auto;
+}
+
+.container-fluid {
+    padding-left: 0px;
+}
+
 textarea {
     resize: none;
 }
@@ -63,10 +71,6 @@ p.speech {
     text-align:left;
 }
 
-body {
-    background-color: rgb(255,255,255);
-}
-
 .form-group {
     margin: 0px 0px 15px 0px;
 }
@@ -80,15 +84,16 @@ body {
 }
 
 .navbar.navbar-inverse {
-    background-color: rgb(52,57,66);
+    background-color: rgb(60,141,188);
 }
 
-.navbar.navbar-fixed-top {
-    position: relative;
+.navbar-header {
+    background-color: rgb(53,124,165);
+    padding-left: 15px;
 }
 
 .panel.panel-default > .panel-heading {
-    background-color: rgb(33,150,243);
+    background-color: rgb(60,141,188);
 }
 
 .modal-content .modal-header {
@@ -96,7 +101,7 @@ body {
 }
 
 .active td {
-    background-color: rgba(33,150,243,0.4) !important;
+    background-color: rgba(60,141,188,0.4) !important;
 }
 
 .list-group .list-group-separator:before {
@@ -120,6 +125,26 @@ body {
     margin-bottom: 0;
     vertical-align: middle;
   }
+}
+
+.form-group label {
+    color: rgba(0,0,0,1);
+}
+
+.form-group input {
+    color: black;
+}
+
+li {
+    margin-left: 10px;
+}
+
+body {
+    background-color: white;
+}
+
+.btn {
+    padding: 10px;
 }
 
 label {

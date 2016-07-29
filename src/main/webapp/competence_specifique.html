@@ -12,6 +12,7 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
         <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
         <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
@@ -43,65 +44,93 @@ and open the template in the editor.
         <div class="container">
             <fieldset>
                 <legend id="legende">Compétence spécifique :</legend>
-                <div class="row">
-                    <div class="form-horizontal">
-                    <div class="col-md-6">
-                        <div class="row">
+                <div class="row" style="margin-left: -15px; margin-right: -15px;">
+                    <div class="col-sm-6" id="col-1">
                             <div class="form-group label-floating">
-                                <label for="code_comp" class="control-label">Code :</label>
-                                <input type="text" class="form-control" id="code_comp" disabled>
-                            </div>
-                            <div class="form-group label-floating">
-                                <label for="categorie_comp" class="control-label">Catégorie :</label>
-                                <select class="form-control" id="categorie_comp" onchange="listerTags()">
-                                    <option>Connaissance</option>
-                                    <option>Compréhension</option>
-                                    <option>Application</option>
-                                    <option>Analyse</option>
-                                    <option>Synthèse</option>
-                                    <option>Évaluation</option>
-                                </select>
-                            </div>
-                            <div class="form-group label-floating">
-                                <label for="libelle_comp" class="control-label">Libellé :</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="clickable fa fa-tags pull-right" onclick="afficherTags()"></i></span>
-                                    <input type="text" class="form-control" id="libelle_comp">
-                                </div>
-                                <div class="modal fade" id="myModal" role="dialog">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div id="tags_cloud"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group label-floating">
-                                <label for="ponderation_comp" class="control-label">Pondération :</label>
-                                <input type="number" class="form-control" id="ponderation_comp" onchange="changerPonderation(this.value)" value="0.2" min="0.1" max="1" step="0.1">
+                            <label for="code_comp" class="control-label">Code :</label>
+                            <input type="text" class="form-control" id="code_comp" disabled>
+                        </div>
+                        <div class="form-group label-floating">
+                            <label for="categorie_comp" class="control-label">Catégorie :</label>
+                            <select class="form-control" id="categorie_comp" onchange="afficherVerbe('libelle_verbe')">
+                                <option>Connaissance</option>
+                                <option>Compréhension</option>
+                                <option>Application</option>
+                                <option>Analyse</option>
+                                <option>Synthèse</option>
+                                <option>Évaluation</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" id="col-2">
+                        <div class="form-inline">
+                            <div class="form-group label-floating" onchange="changerMES()">
+                                <label for="libelle_verbe" class="control-label">Libellé :</label>
+                                <select class="form-control" id="libelle_verbe" style="display: inline-block"></select>
+                                <p id="libelle_pronom" style="display: inline-block"></p>
+                                <input type="text" class="form-control" id="libelle_complement" style="display: inline-block" onkeyup="changerContenu()">                                   
                             </div>
                         </div>
-                        <div class="row" style="padding-left: 0px; margin-left: -15px; margin-right: -15px;">
-                            <label style="text-align: left;">Patterns de règle :</label>
-                            <div id="liste_rule_patterns"></div>
-                        </div>
-                        <div class="row" style="padding-left: 0px; margin-left: -15px; margin-right: -15px;">
-                            <table class="table" id="cas_regle"></table>
-                        </div>
-                        <div class="row" id="row_mes">
-                            <div class="form-group label-floating">
-                                <label for="mise_en_situation">Mise en situation :</label>
-                                <textarea class="form-control" rows="3" id="mise_en_situation"></textarea>
+                        <div class="form-group">
+                            <div class="togglebutton">
+                                <label>
+                                    Masculin <input type="checkbox" id="feminin" onchange="changerPronom()"> Féminin
+                                </label>
+                            </div>
+                            <div class="togglebutton">
+                                <label>
+                                    Singulier <input type="checkbox" id="pluriel" onchange="changerPronom()"> Pluriel
+                                </label>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-6" id="autres_comp"></div>
                 </div>
+                <div class="row">
+                    <div class="form-group label-floating">
+                        <label for="ponderation_comp" class="control-label">Pondération :</label>
+                        <input type="number" class="form-control" style="width: 100px;" id="ponderation_comp" onchange="changerPonderation(this.value)" value="0.2" min="0.1" max="1" step="0.1">
+                    </div>
                 </div>
-                
+                <div class="row" style="margin-left: -15px; margin-right: -15px;">
+                    <hr>
+                    <div class="col-sm-6">
+                        <div class="row" id="row_mes">
+                            <div class="row">
+                                <label>Mise en situation :</label>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 form-group label-floating" style="padding: 0px;">
+                                    <label for="contexte">Contexte</label>
+                                    <textarea class="form-control" rows="3" id="contexte"></textarea>
+                                </div>
+                                <div class="col-md-4 form-group label-floating" style="padding: 0px;">
+                                    <label for="ressources">Ressources</label>
+                                    <textarea class="form-control" rows="3" id="ressources"></textarea>
+                                </div>
+                                <div class="col-md-4 form-group label-floating" style="padding: 0px;">
+                                    <label for="action">Action</label>
+                                    <textarea class="form-control" rows="3" id="action"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <label style="text-align: left;">Patterns de règle :</label>
+                            <div id="liste_rule_patterns"></div>
+                        </div>
+                        <div class="row" id="categorie_nombres"></div>
+                        <div class="row">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="contenu_type" disabled>
+                                <div class="slider shor" id="slider_contenu"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <table class="table" id="cas_regle"></table>
+                        </div>
+                    </div>
+                </div>
                 <div class="row" id="boutons_modif">
                     <div class="text-center">
                         <button type="button" class="btn btn-raised btn-danger" id="annuler" onclick="annuler()"><span class="fa fa-times"></span></button>
@@ -125,6 +154,7 @@ and open the template in the editor.
         <script src='assets/bootstrap/js/jquery.js'></script>
         <script src="assets/bootstrap/js/bootstrap.js"></script>
         <script src='assets/bootstrap/js/ripples.js'></script>
+        <script src="assets/noUiSlider/js/nouislider.js"></script>
         <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="assets/jqcloud/jqcloud-1.0.4.js"></script>

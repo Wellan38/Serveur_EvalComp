@@ -55,8 +55,8 @@ function afficherCompetences()
     
     for (var i = 0; i < liste_competences.length; i++)
     {
-        contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class="panel-heading clearfix">';
-        contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#comp_' + liste_competences[i].code + '_">' + liste_competences[i].libelle + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i id="grade_' + liste_competences[i].code + '_" style="padding-right: 10px;"></i><i class="fa fa-spinner fa-pulse" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
+        contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_comp_' + liste_competences[i].code + '_"><div class=" clickable accordion-toggle panel-heading clearfix" data-toggle="collapse" data-target="#comp_' + liste_competences[i].code + '_">';
+        contenuHtml += '<h4 class="panel-title pull-left">' + liste_competences[i].libelle + '</h4><h4 class="pull-right" style="margin: 0px;"><i id="grade_' + liste_competences[i].code + '_" style="padding-right: 10px;"></i><i class="fa fa-spinner fa-pulse" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
         contenuHtml += '<div id="comp_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
         contenuHtml += '</div></div></div>';
     }
@@ -88,8 +88,8 @@ function detailsComp(code)
         var contenuHtml = '<div"><table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
         contenuHtml += '<th style="width: 25%">Compétence spécifique</th>';
         contenuHtml += '<th class="minimal-cell"></th>';
-        contenuHtml += '<th style="width: 30%">Mise en situation</th>';
-        contenuHtml += '<th style="width: 45%">Score</th>';
+        contenuHtml += '<th style="width: 25%">Mise en situation</th>';
+        contenuHtml += '<th style="width: 50%">Score</th>';
         contenuHtml += '<th class="minimal-cell"></th>';
         contenuHtml += '</tr></thead>';
         contenuHtml += '<tbody>';
@@ -246,8 +246,14 @@ function detailsCompS(codeG, codeS)
             $('[data-toggle="tooltip"]').tooltip();
 
             var mes = c.miseensituation;
+            
+            var texte_mes = '<table class="table"><tbody>';
+            texte_mes += '<tr><td>Contexte</td><td>' + mes.contexte + '</td></tr>';
+            texte_mes += '<tr><td>Ressources</td><td>' + mes.ressources + '</td></tr>';
+            texte_mes += '<tr><td>Action à effectuer</td><td>' + mes.action + '</td></tr>';
+            texte_mes += '</tbody></table>';
 
-            document.getElementById("mes_" + codeS + "_").innerHTML = mes;
+            document.getElementById("mes_" + codeS + "_").innerHTML = texte_mes;
 
             var contenu_regle = '<table class="table table-hover" style="margin-bottom: 0px" id="score_' + codeS + '"><tbody>';
 
@@ -264,7 +270,7 @@ function detailsCompS(codeG, codeS)
                     }
                     if (tab_regle[j].startsWith("&"))
                     {
-                        tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "");
+                        tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "").replace(/_/g, " ");
                     }
                     if (tab_regle[j].endsWith('"'))
                     {

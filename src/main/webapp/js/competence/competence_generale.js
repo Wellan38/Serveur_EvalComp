@@ -193,7 +193,19 @@ function afficherCompS()
 {
     var contenuHtml = '';
     
-    var w = 585;
+    //var w = 585;
+    var w;
+
+    if (window.innerWidth < 1000)
+    {
+        w = window.innerWidth;
+        console.log(w);
+    }
+    else
+    {
+        w = window.innerWidth / 2;
+    }
+    
     var h = 453;
     
     if (compS.length > 0)
@@ -255,11 +267,20 @@ function afficherCompS()
 
                 var h_pond = d - 20;
                 var w_pond = d/2 - 10;
-
-                var r = h/2 - d/2;
+                
+                var r;
+                
+                if (h > w)
+                {
+                    r = w/2 - d/2;
+                }
+                else
+                {
+                    r = h/2 - d/2;
+                }
 
                 var h_circle = h/2 + 30 - d/2 + r * (- Math.cos(i * 2 * Math.PI / compS.length));
-                var w_circle = w/2 - d/2 + r * (Math.sin(i * 2 * Math.PI / compS.length));
+                var w_circle = w/2 - d/2 - 15 + r * (Math.sin(i * 2 * Math.PI / compS.length));
 
                 var w_trash = d/2 - 11;
                 var h_plus_minus = d/2 + d/2 * Math.sqrt(2)/2;
@@ -267,7 +288,7 @@ function afficherCompS()
                 var w_minus = d/2 - d/2 * Math.sqrt(2)/2 - 20;
 
                 contenuHtml += '<div id="cercle_' + compS[i].code + '_" class="clickable full-circle" style="height:' + d + 'px; width:' + d + 'px; top:' + (h_circle) + 'px; left:' + (w_circle) + 'px" data-toggle="tooltip" title="' + compS[i].libelle + '\nCatégorie : ' + compS[i].categorie + '\nPondération : ' + compS[i].ponderation + '" onclick="voirCompS(\'' + compS[i].code + '\')">';
-                contenuHtml += '<p style="font-size:' + 25 * compS[i].ponderation / pond_max + 'px; padding-top:38%">' + libelle + '</p>';
+                contenuHtml += '<p style="font-size:' + 25 * d_max / 130 * compS[i].ponderation / pond_max + 'px; padding-top:38%">' + libelle + '</p>';
                 contenuHtml += '<p style="font-size:10px; position:absolute; top:' + h_pond + 'px; left:' + w_pond + 'px">' + compS[i].ponderation + '</p>';
                 
                 contenuHtml += '<span id="icone_trash_' + compS[i].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
@@ -278,7 +299,7 @@ function afficherCompS()
                 contenuHtml += '</div>';
             }
             
-            var w_ajout = w/2 - 15;
+            var w_ajout = w/2 - 30;
             var h_ajout = h/2 + 15;
         }
     }

@@ -2,9 +2,12 @@
 import alexandre.evalcomp.metier.modele.Apprenant;
 import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
+import static alexandre.evalcomp.metier.modele.CompetenceS_.miseEnSituation;
 import alexandre.evalcomp.metier.modele.Formation;
+import alexandre.evalcomp.metier.modele.MiseEnSituation;
 import alexandre.evalcomp.metier.modele.Regle;
 import alexandre.evalcomp.metier.modele.RulePattern;
+import static alexandre.evalcomp.vue.Parseur.serv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -122,6 +125,8 @@ public class ActionCreation extends Action
     {        
         String code = request.getParameter("code");
         String libelle = request.getParameter("libelle");
+        Boolean feminin = Boolean.valueOf(request.getParameter("feminin"));
+        Boolean pluriel = Boolean.valueOf(request.getParameter("pluriel"));
         String categorie = request.getParameter("categorie");
         Double ponderation = Double.valueOf(request.getParameter("ponderation"));
         RulePattern pattern = servM.trouverRulePatternParId(request.getParameter("rule_pattern"));
@@ -135,13 +140,17 @@ public class ActionCreation extends Action
             cas.add(p);
         }
         
-        Regle regle = servM.creerRegle("R-" + code, "Regle_" + code + "_", pattern, cas);
+        Regle regle = servM.creerRegle("R-" + code, "Regle_" + code + "_", pattern, Boolean.valueOf(request.getParameter("pourcentages")), cas);
         
-        String miseEnSituation = request.getParameter("miseensituation");
+        String contexte = request.getParameter("contexte");
+        String ressources = request.getParameter("ressources");
+        String action = request.getParameter("actions");
+        
+        MiseEnSituation m = serv.creerMiseEnSituation("MES-" + code, contexte, ressources, action);
         
         if (regle != null)
         {
-            CompetenceS cs = servM.creerCompetenceS(code, libelle, categorie, ponderation, regle, miseEnSituation);
+            CompetenceS cs = servM.creerCompetenceS(code, libelle, feminin, pluriel, categorie, ponderation, regle, m);
             
             if (cs != null)
             {

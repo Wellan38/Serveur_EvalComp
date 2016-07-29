@@ -124,6 +124,8 @@ public class ActionListe extends Action
                         JsonObject pa = new JsonObject();
                         pa.addProperty("code", p.getId());
                         pa.addProperty("libelle", p.getLibelle());
+                        pa.addProperty("ajout", p.getAjoutCas());
+                        pa.addProperty("nombre", p.getNombre());
                         
                         JsonArray texte = new JsonArray();
 

@@ -49,10 +49,14 @@ and open the template in the editor.
         <div class="container">
             <fieldset>
                 <legend id="legende">Noter les apprenants pour la compétence : </legend>
-                <div class="row">
-                    <label>Apprenants</label>
+                <div class="form-inline">
+                    <p>Regrouper les informations par <select class="form-control" id="type_classification" style="padding-bottom: 0px;" onchange="init()"><option>apprenants</option><option>compétences spécifiques</option></select></p>
                 </div>
-                <div class="panel-group" id="apprenants"></div>
+                
+                <div class="row">
+                    <label id="type"></label>
+                </div>
+                <div class="panel-group" id="liste"></div>
                 <div class="row" id="boutons_modifs" hidden>
                     <div class="text-center">
                         <button class="btn btn-raised btn-danger" onclick="annulerModifs()"><span class="fa fa-times"></span> Annuler</button>

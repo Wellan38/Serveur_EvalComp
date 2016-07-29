@@ -14,9 +14,29 @@ var liste_apprenants;
 var scores = [];
 
 (function(){
-    $.material.init();
-    listerApprenants();
+    init();
 })();
+
+function init()
+{
+    $.material.init();
+    var type = $('#type_classification').val();
+    
+    $('#liste').html("");
+    
+    switch(type)
+    {
+        case "apprenants" :
+            
+            listerApprenants();
+            break;
+            
+        case "compétences spécifiques" :
+            listerCompetences();
+            
+            break;
+    }
+}
 
 function listerApprenants()
 {
@@ -38,20 +58,20 @@ function listerApprenants()
         
         for (var i = 0; i < liste_apprenants.length; i++)
         {
-            contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_apprenant_' + liste_apprenants[i].code + '_"><div class="panel-heading clearfix">';
-            contenuHtml += '<h4 class="panel-title pull-left"><a class="clickable accordion-toggle" data-toggle="collapse" href="#apprenant_' + liste_apprenants[i].code + '_">' + liste_apprenants[i].nom + '</a></h4><h4 class="pull-right" style="margin: 0px;"><i class="fa fa-spinner fa-pulse" id="icone_' + liste_apprenants[i].code + '_"></i></h4></div>';
+            contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_apprenant_' + liste_apprenants[i].code + '_"><div class="clickable accordion-toggle panel-heading clearfix" data-toggle="collapse" data-target="#apprenant_' + liste_apprenants[i].code + '_">';
+            contenuHtml += '<h4 class="panel-title pull-left">' + liste_apprenants[i].nom + '</h4><h4 class="pull-right" style="margin: 0px;"><i class="fa fa-spinner fa-pulse" style="margin-left: 10px;" id="icone_' + liste_apprenants[i].code + '_"></i></h4></div>';
             contenuHtml += '<div id="apprenant_' + liste_apprenants[i].code + '_" class="clickable panel-collapse collapse"></div>';
             contenuHtml += '</div></div></div>';
         }
         
-        $('#apprenants').html(contenuHtml);
+        $('#liste').html(contenuHtml);
         
-        listerCompetences();
+        listerCompetencesParApprenant();
         
         for (var i = 0; i < liste_apprenants.length; i++)
         {
-            afficherCompetences(liste_apprenants[i].code);
-            $('#icone_' + liste_apprenants[i].code + '_').removeClass("fa-spinner fa-pulse");
+            afficherCompetencesParApprenant(liste_apprenants[i].code);
+            $('#icone_' + liste_apprenants[i].code + '_').removeClass("fa-spinner fa-pulse").css("margin-left", "0px");
         }
     })
     .fail(function() {
@@ -76,9 +96,80 @@ function listerCompetences()
         dataType: 'json'
     })
     .done(function(data) {
+        
         competence_g = data.obj;
+        
+        liste_competences = data.obj.compSpec;
+        
+        for (var i = 0; i < liste_competences.length; i++)
+        {
+            $.ajax({
+                url: './ActionServlet',
+                type: 'GET',
+                data: {
+                    action: 'infos',
+                    type: 'competence_specifique',
+                    code: liste_competences[i].code
+                },
+                async:false,
+                dataType: 'json'
+            })
+            .done(function(data) {
+                liste_competences[i] = data.obj;
+            })
+            .fail(function() {
+                console.log('Erreur dans le chargement des informations.');
+            })
+            .always(function() {
+                //
+            });
+        }
+        
+        var contenuHtml = '';
+        
+        for (var i = 0; i < liste_competences.length; i++)
+        {
+            contenuHtml += '<div class="row"><div style="padding: 15px 0px 0px 0px;"><div class="panel panel-default" id="panel_apprenant_' + liste_competences[i].code + '_"><div class="clickable accordion-toggle panel-heading clearfix" data-toggle="collapse" data-target="#competence_' + liste_competences[i].code + '_">';
+            contenuHtml += '<h4 class="panel-title pull-left">' + liste_competences[i].libelle + '</h4><h4 class="pull-right" style="margin: 0px;"><span class="badge" data-toggle="tooltip" id="ponderation_' + liste_competences[i].code + '_" title="Pondération : ' + liste_competences[i].ponderation + '">' + liste_competences[i].ponderation + '</span><i class="fa fa-spinner fa-pulse" style="margin-left: 10px;" id="icone_' + liste_competences[i].code + '_"></i></h4></div>';
+            contenuHtml += '<div id="competence_' + liste_competences[i].code + '_" class="clickable panel-collapse collapse"></div>';
+            contenuHtml += '</div></div></div>';
+        }
+        
+        $('#liste').html(contenuHtml);
+        
+        $('[data-toggle="tooltip"').tooltip();
+        
+        listerApprenantsParCompetence();
+        
+        for (var i = 0; i < liste_competences.length; i++)
+        {
+            afficherApprenantsParCompetence(liste_competences[i]);
+            $('#icone_' + liste_competences[i].code + '_').removeClass("fa-spinner fa-pulse").css("margin-left", "0px");
+        }
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement de la liste.');
+    })
+    .always(function() {
+        //
+    });
+}
 
-        $('#legende').html("Noter les apprenants pour la compétence : " + competence_g.libelle);
+function listerCompetencesParApprenant()
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'GET',
+        data: {
+            action: 'infos',
+            type: 'competence_generale',
+            code: code_cg
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        competence_g = data.obj;
 
         liste_competences = competence_g.compSpec;
         
@@ -114,8 +205,34 @@ function listerCompetences()
     });
 }
 
-function afficherCompetences(id)
+function listerApprenantsParCompetence()
 {
+    $.ajax({
+        url: './ActionServlet',
+        type: 'GET',
+        data: {
+            action: 'liste',
+            type: 'apprenant',
+            formation: formation
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        liste_apprenants = data.liste;
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
+}
+
+function afficherCompetencesParApprenant(id)
+{
+    $('#legende').html("Noter les apprenants pour la compétence : " + competence_g.libelle);
+    
     var contenuHtml = '<table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
     contenuHtml += '<th style="width: 25%">Compétence spécifique</th>';
     contenuHtml += '<th class="minimal-cell"></th>';
@@ -176,12 +293,88 @@ function afficherCompetences(id)
             texte = tab_regle.join(" ") + ', <b>alors : score = ' + note + '</b>';
         }
 
-        contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + codeS + '_' + note + '" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
+        contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + c.code + '_' + note + '" name="score_' + c.code + '_" onclick="ajouterScore(\'' + code_cg + '\', \'' + c.code + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + c.code + '_' + note + '">' + texte + '</td></tr>';
     }
 
     contenu_regle += '</tbody></table>';
 
     document.getElementById("regle_" + c.code + "_").innerHTML = contenu_regle;
+
+    $.material.init();
+}
+
+function afficherApprenantsParCompetence(comp)
+{
+    $('#legende').html("Noter les apprenants pour la compétence : " + competence_g.libelle);
+    
+    var contenuHtml = '<p>' + comp.miseensituation + '</p>';
+    
+    contenuHtml += '<table class="table" style="margin-bottom: 0px"><thead><tr>';
+    contenuHtml += '<th style="width: 20%">Nom</th>';
+    contenuHtml += '<th style="width: 15%">Entreprise</th>';
+    contenuHtml += '<th style="width: 15%">Fonction</th>';
+    contenuHtml += '<th style="width: 50%">Score</th>';
+    contenuHtml += '</tr></thead>';
+    contenuHtml += '<tbody>';
+
+    for (var i = 0; i < liste_apprenants.length; i++)
+    {
+        var a = liste_apprenants[i];
+        
+        contenuHtml += '<tr><td id="nom_' + a.code + '_">' + a.nom + '</td>';
+        contenuHtml += '<td id="entreprise_' + a.code + '_">' + a.entreprise + '</td>';
+        contenuHtml += '<td id="fonction_' + a.code + '_">' + a.fonction + '</td>';
+        contenuHtml += '<td id="regle_' + a.code + '_"></td>';
+        contenuHtml += '</tr>';
+    }
+
+    contenuHtml += '</tbody>';
+    contenuHtml += '</table>';
+    
+    $('#competence_' + comp.code + '_').html(contenuHtml);
+    
+    var cas_regle = comp.regle.cas;
+
+    var contenu_regle = '<table class="table table-hover" style="margin-bottom: 0px" id="score_' + comp.code + '"><tbody>';
+
+    for (var i = 0; i < cas_regle.length; i++)
+    {
+        var tab_regle = cas_regle[i].condition.split(" ");
+        var note = cas_regle[i].score;
+
+        for (var j = 0; j < tab_regle.length; j++)
+        {
+            if (tab_regle[j] === "si" || tab_regle[j] === "sinon")
+            {
+                tab_regle[j] = '<b>' + tab_regle[j] + '</b>';
+            }
+            if (tab_regle[j].startsWith("&"))
+            {
+                tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "");
+            }
+            if (tab_regle[j].endsWith('"'))
+            {
+                tab_regle[j] = tab_regle[j].replace(/"/g, "");
+            }
+        }
+
+        var texte;
+
+        if (tab_regle[0].includes("sinon"))
+        {
+            texte = tab_regle.join(" ") + '<b> : score = ' + note + '</b>';
+        }
+        else
+        {
+            texte = tab_regle.join(" ") + ', <b>alors : score = ' + note + '</b>';
+        }
+
+        contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + comp.code + '_' + note + '" name="score_' + comp.code + '_" onclick="ajouterScore(\'' + code_cg + '\', \'' + comp.code + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + comp.code + '_' + note + '">' + texte + '</td></tr>';
+    }
+
+    contenu_regle += '</tbody></table>';
+
+    document.getElementById("regle_" + a.code + "_").innerHTML = contenu_regle;
 
     $.material.init();
 }
@@ -205,8 +398,8 @@ function detailsComp(code)
         var contenuHtml = '<div><table class="table table-hover" style="margin-bottom: 0px"><thead><tr>';
         contenuHtml += '<th style="width: 25%">Compétence spécifique</th>';
         contenuHtml += '<th class="minimal-cell"></th>';
-        contenuHtml += '<th style="width: 30%">Mise en situation</th>';
-        contenuHtml += '<th style="width: 45%">Score</th>';
+        contenuHtml += '<th style="width: 25%">Mise en situation</th>';
+        contenuHtml += '<th style="width: 50%">Score</th>';
         contenuHtml += '<th class="minimal-cell"></th>';
         contenuHtml += '</tr></thead>';
         contenuHtml += '<tbody>';
@@ -310,25 +503,6 @@ function afficherScores(competence)
     .always(function() {
         //
     });
-}
-
-function selectionnerCompS(code)
-{
-    for (var i = 0; i < liste_competences.length; i++)
-    {
-        for (var j = 0; j < liste_competences[i].compSpec.length; j++)
-        {
-            if (liste_competences[i].compSpec[j].code == code)
-            {
-                document.getElementById("comp_spec_" + code + "_").setAttribute("class", "row list-group-item active");
-                detailsCompS(code);
-            }
-            else if(document.getElementById("comp_spec_" + liste_competences[i].compSpec[j].code + "_") !== null)
-            {
-                document.getElementById("comp_spec_" + liste_competences[i].compSpec[j].code + "_").setAttribute("class", "row list-group-item");
-            }
-        }
-    }
 }
 
 function detailsCompS(codeG, codeS)

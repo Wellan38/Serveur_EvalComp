@@ -17,7 +17,18 @@ function afficherCompS(code, compS, codeS)
     
     if (compS.length > 0)
     {
-        var w = 585;
+        //var w = 585;
+        var w;
+        
+        if (window.innerWidth < 768)
+        {
+            w = window.innerWidth;
+        }
+        else
+        {
+            w = window.innerWidth / 2;
+        }
+        
         var h = 453;
 
         var d_max; 
@@ -233,7 +244,10 @@ function retirerCompS(codeG, codeS)
     
     competences[index].compSpec = compS;
     
-    afficherCompS(codeG, compS, codeS);
+    if (url === "competence_generale.html")
+    {
+        afficherCompS(codeG, compS, codeS);
+    }
 }
 
 function augmenterPond(codeG, codeS)
@@ -273,7 +287,10 @@ function augmenterPond(codeG, codeS)
     
     competences[index].compSpec = compS;
     
-    afficherCompS(codeG, compS, codeS);
+    if (url === "competence_generale.html")
+    {
+        afficherCompS(codeG, compS, codeS);
+    }
 }
 
 function diminuerPond(codeG, codeS)
@@ -313,5 +330,8 @@ function diminuerPond(codeG, codeS)
     
     competences[index].compSpec = compS;
     
-    afficherCompS(codeG, compS, codeS);
+    if (url === "competence_generale.html")
+    {
+        afficherCompS(codeG, compS, codeS);
+    }
 }
