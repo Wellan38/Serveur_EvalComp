@@ -1,0 +1,4 @@
+code,libelle,texte
+R-EXCLUSIF,Exclusif,si 80% des éléments clés sont respectés alors : score = 10,sinon : score = 0;
+R-COMPTAGE,Comptage,si les plus de N paramètres influents sont identifiés alors : score = 10,si entre P et N paramètres influents sont identifiés alors : score = 5,sinon : score = 0
+R-PROGRESSIF,Progressif,si les bons procédés expérimentaux sont utilisés alors : score = 10,si une partie des procédés expérimentaux sont utilisés alors : score = 5,sinon : score = 0
