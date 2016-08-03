@@ -150,3 +150,7 @@ body {
 label {
     color: black;
 }
+
+.tooltip-inner {
+    white-space: pre-line;
+}

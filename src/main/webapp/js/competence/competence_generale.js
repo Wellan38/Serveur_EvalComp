@@ -225,7 +225,7 @@ function afficherCompS()
             
             var libelle = compS[0].libelle.substring(0).split(" ")[0];
 
-            contenuHtml += '<div id="cercle_' + compS[0].code + '_" class="clickable full-circle" style="height:' + d_max + 'px; width:' + d_max + 'px; top:' + (h/2 - d_max/2) + 'px; left:' + (w/2 - d_max/2) + 'px" data-toggle="tooltip" title="' + compS[0].libelle + '\nCatégorie : ' + compS[0].categorie + '\nPondération : ' + compS[0].ponderation + '" onclick="voirCompS(\'' + compS[0].code + '\')">';
+            contenuHtml += '<div id="cercle_' + compS[0].code + '_" class="clickable full-circle" style="height:' + d_max + 'px; width:' + d_max + 'px; top:' + (h/2 - d_max/2) + 'px; left:' + (w/2 - d_max/2) + 'px" data-toggle="tooltip" title="' + compS[0].libelle + '&#013Catégorie : ' + compS[0].categorie + '\nPondération : ' + compS[0].ponderation + '" onclick="voirCompS(\'' + compS[0].code + '\')">';
             contenuHtml += '<p style="font-size:35px; padding-top:40%; margin-bottom: 29%">' + libelle + '</p>';
             contenuHtml += '<p style="font-size:10px;">' + compS[0].ponderation + '</p>';
             
