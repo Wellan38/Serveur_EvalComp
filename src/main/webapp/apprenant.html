@@ -33,13 +33,13 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
                     </button>
-                    <a class="navbar-brand" href="index.html">EvalComp</a>
+                    <a id="bouton_index" class="navbar-brand">EvalComp</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a><span class="fa fa-question-circle"></span></a></li>
-                        <li><a><span class="fa fa-user-plus"></span> Sign Up</a></li>
-                        <li><a><span class="fa fa-sign-in"></span> Login</a></li>
+                        <li><a class="clickable" id="nav_nom"></a></li>
+                        <li><a class="clickable" data-toggle="modal" data-target="#aide"><span class="fa fa-question-circle"></span></a></li>
+                        <li><a class="clickable" onclick="deconnexion()"><span class="fa fa-sign-out"></span> Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,13 +75,13 @@ and open the template in the editor.
                     <div id="radar"></div>
                 </div>
                 
-                <div class="row">
+                <div class="row" id="boutons_modifs" hidden>
                     <div class="text-center">
                         <button type="button" class="btn btn-raised btn-danger" id="annuler" onclick="detailsApprenant()"><span class="fa fa-times"></span></button>
                         <button type="button" class="btn btn-raised btn-success" id="valider" onclick="validerModifs()"><span class="fa fa-check"></span></button>
                     </div>
                 </div>
-                <div class="modal fade" id="myModal" style="left: 50%" role="dialog">
+                <div class="modal fade" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                                 <div class="modal-header">
@@ -105,6 +105,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
         <script src="js/graphiques.js"></script>
         <script src="js/snackbar.js"></script>
+        <script src="js/common.js"></script>
         <script src="js/apprenant/apprenant.js"></script>
     </body>
 </html>

@@ -13,11 +13,7 @@ var anciennePond;
 var compS;
 var essai_submit = false;
 
-(function() {
-    init();
-}());
-
-function init()
+(function()
 {
     if (mode === "creation")
     {
@@ -36,7 +32,7 @@ function init()
         
         detailsCompetence();
     }   
-}
+}());
 
 function detailsCompetence()
 {
@@ -230,8 +226,11 @@ function afficherCompS()
             contenuHtml += '<p style="font-size:10px;">' + compS[0].ponderation + '</p>';
             
             var w_trash = d_max/2 - 11;
-
-            contenuHtml += '<span id="icone_trash_' + compS[0].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[0].code + '\')" onmouseout="enableClick(\'' + compS[0].code + '\')" onclick="retirerCompS(\'' + compS[0].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
+            
+            if (est_formateur || est_coordonateur)
+            {
+                contenuHtml += '<span id="icone_trash_' + compS[0].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[0].code + '\')" onmouseout="enableClick(\'' + compS[0].code + '\')" onclick="retirerCompS(\'' + compS[0].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
+            }
             
             var w_ajout = w/2;
             var h_ajout = h/2;
@@ -291,10 +290,13 @@ function afficherCompS()
                 contenuHtml += '<p style="font-size:' + 25 * d_max / 130 * compS[i].ponderation / pond_max + 'px; padding-top:38%">' + libelle + '</p>';
                 contenuHtml += '<p style="font-size:10px; position:absolute; top:' + h_pond + 'px; left:' + w_pond + 'px">' + compS[i].ponderation + '</p>';
                 
-                contenuHtml += '<span id="icone_trash_' + compS[i].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
-                
-                contenuHtml += '<span id="icone_plus_' + compS[i].code + '_" class="clickable fa fa-plus-circle" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
-                contenuHtml += '<span id="icone_minus_' + compS[i].code + '_" class="clickable fa fa-minus-circle" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
+                if (est_formateur || est_coordonateur)
+                {
+                    contenuHtml += '<span id="icone_trash_' + compS[i].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
+
+                    contenuHtml += '<span id="icone_plus_' + compS[i].code + '_" class="clickable fa fa-plus-circle" style="top:' + h_plus_minus + 'px; left:' + w_plus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="augmenterPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Augmenter la pondération de cette compétence"></span>';
+                    contenuHtml += '<span id="icone_minus_' + compS[i].code + '_" class="clickable fa fa-minus-circle" style="top:' + h_plus_minus + 'px; left:' + w_minus + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="diminuerPond(\'' + compS[i].code + '\', ' + JSON.stringify(compS).replace(/"/g, "&quot;").replace(/'/g, "&#039;") + ')" data-toggle="tooltip" title="Diminuer la pondération de cette compétence"></span>';
+                }
                 
                 contenuHtml += '</div>';
             }
@@ -309,7 +311,10 @@ function afficherCompS()
         var h_ajout = h/2 + 15;
     }
     
-    contenuHtml += '<h2><i class="clickable fa fa-plus-circle" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></i></h2>';
+    if (est_formateur || est_coordonateur)
+    {
+        contenuHtml += '<h2><i class="clickable fa fa-plus-circle" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></i></h2>';
+    }
     
     contenuHtml += '</div>';
     

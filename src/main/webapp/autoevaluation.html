@@ -6,8 +6,9 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>EvalComp - Notation</title>
+        <title>EvalComp - Autoévaluation</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Material Design fonts -->
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
@@ -19,12 +20,11 @@ and open the template in the editor.
         <!-- Bootstrap Material Design -->
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-material-design.css">
         <link rel="stylesheet" href="assets/bootstrap/css/ripples.min.css">
-        
         <link href="assets/snackbar/css/snackbar.css" rel="stylesheet">
         <link href="assets/snackbar/css/material.css" rel="stylesheet">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="css/common.css" rel="stylesheet">
-        <link href="css/notation.css" rel="stylesheet">
+        <link href="css/autoevaluation.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -48,11 +48,27 @@ and open the template in the editor.
         </nav>
         <div class="container">
             <fieldset>
-                <legend>Donner une note à un apprenant</legend>
-                <div class="row">
-                    <label>Compétences générales</label>
+                <legend id="legende">Autoévaluation pour la compétence : </legend>
+                <div class="panel-group" id="competences">
+                    <div class="panel panel-default">
+                        <div class=" clickable accordion-toggle panel-heading clearfix" data-toggle="collapse" data-target="#liste_competences">
+                            <div class="panel-title pull-left">Compétences spécifiques</div>
+                        </div>
+                        <div class="clickable panel-collapse collapse" id="liste_competences">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 30%">Libellé</th>
+                                        <th style="width: 40%">Mise en situation</th>
+                                        <th style="width: 30%">Évaluation</th>
+                                        <th class="minimal_cell"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="liste"></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="panel-group" id="competences"></div>
                 <div class="row" id="boutons_modifs" hidden>
                     <div class="text-center">
                         <button class="btn btn-raised btn-danger" onclick="annulerModifs()"><span class="fa fa-times"></span> Annuler</button>
@@ -92,9 +108,9 @@ and open the template in the editor.
         <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
-        <script src="js/aide.js"></script>
+        <script src="js/graphiques.js"></script>
         <script src="js/snackbar.js"></script>
         <script src="js/common.js"></script>
-        <script src="js/notation/notation_apprenant.js"></script>
+        <script src="js/notation/autoevaluation.js"></script>
     </body>
 </html>

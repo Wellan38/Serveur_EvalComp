@@ -9,7 +9,8 @@ var url = url_array[url_array.length - 1];
     
     switch(url)
     {
-        case "index.html" :
+        case "" :
+        case "index_formateur.html" :
             titre = "Page d'accueil";
             contenu += "<p align='justify'>Pour commencer, sélectionnez une des formations dont vous êtes responsable. La liste des apprenants suivant cette formation, et la liste des compétences générales apparaîtront alors.<br/><br/>";
             contenu += "Sur cette page, vous pouvez visualiser ( <span class='fa fa-list'></span> ), ajouter ( <span class='fa fa-plus-circle'></span> ) ou supprimer ( <span class='glyphicon glyphicon-trash'></span> ) une formation, un apprenant ou une compétence générale.<br/><br/>";

@@ -35,55 +35,86 @@ public class ActionServlet extends HttpServlet {
         
         System.out.println("Action !");
         
-        switch(todo)
+        if (request.getSession(false) == null && !request.getParameter("action").equals("connexion"))
         {
-            case "infos" :
-                System.out.println("Action d'infos !");
-                ActionInfos acInfos = new ActionInfos();
-                acInfos.setServices(servM);
-                acInfos.execute(request, out);
-                
-                break;
-            
-            case "modification" :
-                System.out.println("Action de modification !");
-                ActionModification acModif = new ActionModification();
-                acModif.setServices(servM);
-                acModif.execute(request, out);
-                
-                break;
-                
-            case "liste" :
-                System.out.println("Action de listing !");
-                ActionListe acListe = new ActionListe();
-                acListe.setServices(servM);
-                acListe.execute(request, out);
-                
-                break;
-                
-            case "creation" :
-                System.out.println("Action de création !");
-                ActionCreation acCreation = new ActionCreation();
-                acCreation.setServices(servM);
-                acCreation.execute(request, out);
-                
-                break;
-                
-            case "notation" :
-                System.out.println("Action de notation !");
-                ActionNotation acNotation = new ActionNotation();
-                acNotation.setServices(servM);
-                acNotation.execute(request, out);
-                
-                break;
-            
-            case "suppression" :
-                System.out.println("Action de suppression !");
-                ActionSuppression acSuppression = new ActionSuppression();
-                acSuppression.setServices(servM);
-                acSuppression.execute(request, out);
-                
-                break;
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        else
+        {
+            switch(todo)
+            {
+                case "infos" :
+                    System.out.println("Action d'infos !");
+                    ActionInfos acInfos = new ActionInfos();
+                    acInfos.setServices(servM);
+                    acInfos.execute(request, out);
+
+                    break;
+
+                case "modification" :
+                    System.out.println("Action de modification !");
+                    ActionModification acModif = new ActionModification();
+                    acModif.setServices(servM);
+                    acModif.execute(request, out);
+
+                    break;
+
+                case "liste" :
+                    System.out.println("Action de listing !");
+                    ActionListe acListe = new ActionListe();
+                    acListe.setServices(servM);
+                    acListe.execute(request, out);
+
+                    break;
+
+                case "creation" :
+                    System.out.println("Action de création !");
+                    ActionCreation acCreation = new ActionCreation();
+                    acCreation.setServices(servM);
+                    acCreation.execute(request, out);
+
+                    break;
+
+                case "notation" :
+                    System.out.println("Action de notation !");
+                    ActionNotation acNotation = new ActionNotation();
+                    acNotation.setServices(servM);
+                    acNotation.execute(request, out);
+
+                    break;
+                    
+                case "autoevaluation" :
+                    System.out.println("Action d'autoévaluation !");
+                    ActionAutoevaluation acAutoevaluation = new ActionAutoevaluation();
+                    acAutoevaluation.setServices(servM);
+                    acAutoevaluation.execute(request, out);
+
+                    break;
+
+                case "suppression" :
+                    System.out.println("Action de suppression !");
+                    ActionSuppression acSuppression = new ActionSuppression();
+                    acSuppression.setServices(servM);
+                    acSuppression.execute(request, out);
+
+                    break;
+
+                case "connexion" :
+                    System.out.println("Action de connexion !");
+                    ActionConnexion acConnexion = new ActionConnexion();
+                    acConnexion.setServices(servM);
+                    acConnexion.execute(request, out);
+
+                    break;
+
+                case "deconnexion" :
+                    System.out.println("Action de déconnexion !");
+                    ActionDeconnexion acDeconnexion = new ActionDeconnexion();
+                    acDeconnexion.setServices(servM);
+                    acDeconnexion.execute(request, out);
+
+                    break;
+            }
         }
     }
     

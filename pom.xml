@@ -4,9 +4,8 @@
 
     <groupId>alexandre</groupId>
     <artifactId>Serveur_EvalComp</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
-
+    <version>1.0</version>
     <name>Serveur_EvalComp</name>
 
     <properties>
@@ -38,9 +37,14 @@
             <version>10.12.1.1</version>
         </dependency>
         <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.3</version>
+        </dependency>
+        <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>EvalComp</artifactId>
-            <version>${project.version}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>

@@ -35,13 +35,13 @@ and open the template in the editor.
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>                        
                     </button>
-                    <a class="navbar-brand" href="index.html">EvalComp</a>
+                    <a id="bouton_index" class="navbar-brand">EvalComp</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navigation">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a><span class="glyphicon glyphicon-question-sign"></span></a></li>
-                        <li><a><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                        <li><a><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li><a class="clickable" id="nav_nom"></a></li>
+                        <li><a class="clickable" data-toggle="modal" data-target="#aide"><span class="fa fa-question-circle"></span></a></li>
+                        <li><a class="clickable" onclick="deconnexion()"><span class="fa fa-sign-out"></span> Déconnexion</a></li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +76,7 @@ and open the template in the editor.
                     </div>
                     <div id="comp_spec"></div>
                 </div>
-                <div class="row" id="boutons_modif">
+                <div class="row" id="boutons_modifs" hidden>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-raised btn-danger" id="btn_annuler" onclick="annuler()"><span class="glyphicon glyphicon-remove"></span></button>
                                     <button type="button" class="btn btn-raised btn-success" id="btn_valider" onclick="valider()" ng-click="submitted"><span class="glyphicon glyphicon-check"></span></button>
@@ -92,6 +92,7 @@ and open the template in the editor.
         <script src="assets/bootstrap/js/material.js"></script>
         <script src="assets/snackbar/js/snackbar.js"></script>
         <script src="js/snackbar.js"></script>
+        <script src="js/common.js"></script>
         <script src="js/competence/competence_generale.js"></script>
     </body>
 </html>

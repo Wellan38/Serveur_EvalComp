@@ -1,9 +1,3 @@
- /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var param = window.location.search.substring(1).split("&");
 var formation = param[0].split("=")[1];
 var apprenant = param[1].split("=")[1];
@@ -14,10 +8,10 @@ var liste_competences;
 var scores = [];
 var myRadarChart = null;
 
-(function(){
+(function() {
     $.material.init();
     listerCompetences();
-})();
+}());
 
 function listerCompetences()
 {
@@ -289,7 +283,7 @@ function detailsCompS(codeG, codeS)
                     texte = tab_regle.join(" ") + ', <b>alors : score = ' + note + '</b>';
                 }
 
-                contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + codeS + '_' + note + '" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
+                contenu_regle += '<tr><td style="padding-right: 0px; vertical-align: middle; width: 20px;"><div class="radio radio-primary" style="margin: 0px;"><label style="padding-left: 42px;"><input type="radio" id="note_' + codeS + '_' + note + '" name="score_' + codeS + '_" onclick="ajouterScore(\'' + codeG + '\', \'' + codeS + '\', ' + note + ')"></label></td><td style="padding-left: 0px;" id="note_' + codeS + '_' + note + '">' + texte + '</td></tr>';
             }
 
             contenu_regle += '</tbody></table>';

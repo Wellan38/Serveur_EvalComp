@@ -1,2 +1,3 @@
-nom_personne,libelle_formation
-Personne1,Initiation à l'ingénierie de projet
+id_personne,id_formation
+jean.dupont@evalcomp.fr,8925
+michel.sardou@evalcomp.fr,7128

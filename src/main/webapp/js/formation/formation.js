@@ -9,7 +9,8 @@ var mode = param[0].split("=")[1];
 var code;
 var essai_submit = false;
 
-$(function(){
+(function()
+{
     $.material.init();
     $('#date_formation').bootstrapMaterialDatePicker
     ({
@@ -34,7 +35,7 @@ $(function(){
         document.getElementById("valider").innerHTML += ' Créer la formation';
     }
     
-});
+}());
 
 function afficherInfos()
 {    

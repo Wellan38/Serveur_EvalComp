@@ -17,7 +17,6 @@ jQuery(document).ready(function($) {
 
 (function()
 {
-    $.material.init();
     listerFormations();
     
     switch(type)
@@ -34,7 +33,7 @@ jQuery(document).ready(function($) {
             deroulerCompetences();
             break;
     }
-})();
+}());
 
 var liste_formations;
 var liste_apprenants;

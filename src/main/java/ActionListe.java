@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,6 +31,8 @@ public class ActionListe extends Action
         
         try
         {
+            HttpSession session = request.getSession();
+            
             String type = request.getParameter("type");
             
             JsonArray liste = new JsonArray();
@@ -37,7 +40,18 @@ public class ActionListe extends Action
             switch(type)
             {
                 case "formation" :
-                    List<Formation> formations = servM.listerFormations();
+                    Personne p = (Personne)session.getAttribute("personne");
+                    
+                    List<Formation> formations = new ArrayList();
+                    
+                    if (p.getType().equals(Personne.TypePersonne.Formateur))
+                    {
+                        formations = servM.listerFormationsParPersonne(p);
+                    }
+                    else if (p.getType().equals(Personne.TypePersonne.Coordonateur))
+                    {
+                        formations = servM.listerFormations();
+                    }
                     
                     for (Formation f : formations)
                     {
@@ -119,17 +133,17 @@ public class ActionListe extends Action
                     System.out.println("Listing de rule patterns !");
                     List<RulePattern> patterns = servM.listerRulePatterns();
                     
-                    for (RulePattern p : patterns)
+                    for (RulePattern pat : patterns)
                     {
                         JsonObject pa = new JsonObject();
-                        pa.addProperty("code", p.getId());
-                        pa.addProperty("libelle", p.getLibelle());
-                        pa.addProperty("ajout", p.getAjoutCas());
-                        pa.addProperty("nombre", p.getNombre());
+                        pa.addProperty("code", pat.getId());
+                        pa.addProperty("libelle", pat.getLibelle());
+                        pa.addProperty("ajout", pat.getAjoutCas());
+                        pa.addProperty("nombre", pat.getNombre());
                         
                         JsonArray texte = new JsonArray();
 
-                        for (Pair<String, Integer> cas : p.getCas())
+                        for (Pair<String, Integer> cas : pat.getCas())
                         {
                             JsonObject o = new JsonObject();
 
@@ -232,6 +246,28 @@ public class ActionListe extends Action
                             liste.add(o);
                         }
                     }
+                    break;
+                    
+                case "autoevaluation":
+                    Apprenant ap = servM.trouverApprenantParId(request.getParameter("apprenant"));
+                    CompetenceG cg = servM.trouverCompetenceGParId(request.getParameter("competence"));
+                    if (ap != null && cg != null)
+                    {
+                        List<AutoEvaluation> evals = servM.listerAutoevaluationsParCompetenceG(ap, cg);
+                        
+                        for (AutoEvaluation e : evals)
+                        {
+                            JsonObject o = new JsonObject();
+                            
+                            o.addProperty("apprenant", ap.getId());
+                            o.addProperty("competence", e.getCompetence().getId());
+                            o.addProperty("valeur", e.getValeur());
+                            o.addProperty("ponderation", e.getCompetence().getPonderation());
+                            
+                            liste.add(o);
+                        }
+                    }
+                    
                     break;
             }
             

@@ -8,8 +8,17 @@ and open the template in the editor.
     Author     : Alex-Laptop
 */
 
-.container {
-    width: auto;
+@media (max-width: 1499px)
+{
+    .container {
+        width: auto;
+    }
+}
+@media (min-width: 1500px)
+{
+    .container {
+        width: 1500px;
+    }
 }
 
 .container-fluid {
@@ -153,4 +162,12 @@ label {
 
 .tooltip-inner {
     white-space: pre-line;
+}
+
+thead {
+    cursor: auto;
+}
+
+tbody {
+    cursor: auto;
 }

@@ -14,7 +14,8 @@ var compSpec;
 var myRadarChart;
 var chartIsGeneral = true;
 
-(function() {
+(function()
+{
     $.material.init();
     if (mode === "creation")
     {
@@ -23,6 +24,9 @@ var chartIsGeneral = true;
         
         document.getElementById("annuler").innerHTML += ' Retour aux apprenants';
         document.getElementById("valider").innerHTML += ' Créer l\'apprenant';
+        
+        $('#boutons_modifs').show();
+        
         listerFormations();
         afficherFormations();
     }
@@ -45,6 +49,15 @@ var chartIsGeneral = true;
             creerGraphiqueSpecifique(competences_g[index].code);
             chartIsGeneral = false;
         };
+        
+        if (est_apprenant)
+        {
+            $(':input').attr("disabled", true);
+        }
+        else
+        {
+            $('#boutons_modifs').show();
+        }
     }
        
 }());

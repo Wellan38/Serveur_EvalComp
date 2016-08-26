@@ -1,3 +1,6 @@
-nom,niveau,type
-Personne1,niveau1,Formateur
-Personne2,niveau2,Coordonateur
+id,nom,niveau,type,mot_de_passe
+jean.dupont@evalcomp.fr,Jean Dupont,niveau1,Formateur,jeandupont
+michel.sardou@evalcomp.fr,Michel Sardou,niveau1,Formateur,michelsardou
+marcel.durand@evalcomp.fr,Marcel Durand,niveau2,Coordonateur,marceldurand
+kevin.francois@evalcomp.fr,Kévin François,niveau3,Apprenant,kevinfrancois
+benjamin.dubreuil@evalcomp.fr,Benjamin Dubreuil,niveau3,Apprenant,benjamindubreuil

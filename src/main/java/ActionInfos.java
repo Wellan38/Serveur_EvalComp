@@ -106,6 +106,17 @@ public class ActionInfos extends Action {
                     }
                     
                     break;
+                    
+                case "personne" :
+                    System.out.println("Infos de personne !");
+                    try {
+                        obj = printPersonne(request);
+                    }
+                    catch (Throwable ex) {
+                        Logger.getLogger(ActionInfos.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    break;
             }
             
             JsonObject container = new JsonObject();
@@ -378,5 +389,27 @@ public class ActionInfos extends Action {
         }
 
         return apprenant;
+    }
+    
+    public JsonObject printPersonne(HttpServletRequest request) throws Throwable
+    {
+        JsonObject personne = new JsonObject();
+        
+        System.out.println(request.getParameter("code"));
+        
+        Personne p = servM.trouverPersonneParId(request.getParameter("code"));
+        
+        personne.addProperty("identifiant", p.getId());
+        personne.addProperty("nom", p.getNom());
+        personne.addProperty("type", p.getType().toString());
+        
+        if (p.getType().equals(Personne.TypePersonne.Apprenant))
+        {
+            Apprenant a = servM.trouverApprenantParCompte(p);
+            personne.addProperty("apprenant", a.getId());
+            personne.addProperty("formation", a.getFormation().getId());
+        }
+        
+        return personne;
     }
 }

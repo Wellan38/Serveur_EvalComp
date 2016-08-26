@@ -2,9 +2,9 @@
 import alexandre.evalcomp.metier.modele.Apprenant;
 import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
-import static alexandre.evalcomp.metier.modele.CompetenceS_.miseEnSituation;
 import alexandre.evalcomp.metier.modele.Formation;
 import alexandre.evalcomp.metier.modele.MiseEnSituation;
+import alexandre.evalcomp.metier.modele.Personne;
 import alexandre.evalcomp.metier.modele.Regle;
 import alexandre.evalcomp.metier.modele.RulePattern;
 import static alexandre.evalcomp.vue.Parseur.serv;
@@ -237,12 +237,19 @@ public class ActionCreation extends Action
         String fonction = request.getParameter("fonction");
         String entreprise = request.getParameter("entreprise");
         String id_form = request.getParameter("formation");
+        String id_personne = request.getParameter("personne");
         
         Formation f = servM.trouverFormationParId(id_form);
         
         if (f != null)
         {
-            Apprenant a = servM.creerApprenant(code, nom, fonction, entreprise);
+            Personne p = servM.trouverPersonneParId(id_personne);
+            if (p == null)
+            {
+                return null;
+            }
+            
+            Apprenant a = servM.creerApprenant(code, nom, fonction, entreprise, p);
             
             if (a != null)
             {

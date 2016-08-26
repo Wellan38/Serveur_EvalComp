@@ -33,14 +33,11 @@ var pluriel;
 var slider_init = false;
 var longueur_type = 1;
 
-(function() {
+(function()
+{
     $.material.init();
     document.getElementById("valider").setAttribute("id", "valider_" + codeG + "_");
-    init();
-}());
-
-function init()
-{
+    
     listerRulePatterns();
     
     RP_EXCLUSIF = trouverRulePattern("RP-EXCLUSIF");
@@ -139,7 +136,7 @@ function init()
         
         afficherCompS(codeG, competences[0].compSpec, null);
     }
-}
+}());
 
 function trouverRulePattern(id)
 {
@@ -331,6 +328,12 @@ function afficherListeRulePatterns(patterns)
     $('cas_regle').html("");
     
     $.material.init();
+    
+    if (est_apprenant)
+    {
+        $(':input').attr("disabled", true);
+        $('.radio').attr("disabled", true);
+    }
 }
 
 function detailsCompS()
@@ -481,6 +484,8 @@ function detailsCompS()
                 }
             }
         }
+        
+        changerContenu();
     })
     .fail(function() {
         console.log('Erreur dans le chargement des informations.');
@@ -641,7 +646,7 @@ function checkRulePattern()
 
         $.material.input();
         
-        changerContenu();
+        //changerContenu();
     }
 }
 
@@ -760,7 +765,7 @@ function valider()
                 {
                     afficherRetour("modifs_acceptees");
                     setTimeout(function() {
-                        //location.replace(document.referrer);
+                        location.replace(document.referrer);
                     }, 1000);
                 }
                 else
