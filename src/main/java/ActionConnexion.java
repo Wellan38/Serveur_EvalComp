@@ -42,7 +42,7 @@ public class ActionConnexion extends Action
                     session.setAttribute("personne", p);
                     
                     JsonObject retour = new JsonObject();
-                    if (p.getType().equals(Personne.TypePersonne.Coordonateur) || p.getType().equals(Personne.TypePersonne.Formateur))
+                    if (p.getType().equals(Personne.TypePersonne.Coordonateur) || p.getType().equals(Personne.TypePersonne.Formateur) || p.getType().equals(Personne.TypePersonne.Administrateur))
                     {
                         retour.addProperty("lien", "index_formateur.html");
                     }

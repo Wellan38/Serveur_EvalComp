@@ -38,6 +38,13 @@ var longueur_type = 1;
     $.material.init();
     document.getElementById("valider").setAttribute("id", "valider_" + codeG + "_");
     
+    if (est_apprenant || est_formateur)
+    {
+        $(':input').attr("disabled", true);
+        $('#slider_contenu').attr("disabled", true);
+        $('#boutons_modifs').hide();
+    }
+    
     listerRulePatterns();
     
     RP_EXCLUSIF = trouverRulePattern("RP-EXCLUSIF");
@@ -518,6 +525,8 @@ function afficherRegle(nouveau)
     var contenuTexte = '<thead><tr><th>Condition</th><th>Score</th><th class="minimal-cell"></th><th class="minimal-cell"></th></tr></thead>';
             
     contenuTexte += '<tbody>';
+    
+    console.log(cas_regle[0].condition);
 
     for (var j = 0; j < cas_regle.length; j++)
     {
@@ -591,7 +600,7 @@ function afficherRegle(nouveau)
 
         if (ajout)
         {
-            if (j > 0 && j < cas_regle.length - 1)
+            if (j > 0 && j < cas_regle.length - 1 && (est_coordonateur || est_administrateur))
             {
                 contenuTexte += '<td style="vertical-align: middle;"><div class="text-center"><i id="icone_plus_' + j + '" class="clickable fa fa-plus-circle" onclick="ajouterCas(' + j + ')"></i></div></td>';
                 contenuTexte += '<td style="vertical-align: middle;"><div class="text-center"><i id="icone_moins_' + j + '" class="clickable fa fa-minus-circle" onclick="retirerCas(' + j + ')"></i></div></td>';
@@ -621,6 +630,11 @@ function afficherRegle(nouveau)
     for (var i = 0; i < verbes.length; i++)
     {
         afficherVerbe(verbes[i].id);
+    }
+    
+    if (est_apprenant || est_formateur)
+    {
+        $(':input').attr("disabled", true);
     }
 }
 
@@ -838,6 +852,7 @@ function changerRulePattern(id)
 {
     code_rule_pattern = id;
     checkRulePattern();
+    changerContenu();
 }
 
 function changerPonderation(val)

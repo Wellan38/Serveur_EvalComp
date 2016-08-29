@@ -246,7 +246,17 @@ function afficherCompetencesParApprenant(id)
         
         contenuHtml += '<tr id="comp_' + c.code + '_' + id + '_"><td id="libelle_' + c.code + '_' + id + '_">' + c.libelle + '</td>';
         contenuHtml += '<td><span class="badge" data-toggle="tooltip" id="ponderation_' + c.code + '_' + id + '_">' + c.ponderation + '</span></td>';
-        contenuHtml += '<td id="mes_' + c.code + '_' + id + '_">' + c.miseensituation + '</td>';
+        contenuHtml += '<td id="mes_' + c.code + '_' + id + '_">';
+        
+        var mes = c.miseensituation;
+        
+        contenuHtml += '<table class="table"><tbody>';
+        contenuHtml += '<tr><td>Contexte</td><td>' + mes.contexte + '</td></tr>';
+        contenuHtml += '<tr><td>Ressources</td><td>' + mes.ressources + '</td></tr>';
+        contenuHtml += '<tr><td>Action à effectuer</td><td>' + mes.action + '</td></tr>';
+        contenuHtml += '</tbody></table>';
+        
+        contenuHtml += '</td>';
         contenuHtml += '<td id="regle_' + c.code + '_' + id + '_"></td>';
         contenuHtml += '</tr>';
     }
@@ -277,7 +287,7 @@ function afficherCompetencesParApprenant(id)
                 }
                 if (tab_regle[j].startsWith("&"))
                 {
-                    tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "");
+                    tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "").replace(/_/g, " ");
                 }
                 if (tab_regle[j].endsWith('"'))
                 {
@@ -313,7 +323,9 @@ function afficherApprenantsParCompetence(comp)
 {
     $('#legende').html("Noter les apprenants pour la compétence : " + competence_g.libelle);
     
-    var contenuHtml = '<p>' + comp.miseensituation + '</p>';
+    var mes = comp.miseensituation;
+    
+    var contenuHtml = '<p style="margin: 10px;"><b>Contexte :</b> ' + mes.contexte + '<br/><b>Ressources :</b> ' + mes.ressources + '<br/><b>Action :</b> ' + mes.action + '</p>';
     
     contenuHtml += '<table class="table" style="margin-bottom: 0px"><thead><tr>';
     contenuHtml += '<th style="width: 20%">Nom</th>';
@@ -360,7 +372,7 @@ function afficherApprenantsParCompetence(comp)
                 }
                 if (tab_regle[j].startsWith("&"))
                 {
-                    tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "");
+                    tab_regle[j] = tab_regle[j].split("=")[1].replace(/"/g, "").replace(/_/g, " ");
                 }
                 if (tab_regle[j].endsWith('"'))
                 {
@@ -423,6 +435,7 @@ function afficherScores(apprenant, competence)
             
             if (index == null)
             {
+                data.liste[i]["apprenant"] = apprenant;
                 scores.push(data.liste[i]);
             }
             else
@@ -473,7 +486,7 @@ function validerModifs()
         var contient = false;
         for (var j = 0; j < scores_par_ap.length; j++)
         {
-            if (scores_par_ap[j].apprenant = scores[i].apprenant)
+            if (scores_par_ap[j].apprenant == scores[i].apprenant)
             {
                 contient = true;
                 scores_par_ap[j].scores.push(scores[i]);
@@ -643,7 +656,7 @@ function ajouterScore(codeG, codeS, note, apprenant)
     
     if (index === null)
     {
-        scores.push({competence: codeS,note: note,ponderation:compS.ponderation});
+        scores.push({apprenant: apprenant, competence: codeS,note: note,ponderation:compS.ponderation});
     }
     else
     {
@@ -694,8 +707,6 @@ function ajouterScore(codeG, codeS, note, apprenant)
                 }
             }
         }
-        
-        console.log(scores);
         
         if (moyenne >= competence_g.seuil_max)
         {

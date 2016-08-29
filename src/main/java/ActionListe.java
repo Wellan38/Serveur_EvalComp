@@ -48,7 +48,7 @@ public class ActionListe extends Action
                     {
                         formations = servM.listerFormationsParPersonne(p);
                     }
-                    else if (p.getType().equals(Personne.TypePersonne.Coordonateur))
+                    else if (p.getType().equals(Personne.TypePersonne.Coordonateur) || p.getType().equals(Personne.TypePersonne.Administrateur))
                     {
                         formations = servM.listerFormations();
                     }

@@ -11,6 +11,12 @@ var essai_submit = false;
 
 (function()
 {
+    if (!est_administrateur)
+    {
+        $(':input').attr("disabled", true);
+        $('#boutons_modifs').hide();
+    }
+    
     $.material.init();
     $('#date_formation').bootstrapMaterialDatePicker
     ({

@@ -15,6 +15,12 @@ var essai_submit = false;
 
 (function()
 {
+    if (est_formateur || est_apprenant)
+    {
+        $(':input').attr("disabled", true);
+        $('#boutons_modifs').hide();
+    }
+    
     if (mode === "creation")
     {
         document.getElementById("btn_annuler").innerHTML = '<span class="fa fa-times"></span> Retour aux compétences';
@@ -227,7 +233,7 @@ function afficherCompS()
             
             var w_trash = d_max/2 - 11;
             
-            if (est_formateur || est_coordonateur)
+            if (est_administrateur || est_coordonateur)
             {
                 contenuHtml += '<span id="icone_trash_' + compS[0].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[0].code + '\')" onmouseout="enableClick(\'' + compS[0].code + '\')" onclick="retirerCompS(\'' + compS[0].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
             }
@@ -290,7 +296,7 @@ function afficherCompS()
                 contenuHtml += '<p style="font-size:' + 25 * d_max / 130 * compS[i].ponderation / pond_max + 'px; padding-top:38%">' + libelle + '</p>';
                 contenuHtml += '<p style="font-size:10px; position:absolute; top:' + h_pond + 'px; left:' + w_pond + 'px">' + compS[i].ponderation + '</p>';
                 
-                if (est_formateur || est_coordonateur)
+                if (est_administrateur || est_coordonateur)
                 {
                     contenuHtml += '<span id="icone_trash_' + compS[i].code + '_" class="clickable glyphicon glyphicon-trash" style="top:-25px; left:' + w_trash + 'px" onmouseover="disableClick(\'' + compS[i].code + '\')" onmouseout="enableClick(\'' + compS[i].code + '\')" onclick="retirerCompS(\'' + compS[i].code + '\')" data-toggle="tooltip" title="Supprimer cette compétence"></span>';
 
@@ -311,7 +317,7 @@ function afficherCompS()
         var h_ajout = h/2 + 15;
     }
     
-    if (est_formateur || est_coordonateur)
+    if (est_administrateur || est_coordonateur)
     {
         contenuHtml += '<h2><i class="clickable fa fa-plus-circle" id="ajouterCompS" style="top:' + h_ajout + 'px; left:' + w_ajout + 'px" onclick="ajouterCompS()"></i></h2>';
     }

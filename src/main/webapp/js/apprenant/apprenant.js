@@ -17,6 +17,17 @@ var chartIsGeneral = true;
 (function()
 {
     $.material.init();
+    
+    if (!est_administrateur)
+    {
+        $(':input').attr("disabled", true);
+        $('#boutons_modifs').remove();
+    }
+    else
+    {
+        $('#boutons_modifs').show();
+    }
+    
     if (mode === "creation")
     {
         formation = param[1].split("=")[1];
@@ -37,8 +48,11 @@ var chartIsGeneral = true;
         
         $('#details').addClass("col-sm-6");
         
-        document.getElementById("annuler").innerHTML += ' Annuler les modifications';
+        if ($('#boutons_modifs').length)
+        {
+            document.getElementById("annuler").innerHTML += ' Annuler les modifications';
         document.getElementById("valider").innerHTML += ' Valider les modifications';
+        }
         
         detailsApprenant(); 
         
@@ -50,16 +64,8 @@ var chartIsGeneral = true;
             chartIsGeneral = false;
         };
         
-        if (est_apprenant)
-        {
-            $(':input').attr("disabled", true);
-        }
-        else
-        {
-            $('#boutons_modifs').show();
-        }
+        
     }
-       
 }());
 
 function detailsApprenant()

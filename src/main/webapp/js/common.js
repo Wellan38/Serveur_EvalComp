@@ -3,6 +3,7 @@ var identifiant = sessionStorage.getItem("identifiant");
 var est_apprenant = (type_utilisateur == "Apprenant");
 var est_formateur = (type_utilisateur == "Formateur");
 var est_coordonateur = (type_utilisateur == "Coordonateur");
+var est_administrateur = (type_utilisateur == "Administrateur");
 
 var url_array = window.location.href.split("?")[0].split("/");
 var url = url_array[url_array.length - 1];
