@@ -68,8 +68,10 @@ function afficherFormations(formations)
         
         if (est_administrateur)
         {
-            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="demandeSuppressionFormation(\'' + f.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette formation"></i></div></td></tr>';
+            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + f.code + '_" onmouseover="disableClickFormation(\'' + f.code + '\')" onmouseout="enableClickFormation(\'' + f.code + '\')" onclick="demandeSuppressionFormation(\'' + f.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette formation"></i></div></td>';
         }
+        
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-file-excel-o" id="exporter_scores_' + f.code + '_" onclick="exporterScoresFormation(\'' + f.code + '\')" data-toggle="tooltip" data-placement="top" title="Exporter les scores pour cette formation"></i></div></td></tr>';
     }
 
     $('#formations_body').html(contenuHtml);
@@ -129,7 +131,7 @@ function afficherCompetences(competences)
         
         if (!est_formateur)
         {
-            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette compétence"></i></div></td></tr>';
+            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette compétence"></i></div></td>';
             $('#historique_competence').hide();
         }
         
@@ -600,6 +602,33 @@ function exporterScoresCompetence(comp)
             type: 'scores',
             par: 'competence',
             competence: comp
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        setTimeout(function(){
+            window.open(data.url);
+        }, 2000);
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
+}
+
+function exporterScoresFormation(f)
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'POST',
+        data: {
+            action: 'export',
+            type: 'scores',
+            par: 'formation',
+            formation: f
         },
         async:false,
         dataType: 'json'

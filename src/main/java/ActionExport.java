@@ -1,6 +1,7 @@
 
 import alexandre.evalcomp.metier.modele.Apprenant;
 import alexandre.evalcomp.metier.modele.CompetenceG;
+import alexandre.evalcomp.metier.modele.Formation;
 import alexandre.evalcomp.metier.service.ServiceMetier;
 import alexandre.evalcomp.metier.service.ServiceTechnique;
 import com.google.gson.Gson;
@@ -49,6 +50,7 @@ public class ActionExport
             String competence;
             Apprenant a;
             CompetenceG cg;
+            Formation form;
             
             switch(type)
             {
@@ -157,6 +159,47 @@ public class ActionExport
                                 }
 
                                 File f = new File(dir.getAbsolutePath() + "\\scores-" + cg.getId() + ".xls");
+
+                                f.createNewFile();
+
+                                FileOutputStream fos = new FileOutputStream(f);
+
+                                wb.write(fos);
+
+                                fos.flush();
+
+                                fos.close();
+
+                                wb.close();
+
+                                PrintWriter out = response.getWriter();
+                                JsonObject container = new JsonObject();
+                                container.addProperty("url", "xls/scores/" + f.getName());
+
+                                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                                String json = gson.toJson(container);
+                                out.println(json);
+                            }
+                            
+                            break;
+                            
+                            case "formation":
+                            String formation = request.getParameter("formation");
+
+                            form = servM.trouverFormationParId(formation);
+
+                            if (form != null)
+                            {
+                                HSSFWorkbook wb = servT.exporterResultats(form);
+
+                                File dir = new File(ActionServlet.path + "\\xls\\scores");
+
+                                if (!dir.exists())
+                                {
+                                    dir.mkdirs();
+                                }
+
+                                File f = new File(dir.getAbsolutePath() + "\\scores-" + form.getId() + ".xls");
 
                                 f.createNewFile();
 

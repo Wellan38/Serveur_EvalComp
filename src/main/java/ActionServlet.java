@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
     
-    public static String path = "C:\\Users\\alexa\\OneDrive\\Documents\\NetBeansProjects\\Serveur_EvalComp\\src\\main\\webapp";
+    public static String path = "C:\\Users\\Alexandre\\Documents\\NetBeansProjects\\Serveur_EvalComp\\src\\main\\webapp";
     
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
