@@ -38,6 +38,7 @@ function connexion()
            sessionStorage.setItem("nav_nom", retour.nom);
            sessionStorage.setItem("type_utilisateur", retour.type);
            sessionStorage.setItem("apprenant", retour.apprenant);
+           sessionStorage.setItem("formation", retour.formation);
     })
     .fail(function() {
         console.log('Erreur de connexion.');

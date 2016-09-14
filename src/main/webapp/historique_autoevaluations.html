@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>EvalComp - Notation</title>
+        <title>EvalComp - Historique des autoévaluations</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Material Design fonts -->
@@ -24,7 +24,7 @@ and open the template in the editor.
         <link href="assets/snackbar/css/material.css" rel="stylesheet">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
         <link href="css/common.css" rel="stylesheet">
-        <link href="css/notation.css" rel="stylesheet">
+        <link href="css/historique.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
@@ -46,19 +46,15 @@ and open the template in the editor.
                 </div>
             </div>
         </nav>
+        
         <div class="container">
             <fieldset>
-                <legend>Donner une note à un apprenant</legend>
+                <legend id="legende">Historique des autoévaluations pour l'apprenant : </legend>
                 <div class="row">
                     <label>Compétences générales :</label>
                 </div>
                 <div class="panel-group" id="competences"></div>
-                <div class="row" id="boutons_modifs" hidden>
-                    <div class="text-center">
-                        <button class="btn btn-raised btn-danger" onclick="annulerModifs()"><span class="fa fa-times"></span> Annuler</button>
-                        <button class="btn btn-raised btn-success" onclick="validerModifs()"><span class="fa fa-check"></span> Valider</button>
-                    </div>
-                </div>
+                
                 <div class="modal fade" id="aide" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -67,19 +63,6 @@ and open the template in the editor.
                                 <h4 class="modal-title" id="titre_aide"></h4>
                             </div>
                             <div class="modal-body" id="contenu_aide"></div>
-                        </div>
-                    </div>
-		</div>
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title" id="libelle_compG"></h4>
-                                </div>
-                                <div class="modal-body">
-                                    <canvas id="graph_spec"></canvas>
-                                </div>
                         </div>
                     </div>
 		</div>
@@ -95,6 +78,6 @@ and open the template in the editor.
         <script src="js/aide.js"></script>
         <script src="js/snackbar.js"></script>
         <script src="js/common.js"></script>
-        <script src="js/notation/notation_apprenant.js"></script>
+        <script src="js/historique/historique_autoevaluations.js"></script>
     </body>
 </html>

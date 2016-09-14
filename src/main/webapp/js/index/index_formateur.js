@@ -90,14 +90,18 @@ function afficherApprenants(apprenants)
         if (est_formateur)
         {
             contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + a.code + '_" onclick="window.location.href=\'notation_apprenant.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Attribuer une note à cet apprenant"></i></div></td>';
+            contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-table" onclick="window.location.href=\'historique_scores_apprenant.html?formation=' + a.formation + '&apprenant=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser l\'historique des scores de cet apprenant"></i></div></td>';
         }
         
         contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + a.code + '_" onclick="window.location.href=\'apprenant.html?mode=modification&code=' + a.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cet apprenant"></i></div></td>';
         
         if (est_administrateur)
         {
-            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + a.code + '_" onclick="demandeSuppressionApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cet apprenant"></i></div></td></tr>';
+            contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + a.code + '_" onclick="demandeSuppressionApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cet apprenant"></i></div></td>';
+            $('#historique_apprenant').hide();
         }
+        
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-file-excel-o" id="exporter_scores_' + a.code + '_" onclick="exporterScoresApprenant(\'' + a.code + '\')" data-toggle="tooltip" data-placement="top" title="Exporter les scores de cet apprenant"></i></div></td></tr>';
     }
 
     $('#apprenants_body').html(contenuHtml);
@@ -118,6 +122,7 @@ function afficherCompetences(competences)
         if (est_formateur)
         {
             contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-pencil" id="noter_' + c.code + '_" onclick="window.location.href=\'notation_competence.html?formation=' + formation + '&competence=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Noter les apprenants pour cette compétence"></i></div></td>';
+            contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-table" id="historique_' + c.code + '_" onclick="window.location.href=\'historique_scores_competence.html?formation=' + formation + '&competence=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser l\'historique des scores pour cette compétence"></i></div></td>';
         }
         
         contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-list" id="voir_' + c.code + '_" onclick="window.location.href=\'competence_generale.html?mode=modification&code=' + c.code + '\'" data-toggle="tooltip" data-placement="top" title="Visualiser cette compétence"></i></div></td>';
@@ -125,7 +130,10 @@ function afficherCompetences(competences)
         if (!est_formateur)
         {
             contenuHtml += '<td><div class="text-center"><i class="clickable glyphicon glyphicon-trash" id="supprimer_' + c.code + '_" onclick="demandeSuppressionCompG(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Supprimer cette compétence"></i></div></td></tr>';
+            $('#historique_competence').hide();
         }
+        
+        contenuHtml += '<td><div class="text-center"><i class="clickable fa fa-file-excel-o" id="exporter_scores_' + c.code + '_" onclick="exporterScoresCompetence(\'' + c.code + '\')" data-toggle="tooltip" data-placement="top" title="Exporter les scores pour cette compétence"></i></div></td></tr>';
     }
 
     $('#competences_body').html(contenuHtml);
@@ -553,4 +561,58 @@ function disableClickFormation(id)
 function enableClickFormation(id)
 {
     $('#formation_' + id + '_').attr("onclick", "selectionnerFormation('" + id + "')");
+}
+
+function exporterScoresApprenant(apprenant)
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'POST',
+        data: {
+            action: 'export',
+            type: 'scores',
+            par: 'apprenant',
+            apprenant: apprenant
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        setTimeout(function(){
+            window.open(data.url);
+        }, 2000);
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
+}
+
+function exporterScoresCompetence(comp)
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'POST',
+        data: {
+            action: 'export',
+            type: 'scores',
+            par: 'competence',
+            competence: comp
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        setTimeout(function(){
+            window.open(data.url);
+        }, 2000);
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
 }

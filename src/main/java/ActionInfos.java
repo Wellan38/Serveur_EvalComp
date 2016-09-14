@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionInfos extends Action {
     
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request,HttpServletResponse response)
     {
         try {
             System.out.println("Entrée dans le try !");
@@ -119,6 +120,7 @@ public class ActionInfos extends Action {
                     break;
             }
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("obj", obj);
             
@@ -127,7 +129,11 @@ public class ActionInfos extends Action {
             out.println(json);
         }
         catch(Exception e) {
-            throw e;
+            try {
+                throw e;
+            } catch (Exception ex) {
+                Logger.getLogger(ActionInfos.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
     

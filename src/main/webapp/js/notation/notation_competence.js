@@ -500,8 +500,6 @@ function validerModifs()
         }
     }
     
-    console.log(scores_par_ap);
-    
     for (var i = 0; i < scores_par_ap.length; i++)
     {
         $.ajax({

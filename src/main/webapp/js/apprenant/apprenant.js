@@ -13,6 +13,9 @@ var liste_formations;
 var compSpec;
 var myRadarChart;
 var chartIsGeneral = true;
+var competences_g;
+var grades;
+var scores;
 
 (function()
 {
@@ -26,6 +29,14 @@ var chartIsGeneral = true;
     else
     {
         $('#boutons_modifs').show();
+    }
+    
+    if (est_apprenant)
+    {
+        $('#bouton_scores').attr("disabled", false);
+        $('#bouton_evals').attr("disabled", false);
+        
+        $('boutons_export').show();
     }
     
     if (mode === "creation")
@@ -306,4 +317,56 @@ function validerModifs()
         //
     });
     }
+}
+
+function exporterAutoevaluations()
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'POST',
+        data: {
+            action: 'export',
+            type: 'autoevaluations',
+            apprenant: sessionStorage.getItem("apprenant")
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        setTimeout(function(){
+            window.open(data.url);
+        }, 2000);
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
+}
+
+function exporterScores()
+{
+    $.ajax({
+        url: './ActionServlet',
+        type: 'POST',
+        data: {
+            action: 'export',
+            type: 'scores',
+            apprenant: sessionStorage.getItem("apprenant")
+        },
+        async:false,
+        dataType: 'json'
+    })
+    .done(function(data) {
+        setTimeout(function(){
+            window.open(data.url);
+        }, 2000);
+    })
+    .fail(function() {
+        console.log('Erreur dans le chargement des informations.');
+    })
+    .always(function() {
+        //
+    });
 }

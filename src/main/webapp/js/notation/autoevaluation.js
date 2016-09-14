@@ -204,7 +204,14 @@ function validerModifs()
         dataType: 'json'
     })
     .done(function(data) {
-        
+        if (data.retour.valide)
+        {
+            afficherRetour("autoevaluation_acceptee");
+        }
+        else
+        {
+            afficherRetour("autoevaluation_refusee");
+        }
         
     })
     .fail(function() {

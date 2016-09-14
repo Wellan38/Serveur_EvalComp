@@ -159,6 +159,21 @@ function afficherRetour(type)
             contenu = '<div class="pull-left">Les scores n\'ont pas pu être enregistrés ! </div><span class="pull-right fa fa-times" style="color: #FF6347"></span>';
             
             break;
+            
+        case "autoevaluation_en_cours" :
+            contenu = '<div class="pull-left">Enregistrement des autoévaluations en cours... </div><span class="pull-right fa fa-times" style="color: #FF6347"></span>';
+            
+            break;
+            
+        case "autoevaluation_acceptee" :
+            contenu = '<div class="pull-left">Les autoévaluations ont bien été enregistrées ! </div><span class="pull-right fa fa-check" style="color: #32CD32"></span>';
+            
+            break;
+            
+        case "autoevaluation_refusee" :
+            contenu = '<div class="pull-left">Les autoévaluations n\'ont pas pu être enregistrées ! </div><span class="pull-right fa fa-times" style="color: #FF6347"></span>';
+            
+            break;
     }
     
     snack = $.snackbar({content: contenu, timeout: 1500, htmlAllowed: true});

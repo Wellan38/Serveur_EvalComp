@@ -22,6 +22,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -36,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionModification extends Action
 {
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
     {
         try
         {
@@ -95,6 +96,7 @@ public class ActionModification extends Action
                     break;
             }
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("retour", obj);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();

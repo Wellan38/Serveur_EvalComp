@@ -3,14 +3,18 @@ import alexandre.evalcomp.metier.modele.Apprenant;
 import alexandre.evalcomp.metier.modele.AutoEvaluation;
 import alexandre.evalcomp.metier.modele.CompetenceG;
 import alexandre.evalcomp.metier.modele.CompetenceS;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionAutoevaluation extends Action {
 
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
     {
         try
         {
@@ -38,7 +42,7 @@ public class ActionAutoevaluation extends Action {
             for (JsonElement e : scores)
             {
                 CompetenceS c = servM.trouverCompetenceSParId(e.getAsJsonObject().get("competence").getAsString());
-                Integer valeur = e.getAsJsonObject().get("score").getAsInt();
+                Double valeur = e.getAsJsonObject().get("score").getAsDouble();
                 
                 servM.ajouterAutoevaluation(apprenant, c, valeur);
             }
@@ -63,6 +67,17 @@ public class ActionAutoevaluation extends Action {
                     servM.supprimerAutoevaluation(apprenant, a.getCompetence());
                 }
             }
+            
+            JsonObject obj = new JsonObject();
+            
+            obj.addProperty("valide", Boolean.TRUE);
+            
+            PrintWriter out = response.getWriter();
+            JsonObject container = new JsonObject();
+            container.add("retour", obj);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(container);
+            out.println(json);
         }
         catch (Throwable ex) {
             Logger.getLogger(ActionAutoevaluation.class.getName()).log(Level.SEVERE, null, ex);

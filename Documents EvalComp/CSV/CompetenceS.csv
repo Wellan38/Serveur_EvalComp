@@ -3,7 +3,7 @@ code,libelle,feminin,pluriel,type,ponderation,codecompetenceG,coderulepattern,co
 8925-1-2,Définir les différentes phases,true,true,Connaissance,0.3,8925-1,RP-COMPTAGE,MES-8925-1-2
 8925-1-3,Identifier la place du projet dans les entreprises,true,false,Connaissance,0.3,8925-1,RP-PROGRESSIF,MES-8925-1-3
 8925-2-1,Organiser les rôles,false,true,Synthèse,0.6,8925-2,RP-PROGRESSIF,MES-8925-2-1
-8925-2-2,Organiser les objectifs,false,true,Connaissance,0.4,8925-2,RP-PROGRESSIF,MES-8925-2-2
+8925-2-2,Organiser les objectifs,false,true,Synthèse,0.4,8925-2,RP-PROGRESSIF,MES-8925-2-2
 8925-3-1,Analyser la faisabilité et la décision de lancement de l’opération,true,false,Analyse,0.5,8925-3,RP-PROGRESSIF,MES-8925-3-1
 8925-3-2,Analyser le recueil des données et des contraintes,false,false,Analyse,0.5,8925-3,RP-PROGRESSIF,MES-8925-3-2
 7128-1-1,Maîtriser la nomenclature IUPAC et usuelle des grands polymères industriels,true,false,Connaissance,0.5,7128-1,RP-COMPTAGE,MES-7128-1-1

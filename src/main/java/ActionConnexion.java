@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /*
@@ -24,7 +25,7 @@ public class ActionConnexion extends Action
 {
 
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
     {
         try
         {            
@@ -51,6 +52,7 @@ public class ActionConnexion extends Action
                         retour.addProperty("lien", "index_apprenant.html");
                         Apprenant ap = servM.trouverApprenantParCompte(p);
                         retour.addProperty("apprenant", ap.getId());
+                        retour.addProperty("formation", ap.getFormation().getId());
                         session.setAttribute("apprenant", ap);
                     }
                     
@@ -58,6 +60,7 @@ public class ActionConnexion extends Action
                     retour.addProperty("nom", p.getNom());
                     retour.addProperty("type", p.getType().toString());
                     
+                    PrintWriter out = response.getWriter();
                     JsonObject container = new JsonObject();
                     container.add("retour", retour);
                     Gson gson = new GsonBuilder().setPrettyPrinting().create();

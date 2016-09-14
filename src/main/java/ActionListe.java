@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /*
@@ -27,7 +28,7 @@ public class ActionListe extends Action
 {
 
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out) {
+    public void execute(HttpServletRequest request, HttpServletResponse response) {
         
         try
         {
@@ -51,6 +52,10 @@ public class ActionListe extends Action
                     else if (p.getType().equals(Personne.TypePersonne.Coordonateur) || p.getType().equals(Personne.TypePersonne.Administrateur))
                     {
                         formations = servM.listerFormations();
+                    }
+                    else if (p.getType().equals(Personne.TypePersonne.Apprenant))
+                    {
+                        formations.add(servM.trouverApprenantParCompte(p).getFormation());
                     }
                     
                     for (Formation f : formations)
@@ -271,6 +276,7 @@ public class ActionListe extends Action
                     break;
             }
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("liste", liste);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();

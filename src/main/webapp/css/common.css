@@ -94,6 +94,7 @@ p.speech {
 
 .navbar.navbar-inverse {
     background-color: rgb(60,141,188);
+    margin-bottom: 10px;
 }
 
 .navbar-header {

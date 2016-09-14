@@ -1,12 +1,5 @@
 
-import alexandre.evalcomp.metier.modele.Apprenant;
-import alexandre.evalcomp.metier.modele.CompetenceG;
-import alexandre.evalcomp.metier.modele.CompetenceS;
-import alexandre.evalcomp.metier.modele.Formation;
-import alexandre.evalcomp.metier.modele.MiseEnSituation;
-import alexandre.evalcomp.metier.modele.Personne;
-import alexandre.evalcomp.metier.modele.Regle;
-import alexandre.evalcomp.metier.modele.RulePattern;
+import alexandre.evalcomp.metier.modele.*;
 import static alexandre.evalcomp.vue.Parseur.serv;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,12 +12,14 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.util.Pair;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -39,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionCreation extends Action
 {
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request,HttpServletResponse response)
     {
         try
         {
@@ -109,6 +104,7 @@ public class ActionCreation extends Action
                     break;
             }
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("retour", obj);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -237,18 +233,57 @@ public class ActionCreation extends Action
         String fonction = request.getParameter("fonction");
         String entreprise = request.getParameter("entreprise");
         String id_form = request.getParameter("formation");
-        String id_personne = request.getParameter("personne");
+        
+        String id_personne = nom.toLowerCase().replace(" ", ".");
+        
+        Personne p = servM.creerPersonne(id_personne + "@evalcomp.fr", nom, "niv", Personne.TypePersonne.Apprenant, id_personne.replace(".", ""));
+        
+        while (p == null)
+        {
+            String[] tab = id_personne.split("\\.");
+            
+            String last = tab[tab.length - 1];
+            
+            try
+            {
+                int number = Integer.parseInt(last);
+            }
+            catch (NumberFormatException e)
+            {
+                String[] tab2 = new String[tab.length + 1];
+                
+                for (int i = 0; i < tab.length; i++)
+                {
+                    tab2[i] = tab[i];
+                }
+                
+                tab2[tab2.length - 1] = "0";
+                
+                tab = tab2;
+            }
+            
+            int number = Integer.parseInt(tab[tab.length - 1]);
+            tab[tab.length - 1] = String.valueOf(number + 1);
+            
+            id_personne = "";
+            
+            for (int i = 0; i < tab.length; i++)
+            {
+                id_personne += tab[i];
+                
+                if (i < tab.length - 1)
+                {
+                    id_personne += ".";
+                }
+            }
+            
+            p = servM.creerPersonne(id_personne + "@evalcomp.fr", nom, "niv", Personne.TypePersonne.Apprenant, id_personne.replace(".", ""));
+        }
         
         Formation f = servM.trouverFormationParId(id_form);
         
         if (f != null)
-        {
-            Personne p = servM.trouverPersonneParId(id_personne);
-            if (p == null)
-            {
-                return null;
-            }
-            
+        {            
             Apprenant a = servM.creerApprenant(code, nom, fonction, entreprise, p);
             
             if (a != null)
@@ -259,6 +294,7 @@ public class ActionCreation extends Action
             }
             else
             {
+                servM.supprimerPersonne(p);
                 return null;
             }
         }

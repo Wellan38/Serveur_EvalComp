@@ -6,9 +6,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionSuppression extends Action
 {
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
     {
         try
         {
@@ -76,6 +78,7 @@ public class ActionSuppression extends Action
                     break;
             }
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("retour", obj);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();

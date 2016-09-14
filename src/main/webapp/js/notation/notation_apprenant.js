@@ -2,8 +2,6 @@ var param = window.location.search.substring(1).split("&");
 var formation = param[0].split("=")[1];
 var apprenant = param[1].split("=")[1];
 
-var liste_formations;
-var liste_apprenants;
 var liste_competences;
 var scores = [];
 var myRadarChart = null;

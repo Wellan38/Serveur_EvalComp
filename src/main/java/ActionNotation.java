@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,12 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 public class ActionNotation extends Action
 {
     @Override
-    public void execute(HttpServletRequest request, PrintWriter out)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
     {
         try
         {
             Apprenant a = servM.trouverApprenantParId(request.getParameter("apprenant"));
-            System.out.println(a);
             
             JsonParser jsonParser = new JsonParser();
             JsonArray demandes = (JsonArray)jsonParser.parse(request.getParameter("scores"));
@@ -40,8 +40,7 @@ public class ActionNotation extends Action
             for (JsonElement e : demandes)
             {
                 CompetenceS cs = servM.trouverCompetenceSParId(e.getAsJsonObject().get("competence").toString().replace("\"", ""));
-                System.out.println(cs);
-                System.out.println(Double.valueOf(e.getAsJsonObject().get("note").getAsString()));
+                
                 if (!servM.ajouterNote(a, cs, Double.valueOf(e.getAsJsonObject().get("note").getAsString())))
                 {
                     res = false;
@@ -53,6 +52,7 @@ public class ActionNotation extends Action
             
             obj.addProperty("valide", res);
             
+            PrintWriter out = response.getWriter();
             JsonObject container = new JsonObject();
             container.add("retour", obj);
             Gson gson = new GsonBuilder().setPrettyPrinting().create();

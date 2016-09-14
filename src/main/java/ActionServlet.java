@@ -5,8 +5,10 @@
  */
 
 import alexandre.evalcomp.metier.service.ServiceMetier;
+import alexandre.evalcomp.metier.service.ServiceTechnique;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/ActionServlet"})
 public class ActionServlet extends HttpServlet {
     
+    public static String path = "C:\\Users\\alexa\\OneDrive\\Documents\\NetBeansProjects\\Serveur_EvalComp\\src\\main\\webapp";
+    
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -29,7 +33,7 @@ public class ActionServlet extends HttpServlet {
         String todo = request.getParameter("action");
 
         ServiceMetier servM = new ServiceMetier();
-        PrintWriter out = response.getWriter();
+        ServiceTechnique servT = new ServiceTechnique();
         response.setCharacterEncoding("UTF-8");
         
         
@@ -46,72 +50,88 @@ public class ActionServlet extends HttpServlet {
                 case "infos" :
                     System.out.println("Action d'infos !");
                     ActionInfos acInfos = new ActionInfos();
-                    acInfos.setServices(servM);
-                    acInfos.execute(request, out);
+                    acInfos.setServices(servM, servT);
+                    acInfos.execute(request, response);
 
                     break;
 
                 case "modification" :
                     System.out.println("Action de modification !");
                     ActionModification acModif = new ActionModification();
-                    acModif.setServices(servM);
-                    acModif.execute(request, out);
+                    acModif.setServices(servM, servT);
+                    acModif.execute(request, response);
 
                     break;
 
                 case "liste" :
                     System.out.println("Action de listing !");
                     ActionListe acListe = new ActionListe();
-                    acListe.setServices(servM);
-                    acListe.execute(request, out);
+                    acListe.setServices(servM, servT);
+                    acListe.execute(request, response);
 
                     break;
 
                 case "creation" :
                     System.out.println("Action de création !");
                     ActionCreation acCreation = new ActionCreation();
-                    acCreation.setServices(servM);
-                    acCreation.execute(request, out);
+                    acCreation.setServices(servM, servT);
+                    acCreation.execute(request, response);
 
                     break;
 
                 case "notation" :
                     System.out.println("Action de notation !");
                     ActionNotation acNotation = new ActionNotation();
-                    acNotation.setServices(servM);
-                    acNotation.execute(request, out);
+                    acNotation.setServices(servM, servT);
+                    acNotation.execute(request, response);
 
                     break;
                     
                 case "autoevaluation" :
                     System.out.println("Action d'autoévaluation !");
                     ActionAutoevaluation acAutoevaluation = new ActionAutoevaluation();
-                    acAutoevaluation.setServices(servM);
-                    acAutoevaluation.execute(request, out);
+                    acAutoevaluation.setServices(servM, servT);
+                    acAutoevaluation.execute(request, response);
 
                     break;
 
                 case "suppression" :
                     System.out.println("Action de suppression !");
                     ActionSuppression acSuppression = new ActionSuppression();
-                    acSuppression.setServices(servM);
-                    acSuppression.execute(request, out);
+                    acSuppression.setServices(servM, servT);
+                    acSuppression.execute(request, response);
 
                     break;
 
                 case "connexion" :
                     System.out.println("Action de connexion !");
                     ActionConnexion acConnexion = new ActionConnexion();
-                    acConnexion.setServices(servM);
-                    acConnexion.execute(request, out);
+                    acConnexion.setServices(servM, servT);
+                    acConnexion.execute(request, response);
 
                     break;
 
                 case "deconnexion" :
                     System.out.println("Action de déconnexion !");
                     ActionDeconnexion acDeconnexion = new ActionDeconnexion();
-                    acDeconnexion.setServices(servM);
-                    acDeconnexion.execute(request, out);
+                    acDeconnexion.setServices(servM, servT);
+                    acDeconnexion.execute(request, response);
+
+                    break;
+                    
+                case "historique" :
+                    System.out.println("Action d'historique !");
+                    ActionHistorique acHistorique = new ActionHistorique();
+                    acHistorique.setServices(servM, servT);
+                    acHistorique.execute(request, response);
+
+                    break;
+                    
+                case "export" :
+                    System.out.println("Action d'export !");
+                    ActionExport acExport = new ActionExport();
+                    acExport.setServices(servM, servT);
+                    acExport.execute(request, response);
 
                     break;
             }

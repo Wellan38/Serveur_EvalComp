@@ -1,7 +1,7 @@
 
 import alexandre.evalcomp.metier.service.*;
-import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class Action {
     
     ServiceMetier servM;
+    ServiceTechnique servT;
     
-    public abstract void execute(HttpServletRequest request, PrintWriter out);
+    public abstract void execute(HttpServletRequest request, HttpServletResponse response);
     
-    public void setServices(ServiceMetier aservM)
+    public void setServices(ServiceMetier servM, ServiceTechnique servT)
     {
-        servM = aservM;
+        this.servM = servM;
+        this.servT = servT;
     }
 }

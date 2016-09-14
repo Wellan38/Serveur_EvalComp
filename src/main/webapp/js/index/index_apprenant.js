@@ -136,3 +136,8 @@ function voirApprenant()
 {
     window.location.href = "apprenant.html?mode=modification&code=" + sessionStorage.getItem("apprenant");
 }
+
+function voirHistorique()
+{
+    window.location.href = "historique_autoevaluations.html?formation=" + sessionStorage.getItem("formation") + "&apprenant=" + sessionStorage.getItem("apprenant");
+}
